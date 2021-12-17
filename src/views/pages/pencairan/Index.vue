@@ -33,7 +33,6 @@
                   id="field-search-for-tbl"
                   v-model="searchTerm"
                   placeholder="Search"
-                  @input="searching()"
                 />
               </b-input-group>
               <b-dropdown
@@ -53,14 +52,16 @@
                   style="width: 417px;"
                 >
                   <b-form-group
+                    v-model="filterDropdown.partner_name"
                     label="Nama"
                     label-for="dropdown-form-nama"
+                    @submit.stop.prevent
                   >
                     <b-form-input
                       id="dropdown-form-nama"
-                      v-model="nameFilter"
                       size="lg"
                       placeholder="Masukkan Nama"
+                      @input="onChangeParter"
                     />
                   </b-form-group>
 
@@ -70,7 +71,7 @@
                   >
                     <b-form-select
                       id="dropdown-form-status"
-                      v-model="statusFilter"
+                      v-model="filterDropdown.selectedStatus"
                       size="lg"
                       class="mb-2"
                       :options="optionsStatus"
@@ -82,13 +83,14 @@
                       variant="outline-primary"
                       size="lg"
                       class="mr-2"
+                      @click="onClickResetFilterDropdown"
                     >
                       Reset
                     </b-button>
                     <b-button
                       variant="primary"
                       size="lg"
-                      @click="filterDropdown()"
+                      @click="onClickTerapkanFilterDropdown"
                     >
                       Terapkan
                     </b-button>
@@ -118,6 +120,7 @@
                 @row-clicked="showDetails"
                 @filtered="onFiltered"
               >
+                <!-- A virtual composite column -->
                 <template #cell(detailName)="data">
                   <b>
                     {{ data.item.partner_name }}
@@ -247,6 +250,7 @@ import {
 import Ripple from 'vue-ripple-directive'
 
 import axioskomsipdev from '@/libs/axioskomsipdev'
+import { kFormatter } from '@core/utils/filter'
 
 export default {
   components: {
@@ -283,12 +287,17 @@ export default {
       alertshow: false,
       loadDataAwal: true,
       searchTerm: '',
-      nameFilter: null,
-      statusFilter: null,
+      queryParterName: '',
+      queryStatuse: '',
+      filterDropdown: {
+        partner_name: '',
+        selectedStatus: null,
+      },
       optionsStatus: [
         { value: null, text: 'Pilih Status', disabled: true },
         { value: 'completed', text: 'Disetujui' },
         { value: 'requested', text: 'Perlu Disetujui' },
+        // { value: 'canceled', text: 'Canceled' },
         { value: 'on_review', text: 'Sedang Direview' },
         { value: 'rejected', text: 'Ditolak' },
       ],
@@ -305,6 +314,7 @@ export default {
       filterOn: [],
       items: [],
       fields: [
+        // A virtual column made up from two fields
         {
           key: 'detailName',
           label: 'Nama',
@@ -328,18 +338,30 @@ export default {
       ],
     }
   },
+  computed: {
+    //
+  },
+  watch: {
+    searchTerm: {
+      handler() {
+        this.fetchData({ partner_name: this.searchTerm })
+      },
+    },
+  },
   mounted() {
     this.fetchData()
+    //
+  },
+  created() {
+    //
   },
   methods: {
-    searching() {
-      this.fetchData(this.searchTerm, null)
-    },
-    filterDropdown() {
-      this.fetchData(this.nameFilter, this.statusFilter)
-    },
     showDetails(item) {
+      console.log(item)
       this.$router.push({ name: 'cod-rincian-penarikan-saldo', params: { slug: item.withdrawal_id } })
+    },
+    onChangeParter(value) {
+      this.queryParterName = value
     },
     statusToIndo(status) {
       let newStatus
@@ -359,35 +381,59 @@ export default {
       return newStatus
     },
     onFiltered(filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length
       this.currentPage = 1
+    },
+    kFormatter,
+    onClickResetFilterDropdown() {
+      this.filterDropdown = {
+        partner_name: '',
+        selectedStatus: null,
+      }
+    },
+    onClickTerapkanFilterDropdown() {
+      this.fetchData(this.filterDropdown.selectedStatus, this.queryParterName)
+      // Close the dropdown and (by passing true) return focus to the toggle button
+      this.$refs.dropdownFilter.hide(true)
     },
     colorStatus(status) {
       let classStatusColor = ''
       switch (status) {
         case 'on_review':
+          // #FBA63C
           classStatusColor = 'colorStatusWarning'
           break
         case 'rejected':
+          // #FBA63C
           classStatusColor = 'colorStatusWarning'
           break
         case 'completed':
+          // #34A770
           classStatusColor = 'colorStatusSuccess'
           break
         default:
+          // #FF6A3A
           classStatusColor = 'colorStatusPrimary'
           break
       }
       return classStatusColor
     },
-    fetchData(search, status) {
-      this.loading = true
-      axioskomsipdev.get('/v1/admin/withdrawal/list', {
-        params: { status, search },
-      }).then(response => {
-        const { data } = response.data
-        this.items = data
-        this.totalRows = data.length
+    fetchData(status, parterName) {
+      // change this endpoint
+      const endpoint = '/v1/admin/withdrawal/list'
+      let getData = null
+
+      if (status || parterName) {
+        getData = axioskomsipdev.get(endpoint, { params: { status, partner_name: parterName } })
+      } else {
+        getData = axioskomsipdev.get(endpoint)
+      }
+
+      getData.then(({ data }) => {
+        const parseData = JSON.parse(JSON.stringify(data.data))
+        this.items = parseData
+        this.totalRows = parseData.length
       })
         .catch(e => {
           console.log('error', e)
@@ -395,6 +441,14 @@ export default {
         .finally(() => {
           this.loadDataAwal = false
         })
+      // this.$nextTick(function () {
+      //   console.log('338 :', this.row)
+      // })
+    },
+    toPage(params = '') {
+      console.log(params)
+      // make sure to pass params on router base for changing page
+      this.$router.push('/')
     },
   },
 }

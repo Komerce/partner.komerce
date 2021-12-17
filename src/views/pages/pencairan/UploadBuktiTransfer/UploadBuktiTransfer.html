@@ -10,6 +10,16 @@
           <button class="btn btn-primary btn-lg mt-2 mb-2" @click="$bvModal.hide('failUploadPopup')">Oke</button>
         </div>
     </b-modal>
+    <b-modal id="maxUploadPopup" ref="maxUploadPopup" centered hide-header hide-footer>
+        <div class="d-block text-center">
+          <img
+            src="@/assets/images/icons/popup-warning.png"
+            class="mx-auto pt-2"
+          >
+          <h4 class="text-bold mt-1">Maaf, maksimal upload tidak bisa lebih dari 2 MB.</h4>
+          <button class="btn btn-primary btn-lg mt-2 mb-2" @click="$bvModal.hide('maxUploadPopup')">Oke</button>
+        </div>
+    </b-modal>
     <b-card no-body>
       <b-card-header>
         <h4 class="card-title text-24-bold">
@@ -90,6 +100,7 @@
                               <span
                                 class="text-bukti-transfer"
                                 style="color: #E31A1A;cursor: pointer;"
+                                @click="removeFileUpload(filebeingUpload)"
                               >
                                 Batal
                               </span>
