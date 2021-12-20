@@ -67,8 +67,6 @@
                   #default="{errors}"
                   name="Upload Gambar"
                 >
-
-                  <!-- Preview Image -->
                   <transition name="fade">
                     <b-avatar
                       v-if="imageInitialFile !== null || imageFile !== null"
@@ -78,7 +76,6 @@
                       class="mr-50"
                     />
                   </transition>
-                  <!-- Button Upload Image -->
                   <label
                     for="uploadImage"
                   >
@@ -105,8 +102,6 @@
                       size="20"
                     />
                   </label>
-
-                  <!-- Field Gambar -->
                   <b-form-file
                     id="uploadImage"
                     v-model="imageFile"
@@ -840,6 +835,7 @@
                 <b-form-input
                   v-model="stockProduct"
                   placeholder="Masukan jumlah stok barang"
+                  @keypress="onlyNumber"
                 />
               </b-form-group>
             </b-col>
@@ -968,8 +964,6 @@
                 </div>
               </b-form-group>
             </b-col>
-
-            <!-- submit and reset -->
             <b-col
               cols="12"
               class="d-flex justify-content-end pb-2 pr-2"
@@ -1183,9 +1177,8 @@ export default {
   },
   methods: {
     onlyNumber($event) {
-      // console.log($event.keyCode); //keyCodes value
       const keyCode = ($event.keyCode ? $event.keyCode : $event.which)
-      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) { // 46 is dot
+      if (keyCode < 48 || keyCode > 57) {
         $event.preventDefault()
       }
     },
@@ -1198,7 +1191,6 @@ export default {
         headers: { Authorization: `Bearer ${useJwt.getToken()}` },
       }).then(response => {
         const { data } = response.data
-        console.log(data)
         this.fieldEditVariation = data
         this.productName = data.product_name
         this.skuName = data.product_sku
@@ -1483,8 +1475,6 @@ export default {
         }
       }
 
-      console.log(this.variantItems)
-
       // Delete empty choices
       // eslint-disable-next-line no-plusplus
       for (let x = 0; x < this.formChoices1.length; x++) {
@@ -1672,8 +1662,6 @@ export default {
         variant_option: this.variantStore,
         option: this.optionStore,
       }
-
-      console.log(params)
 
       httpKomship.put(`/v1/product/update/${this.productId}`, params, {
         headers: { Authorization: `Bearer ${useJwt.getToken()}` },

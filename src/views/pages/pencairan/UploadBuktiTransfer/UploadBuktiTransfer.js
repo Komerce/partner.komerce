@@ -22,9 +22,6 @@ export default {
     BCardHeader,
     BModal,
   },
-  filters: {
-    //
-  },
   data() {
     return {
       loadDataAwal: true,
@@ -40,6 +37,7 @@ export default {
     this.loadDataAwal = false
     this.dragAndDropCapable = this.determineDragAndDropCapable()
 
+    // eslint-disable-next-line func-names
     this.$nextTick(function () {
       if (this.dragAndDropCapable) {
         ['drag', 'dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop'].forEach(evt => {
@@ -79,8 +77,16 @@ export default {
     },
     previewFiles(event) {
       const data = event.target.files
-      this.filesSettled = data
-      this.handleFiles(data)
+      for (let index = 0; index < data.length; index++) {
+        if (data.length > 3) {
+          this.$refs.failUploadPopup.show()
+        } else if (data[index].size > 1024 * 2048) {
+          this.$refs.maxUploadPopup.show()
+        } else {
+          this.filesSettled.push(data[index])
+        }
+      }
+      this.handleFiles(this.filesSettled)
     },
     preventDefaults(e) {
       e.preventDefault()
@@ -88,15 +94,12 @@ export default {
     },
     handleDrop(e) {
       const { files } = e.dataTransfer
-      console.log('dt :', e, e.dataTransfer)
-      console.log('files :', files)
       this.handleFiles(files)
     },
     handleFiles(files) {
       const endpoint = `/v1/admin/withdrawal/update/${this.$route.params.slug}?status=${this.$store.state.pencairan.status}`
       const dataCopy = [...files]
       dataCopy.forEach(file => {
-        console.log(file)
         const formData = new FormData()
         formData.append('file', file)
         axioskomsipdev.put(endpoint, formData, {
@@ -112,7 +115,6 @@ export default {
           },
         })
           .then(({ data }) => {
-            console.log(this.file)
             this.filesUploaded.push(data)
           })
           .catch(e => {
@@ -126,10 +128,11 @@ export default {
       // back to rincian routes
       // this.$router.go(-1)
     },
-    removeFileUpload(anjay) {
-      const index = this.filesSettled.indexOf(anjay)
+    removeFileUpload(files) {
+      const index = this.filesSettled.indexOf(files)
       if (index > -1) {
         this.filesSettled.splice(index, 1)
+        this.fileUploadCount -= 1
       }
     },
     calculateSizeFile(size) {
