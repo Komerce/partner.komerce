@@ -1,7 +1,11 @@
 <template>
   <div class="add-order-main-wrapper">
-    <b-card-title class="mb-4">Tambah Order</b-card-title>
-    <div class="add-order-dsc-title top-right">{{ profile && profile.is_komship === 1 ? 'Pengiriman Kompship' : 'Pengiriman Non Kompship' }}</div>
+    <b-card-title class="mb-4">
+      Tambah Order
+    </b-card-title>
+    <div class="add-order-dsc-title top-right">
+      {{ profile && profile.is_komship === 1 ? 'Pengiriman Kompship' : 'Pengiriman Non Kompship' }}
+    </div>
     <section class="add-order-form mb-4">
       <b-form-group
         class="add-order-label mb-2"
@@ -9,7 +13,9 @@
         label-cols-md="2"
         label-for="input-date"
       >
-        <div class="add-order-date-label">{{ dateLabel }}</div>
+        <div class="add-order-date-label">
+          {{ dateLabel }}
+        </div>
         <b-form-datepicker
           id="input-date"
           ref="dp1"
@@ -76,13 +82,22 @@
                 {{ data.value }}
               </strong>
             </h4>
-            <b-button
-              variant="outline-primary"
-              class="btn-icon"
-              @click="chooseVariation(data)"
-            >
-              Pilih variasi
-            </b-button>
+            <div v-if="data.item.itemSelected === undefined">
+              <b-button
+                variant="outline-primary"
+                class="btn-icon"
+                @click="chooseVariation(data)"
+              >
+                Pilih variasi
+              </b-button>
+            </div>
+            <div v-if="data.item.itemSelected !== undefined">
+              <h4 class="text-primary">
+                <strong>
+                  {{ data.item.itemSelected.variation }}
+                </strong>
+              </h4>
+            </div>
           </b-col>
         </b-row>
       </template>
@@ -115,64 +130,132 @@
     <!-- Modal Choose Variation -->
     <b-modal
       id="modal-choose-variation"
-      ok-only
-      ok-variant="danger"
-      ok-title="Accept"
+      hide-footer
       modal-class="modal-danger"
       centered
     >
 
       <!-- Parent Variant -->
-      <b-row class="ml-50">
-        <h4>
-          <strong>
-            {{ itemsChooseVariation.item.variant[0].variant_name }}
-          </strong>
-        </h4>
-      </b-row>
-      <b-row class="mb-2 ml-50">
-        <div
-          v-for="(itemsVariant, indexVariant) in itemsChooseVariation.item.variant[0].variant_option"
-          :key="indexVariant+1"
-        >
-          <b-button
-            :variant="isActiveVariant === itemsVariant.option_name ? 'outline-primary' : 'outline-dark'"
-            class="btn-icon m-50"
-            :pressed="isActiveVariant === itemsVariant.option_name"
-            @click="selectVariation(itemsVariant)"
+      <div
+        v-for="(items, index) in itemsChooseVariation.item.variant"
+        :key="index+1"
+      >
+        <b-row class="ml-50">
+          <h4>
+            <strong>
+              {{ getNameVariantParent(items) }}
+            </strong>
+          </h4>
+        </b-row>
+        <b-row class="ml-50">
+          <div
+            v-for="(itemsVariant, indexVariant) in items.variant_option"
+            :key="indexVariant+1"
           >
-            {{ itemsVariant.option_name }}
-          </b-button>
-        </div>
-      </b-row>
+            <div v-if="itemsChooseVariation.item.variant[1] !== undefined">
+              <b-button
+                :variant="isActiveVariant === itemsVariant.option_name ? 'outline-primary' : 'outline-dark'"
+                :class="itemsVariant.option_parent === 0 ? 'btn-icon m-50' : 'd-none'"
+                :pressed="isActiveVariant === itemsVariant.option_name"
+                @click="selectParentVariation(itemsVariant, itemsChooseVariation.item)"
+              >
+                {{ getNameFirstChildVariant(itemsVariant) }}
+              </b-button>
+            </div>
+            <div v-else>
+              <b-button
+                :variant="isActiveVariant === itemsVariant.name ? 'outline-primary' : 'outline-dark'"
+                :class="itemsVariant.option_parent === 0 ? 'btn-icon m-50' : 'd-none'"
+                :pressed="isActiveVariant === itemsVariant.name"
+                @click="selectParentVariation(itemsVariant, itemsChooseVariation.item)"
+              >
+                {{ getNameFirstChildVariant(itemsVariant) }}
+              </b-button>
+            </div>
+          </div>
+        </b-row>
+      </div>
 
       <!-- First Child -->
-      <b-row class="ml-50">
-        <h4>
-          <strong>
-            {{ itemsChooseVariation.item.variant[1].variant_name }}
-          </strong>
-        </h4>
-      </b-row>
-      <b-row class="mb-2 ml-50">
-        <div
-          v-for="(itemsVariant, indexVariant) in itemsChooseVariation.item.variant[1].variant_option"
-          :key="indexVariant+1"
-        >
-          <b-button
-            :variant="isActiveVariantFirstChild === itemsVariant.option_name ? 'outline-primary' : 'outline-dark'"
-            class="btn-icon m-50"
-            :pressed="isActiveVariantFirstChild === itemsVariant.option_name"
-            @click="selectVariationFirstChild(itemsVariant)"
+      <div v-if="itemFirstChildVariant !== []">
+        <b-row class="ml-50 mt-2">
+          <h4>
+            <strong>
+              {{ nameFirstChildVariation }}
+            </strong>
+          </h4>
+        </b-row>
+        <b-row class="ml-50">
+          <div
+            v-for="(itemsVariant, indexVariant) in itemFirstChildVariant"
+            :key="indexVariant+1"
           >
-            {{ itemsVariant.option_name }}
-          </b-button>
-        </div>
+            <div v-if="itemsChooseVariation.item.variant.length > 2">
+              <b-button
+                :variant="isActiveVariantFirstChild === itemsVariant.option_name ? 'outline-primary' : 'outline-dark'"
+                class="btn-icon m-50"
+                :pressed="isActiveVariantFirstChild === itemsVariant.option_name"
+                @click="selectVariationFirstChild(itemsVariant, itemsChooseVariation.item)"
+              >
+                {{ itemsVariant.option_name }}
+              </b-button>
+            </div>
+            <div v-else>
+              <b-button
+                :variant="isActiveVariantFirstChild === itemsVariant.name ? 'outline-primary' : 'outline-dark'"
+                class="btn-icon m-50"
+                :pressed="isActiveVariantFirstChild === itemsVariant.name"
+                @click="selectVariationFirstChild(itemsVariant, itemsChooseVariation.item)"
+              >
+                {{ itemsVariant.name }}
+              </b-button>
+            </div>
+          </div>
+        </b-row>
+      </div>
+
+      <!-- Second Child -->
+      <div v-if="itemSecondChildVariant !== []">
+        <b-row class="ml-50 mt-2">
+          <h4>
+            <strong>
+              {{ nameSecondChildVariation }}
+            </strong>
+          </h4>
+        </b-row>
+        <b-row class="ml-50">
+          <div
+            v-for="(itemsVariant, indexVariant) in itemSecondChildVariant"
+            :key="indexVariant+1"
+          >
+            <b-button
+              :variant="isActiveVariantSecondChild === itemsVariant.name ? 'outline-primary' : 'outline-dark'"
+              class="btn-icon m-50"
+              :pressed="isActiveVariantSecondChild === itemsVariant.name"
+              @click="selectVariationSecondChild(itemsVariant)"
+            >
+              {{ itemsVariant.name }}
+            </b-button>
+          </div>
+        </b-row>
+      </div>
+
+      <b-row class="d-flex justify-content-end">
+        <b-button
+          variant="primary"
+          class="btn-icon mr-3 mb-2"
+          @click="addOrderToTable(itemsChooseVariation.item)"
+        >
+          Ok
+        </b-button>
       </b-row>
+
     </b-modal>
 
     <section class="view-order-summary">
-      <div class="add-order-summary-text"><span>{{ selectedItems.length }}</span> Produk ditambahkan</div>
+      <div class="add-order-summary-text">
+        <span>{{ selectedItems.length }}</span> Produk ditambahkan
+      </div>
       <div class="add-order-summary-button-wrapper">
         <b-button
           v-if="selectedItems.length > 0"
@@ -361,21 +444,165 @@ export default {
           ],
         },
       },
+      itemParentVariant: [],
+      itemFirstChildVariant: [],
+      itemSecondChildVariant: [],
+
       isActiveVariant: '',
       isActiveVariantFirstChild: '',
+      isActiveVariantSecondChild: '',
+
+      nameFirstChildVariation: '',
+      nameSecondChildVariation: '',
+
+      // Data Table
+      variationProductParent: null,
+      variationProductFirstChild: null,
+      variationProductSecondChild: null,
+      price: null,
+      stock: null,
+      total: null,
+      subtotal: null,
     }
   },
   methods: {
     chooseVariation(data) {
-      console.log(data)
+      if (this.nameFirstChildVariation !== '') this.nameFirstChildVariation = ''
+      if (this.nameSecondChildVariation !== '') this.nameSecondChildVariation = ''
+      if (this.itemFirstChildVariant !== []) this.itemFirstChildVariant = []
+      if (this.itemSecondChildVariant !== []) this.itemSecondChildVariant = []
+      if (this.isActiveVariant !== '') this.isActiveVariant = ''
+      if (this.isActiveVariantFirstChild !== '') this.isActiveVariantFirstChild = ''
+      if (this.isActiveVariantSecondChild !== '') this.isActiveVariantSecondChild = ''
       this.itemsChooseVariation = data
       this.$root.$emit('bv::show::modal', 'modal-choose-variation')
     },
-    selectVariation(data) {
-      this.isActiveVariant = data.option_name
+    selectParentVariation(itemsVariant, items) {
+      if (this.itemFirstChildVariant !== []) {
+        this.itemFirstChildVariant = []
+      }
+      if (items.variant[1] !== undefined) {
+        this.nameFirstChildVariation = items.variant[1].variant_name
+
+        if (items.variant[2] !== undefined) {
+          this.isActiveVariant = itemsVariant.option_name
+          // eslint-disable-next-line no-plusplus
+          for (let x = 0; x < items.variant[1].variant_option.length; x++) {
+            if (items.variant[1].variant_option[x].option_parent === itemsVariant.option_id) {
+              this.itemFirstChildVariant.push(items.variant[1].variant_option[x])
+            }
+          }
+          this.variationProduct = itemsVariant.option_name
+        } else if (items.variant[2] === undefined) {
+        // eslint-disable-next-line no-plusplus
+          for (let x = 0; x < items.product_variant.length; x++) {
+            if (items.product_variant[x].parent === itemsVariant.option_id) {
+              this.itemFirstChildVariant.push(items.product_variant[x])
+            }
+          }
+          this.isActiveVariant = itemsVariant.option_name
+          this.variationProduct = itemsVariant.option_name
+          if (items.price !== undefined) this.price = itemsVariant.price
+          if (items.stock !== undefined) this.stock = itemsVariant.stock
+        }
+      }
+      if (items.variant[1] === undefined) {
+        this.isActiveVariant = itemsVariant.name
+        this.variationProduct = itemsVariant.name
+        if (items.price !== undefined) this.price = itemsVariant.price
+        if (items.stock !== undefined) this.stock = itemsVariant.stock
+      }
     },
-    selectVariationFirstChild(data) {
-      this.isActiveVariantFirstChild = data.option_name
+    selectVariationFirstChild(data, items) {
+      if (this.itemSecondChildVariant !== []) {
+        this.itemSecondChildVariant = []
+      }
+
+      if (items.variant[2] !== undefined) {
+        this.isActiveVariantFirstChild = data.option_name
+        this.variationProductFirstChild = data.option_name
+        this.nameSecondChildVariation = items.variant[2].variant_name
+        // eslint-disable-next-line no-plusplus
+        for (let y = 0; y < items.variant[2].variant_option.length; y++) {
+          if (items.variant[2].variant_option[y].option_parent === data.option_id) {
+            this.itemSecondChildVariant.push(items.product_variant[y])
+          }
+        }
+      }
+      if (items.variant[2] === undefined) {
+        this.isActiveVariantFirstChild = data.name
+        this.variationProductFirstChild = data.name
+        if (items.price !== undefined) this.price = data.price
+        if (items.stock !== undefined) this.stock = data.stock
+      }
+    },
+    selectVariationSecondChild(items) {
+      this.isActiveVariantSecondChild = items.name
+      this.variationProductSecondChild = items.name
+      if (items.price !== undefined) this.price = items.price
+      if (items.stock !== undefined) this.stock = items.stock
+    },
+    getNameVariantParent(data) {
+      let nameVariant = ''
+      // eslint-disable-next-line no-plusplus
+      for (let x = 0; x < data.variant_option.length; x++) {
+        if (data.variant_option[x].option_parent === 0) {
+          nameVariant = data.variant_name
+        }
+      }
+      return nameVariant
+    },
+    getNameFirstChildVariant(data) {
+      let nameVariant = ''
+      if (data.option_parent === 0) {
+        nameVariant = data.option_name
+      }
+      return nameVariant
+    },
+    addOrderToTable(data) {
+      // eslint-disable-next-line no-plusplus
+      for (let x = 0; x < this.itemsOrder.length; x++) {
+        if (this.itemsOrder[x].product_name === data.product_name) {
+          if (this.variationProductSecondChild !== null) {
+            Object.assign(this.itemsOrder[x],
+              {
+                itemSelected: {
+                  variation: `${this.variationProduct}, ${this.variationProductFirstChild}, ${this.variationProductSecondChild}`,
+                  price: this.price,
+                  stock: this.stock,
+                  total: this.total,
+                  subtotal: this.subtotal,
+                },
+              })
+          }
+          if (this.variationProductSecondChild === null && this.variationProductFirstChild !== null) {
+            Object.assign(this.itemsOrder[x],
+              {
+                itemSelected: {
+                  variation: `${this.variationProduct}, ${this.variationProductFirstChild}`,
+                  price: this.price,
+                  stock: this.stock,
+                  total: this.total,
+                  subtotal: this.subtotal,
+                },
+              })
+          }
+          if (this.variationProductSecondChild === null && this.variationProductFirstChild === null) {
+            Object.assign(this.itemsOrder[x],
+              {
+                itemSelected: {
+                  variation: `${this.variationProduct}`,
+                  price: this.price,
+                  stock: this.stock,
+                  total: this.total,
+                  subtotal: this.subtotal,
+                },
+              })
+          }
+        }
+      }
+      this.$refs.tableAddOrderOne.refresh()
+      console.log(data)
     },
     onChangeDate(ctx) {
       if (ctx && ctx.activeYMD) {
