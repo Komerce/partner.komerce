@@ -590,17 +590,17 @@
                       <b-form-input
                         v-model="price"
                         type="text"
-                        @keypress="onlyNumber"
                         placeholder="Rp | Harga"
+                        @keypress="onlyNumber"
                       />
                     </b-col>
 
                     <b-col md="2">
                       <b-form-input
                         v-model="stock"
-                        @keypress="onlyNumber"
                         type="text"
                         placeholder="Stok"
+                        @keypress="onlyNumber"
                       />
                     </b-col>
 
@@ -865,9 +865,9 @@
                             v-if="variationName3 === null && variationName2 === null && variationName1 !== null"
                           >
                             <b-form-input
-                              @keypress="onlyNumber"
                               v-model="data.item.variant1.stock"
                               type="text"
+                              @keypress="onlyNumber"
                             />
                           </div>
                         </div>
@@ -951,9 +951,9 @@
                 <b-form-input
                   v-model="stockNotVariation"
                   type="text"
-                  @keypress="onlyNumber"
                   placeholder="Masukan jumlah stok barang"
                   :state="errors.length > 0 ? false:null"
+                  @keypress="onlyNumber"
                 />
                 <small class="text-primary">{{ errors[0] }}</small>
               </validation-provider>
@@ -976,9 +976,9 @@
                 <b-form-input
                   v-model="priceNotVariation"
                   type="text"
-                  @keypress="onlyNumber"
                   placeholder="Rp  |  Masukan harga barang"
                   :state="errors.length > 0 ? false:null"
+                  @keypress="onlyNumber"
                 />
                 <small class="text-primary">{{ errors[0] }}</small>
               </validation-provider>
@@ -1010,9 +1010,9 @@
                       id="hi-first-name"
                       v-model="weightProduct"
                       type="text"
-                      @keypress="onlyNumber"
                       placeholder="1000"
                       :state="errors.length > 0 ? false:null"
+                      @keypress="onlyNumber"
                     />
                     <b-input-group-append is-text>
                       gram
@@ -1309,7 +1309,6 @@ export default {
   },
   methods: {
     onlyNumber($event) {
-      // console.log($event.keyCode); //keyCodes value
       const keyCode = ($event.keyCode ? $event.keyCode : $event.which)
       if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) { // 46 is dot
         $event.preventDefault()
@@ -1349,7 +1348,6 @@ export default {
             this.heightProduct = 0
           }
           if (this.formChoices3[0] !== undefined) {
-            console.log('Variant 3')
             this.variantStore.push(
               {
                 val: this.variationName1,
@@ -1398,7 +1396,6 @@ export default {
               }
             }
           } else if (this.formChoices2[0] !== undefined && this.formChoices3[0] === undefined) {
-            console.log('variant 2')
             this.variantStore.push(
               {
                 val: this.variationName1,
@@ -1431,7 +1428,6 @@ export default {
               }
             }
           } else if (this.formChoices1[0] !== undefined && this.formChoices2[0] === undefined && this.formChoices3[0] === undefined) {
-            console.log('varian 1')
             this.variantStore.push(
               {
                 val: this.variationName1,
@@ -1449,8 +1445,6 @@ export default {
               )
             }
           }
-          console.log('variantItems')
-          console.log(this.variantItems)
 
           if (this.cod === true) {
             this.flavours.push('COD')
@@ -1484,11 +1478,6 @@ export default {
             }
           }
 
-          console.log('variantStore')
-          console.log(this.variantStore)
-          console.log('optionStore')
-          console.log(this.optionStore)
-
           httpKomship.post('/v1/product/create/1', {
             product_name: this.productName,
             sku: this.skuName,
@@ -1506,9 +1495,7 @@ export default {
             headers: { Authorization: `Bearer ${useJwt.getToken()}` },
           }).then(response => {
             this.productId = response.data.data.product_id
-            console.log(response.data.data)
             if (this.imageFile !== null) {
-              // Store image
               const formData = new FormData()
               formData.append('product_id', response.data.data.product_id)
               formData.append('image_path', this.imageFile)
@@ -1596,7 +1583,6 @@ export default {
             this.heightProduct = 0
           }
           if (this.formChoices3[0] !== undefined) {
-            console.log('Variant 3')
             this.variantStore.push(
               {
                 val: this.variationName1,
@@ -1645,7 +1631,6 @@ export default {
               }
             }
           } else if (this.formChoices2[0] !== undefined && this.formChoices3[0] === undefined) {
-            console.log('variant 2')
             this.variantStore.push(
               {
                 val: this.variationName1,
@@ -1678,7 +1663,6 @@ export default {
               }
             }
           } else if (this.formChoices1[0] !== undefined && this.formChoices2[0] === undefined && this.formChoices3[0] === undefined) {
-            console.log('varian 1')
             this.variantStore.push(
               {
                 val: this.variationName1,
@@ -1696,8 +1680,6 @@ export default {
               )
             }
           }
-          console.log('variantItems')
-          console.log(this.variantItems)
 
           if (this.cod === true) {
             this.flavours.push('COD')
@@ -1731,11 +1713,6 @@ export default {
             }
           }
 
-          console.log('variantStore')
-          console.log(this.variantStore)
-          console.log('optionStore')
-          console.log(this.optionStore)
-
           httpKomship.post('/v1/product/create/0', {
             product_name: this.productName,
             sku: this.skuName,
@@ -1753,7 +1730,6 @@ export default {
             headers: { Authorization: `Bearer ${useJwt.getToken()}` },
           }).then(response => {
             this.productId = response.data.data.product_id
-            console.log(response.data.data)
             if (this.imageFile !== null) {
               // Store image
               const formData = new FormData()
@@ -1831,7 +1807,6 @@ export default {
         }
       }
       if (this.formChoices3[0] !== undefined) {
-        console.log('variant 3')
         // eslint-disable-next-line no-plusplus
         for (let i = 0; i < this.formChoices1.length; i++) {
           this.variantItems.push({
@@ -1869,7 +1844,6 @@ export default {
         }
       }
       if (this.formChoices3[0] === undefined && this.formChoices2[0] !== undefined) {
-        console.log('variant 2')
         // eslint-disable-next-line no-plusplus
         for (let i = 0; i < this.formChoices1.length; i++) {
           this.variantItems.push({
@@ -1895,7 +1869,6 @@ export default {
         }
       }
       if (this.formChoices3[0] === undefined && this.formChoices2[0] === undefined && this.formChoices1[0] !== undefined) {
-        console.log('variant 1')
         // eslint-disable-next-line no-plusplus
         for (let i = 0; i < this.formChoices1.length; i++) {
           this.variantItems.push({
@@ -1946,7 +1919,6 @@ export default {
           class: 'col-action',
         },
       )
-      console.log(this.variantItems)
       return this.variantItems
     },
     addVariation() {

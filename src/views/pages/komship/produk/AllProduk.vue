@@ -402,32 +402,11 @@
                   class="d-flex justify-content-end mb-2"
                 >
                   <b-col cols="auto">
-                    <div v-if="expandIsActive === false">
-                      <b-button
-                        v-b-toggle="`collapse-${String(index)}`"
-                        variant="flat-dark"
-                        size="sm"
-                        @click="buttonToExpand"
-                      >
-                        Tampilkan Versi Lainnya
-                        <feather-icon
-                          icon="ChevronDownIcon"
-                        />
-                      </b-button>
-                    </div>
-                    <div v-else>
-                      <b-button
-                        v-b-toggle="`collapse-${String(index)}`"
-                        variant="flat-dark"
-                        size="sm"
-                        @click="buttonToCloseExpand"
-                      >
-                        Tutup
-                        <feather-icon
-                          icon="ChevronUpIcon"
-                        />
-                      </b-button>
-                    </div>
+                    <b-button
+                      v-b-toggle="`collapse-${String(index)}`"
+                      variant="flat-dark"
+                      size="sm"
+                    />
                   </b-col>
                 </b-row>
                 <hr>
@@ -813,9 +792,7 @@ export default {
 
       searchProduct: '',
 
-      expandCollapseIsActive: false,
-
-      expandIsActive: false,
+      nameButton: [],
 
       // Filter
       name: '',
@@ -845,7 +822,6 @@ export default {
         headers: { Authorization: `Bearer ${useJwt.getToken()}` },
       }).then(response => {
         const { data } = response.data
-        console.log(data)
         this.variantData = data
         this.loading = false
         return this.variantData
@@ -894,12 +870,6 @@ export default {
         })
       })
     },
-    buttonToExpand() {
-      this.expandIsActive = true
-    },
-    buttonToCloseExpand() {
-      this.expandIsActive = false
-    },
     resetFilter() {
       this.name = ''
       this.stockFrom = ''
@@ -924,6 +894,12 @@ export default {
 
 [dir] .background-table-variant {
   background: #FFF;
+}
+[dir] .btn.btn-flat-dark.btn-sm.collapsed:before{
+  content: 'Tampilkan Versi Lainnya';
+}
+[dir] .btn.btn-flat-dark.btn-sm.not-collapsed:after{
+  content: 'Tutup';
 }
 
 @media only screen and (max-width: 922px) {
