@@ -131,9 +131,9 @@
             <span>Mobil</span>
           </b-button>
           <b-button
-            v-if="profile && profile.vehicle && profile.vehicle.indexOf('TRUK') > -1"
-            :class="`vehicle-button-content vehicle-button-content-truk ${chosenVehicle === 'TRUK' ? 'vehicle-selected white-button' : 'vehicle-button'}`"
-            @click="() => onChooseVehicle('TRUK')"
+            v-if="profile && profile.vehicle && profile.vehicle.indexOf('TRUCK') > -1"
+            :class="`vehicle-button-content vehicle-button-content-truk ${chosenVehicle === 'TRUCK' ? 'vehicle-selected white-button' : 'vehicle-button'}`"
+            @click="() => onChooseVehicle('TRUCK')"
           >
             <img src="@/assets/images/icons/truk.png">
             <span>Truk</span>
@@ -282,6 +282,7 @@ export default {
     }).then(response => {
       this.userData = response.data.data
     })
+    console.log(this.profile)
   },
   methods: {
     changeDate(dateString, type) {
