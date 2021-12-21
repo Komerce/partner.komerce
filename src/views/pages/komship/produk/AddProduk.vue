@@ -1312,7 +1312,6 @@ export default {
   },
   methods: {
     onlyNumber($event) {
-      // console.log($event.keyCode); //keyCodes value
       const keyCode = ($event.keyCode ? $event.keyCode : $event.which)
       if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) { // 46 is dot
         $event.preventDefault()
@@ -1500,7 +1499,6 @@ export default {
           }).then(response => {
             this.productId = response.data.data.product_id
             if (this.imageFile !== null) {
-              // Store image
               const formData = new FormData()
               formData.append('product_id', response.data.data.product_id)
               formData.append('image_path', this.imageFile)

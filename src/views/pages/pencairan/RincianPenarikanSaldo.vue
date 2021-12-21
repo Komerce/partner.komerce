@@ -738,7 +738,6 @@ export default {
       const endpoint = `/v1/admin/withdrawal/detail/${this.$route.params.slug}`
       axioskomsipdev.get(endpoint)
         .then(({ data }) => {
-          console.log(data.data)
           const parseData = JSON.parse(JSON.stringify(data.data))
           this.$store.commit('pencairan/UPDATE_PENCAIRAN_STATUS', parseData.status)
           this.detailData = parseData

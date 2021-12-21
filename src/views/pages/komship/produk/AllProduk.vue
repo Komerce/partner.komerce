@@ -819,6 +819,7 @@ export default {
 
       searchProduct: '',
 
+      nameButton: [],
       expandCollapseIsActive: false,
 
       // Filter
@@ -921,6 +922,12 @@ export default {
 
 [dir] .background-table-variant {
   background: #FFF;
+}
+[dir] .btn.btn-flat-dark.btn-sm.collapsed:before{
+  content: 'Tampilkan Versi Lainnya';
+}
+[dir] .btn.btn-flat-dark.btn-sm.not-collapsed:after{
+  content: 'Tutup';
 }
 
 @media only screen and (max-width: 922px) {
