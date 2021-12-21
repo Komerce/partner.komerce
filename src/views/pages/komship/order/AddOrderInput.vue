@@ -35,6 +35,7 @@
         label-cols-md="2"
       >
         <v-select
+          v-model="choosenProduct"
           class="add-order-product-input"
           label="product_name"
           label-cols-md="2"
@@ -82,7 +83,7 @@
                 {{ data.value }}
               </strong>
             </h4>
-            <div v-if="data.item.itemSelected === undefined">
+            <div v-if="data.item.itemSelected === undefined && data.item.variant[0] !== undefined">
               <b-button
                 variant="outline-primary"
                 class="btn-icon"
@@ -90,6 +91,13 @@
               >
                 Pilih variasi
               </b-button>
+            </div>
+            <div v-if="data.item.variant[0] === undefined">
+              <h5>
+                <strong>
+                  Tidak ada variasi
+                </strong>
+              </h5>
             </div>
             <div v-if="data.item.itemSelected !== undefined">
               <h4 class="text-primary">
@@ -103,19 +111,95 @@
       </template>
 
       <template #cell(price)="data">
-        <h4>
-          <strong>
-            {{ data.value }}
-          </strong>
-        </h4>
+        <div v-if="data.item.itemSelected !== undefined">
+          <h4>
+            <strong>
+              {{ data.item.itemSelected.price }}
+            </strong>
+          </h4>
+        </div>
+        <div v-else-if="data.item.variant[0] === undefined">
+          <h4>
+            <strong>
+              {{ data.item.price }}
+            </strong>
+          </h4>
+        </div>
+        <div v-else>
+          <h4>
+            <strong>
+              0
+            </strong>
+          </h4>
+        </div>
       </template>
 
-      <template #cell(jumlah)>
-        <h4>
-          <strong>
-            0
-          </strong>
-        </h4>
+      <template #cell(jumlah)="data">
+        <div v-if="data.item.itemSelected !== undefined">
+          <b-row class="justify-content-center">
+            <b-button
+              variant="outline-primary"
+              class="minus-button mr-1"
+              @click="reduceTotalToOrder(data)"
+            >
+              -
+            </b-button>
+            <h4 class="mr-1 mt-50">
+              <strong>
+                {{ data.item.stockToDisplay }}
+              </strong>
+            </h4>
+            <b-button
+              variant="outline-primary"
+              class="plus-button"
+              :disabled="data.item.itemSelected.stock === 0"
+              @click="addTotalToOrder(data)"
+            >
+              +
+            </b-button>
+          </b-row>
+          <b-row class="justify-content-center">
+            <h5 class="text-primary">
+              Stock tersedia: {{ data.item.itemSelected.stock }}
+            </h5>
+          </b-row>
+        </div>
+        <div v-else-if="data.item.variant[0] === undefined">
+          <b-row class="justify-content-center">
+            <b-button
+              variant="outline-primary"
+              class="minus-button mr-1"
+              @click="reduceTotalToOrder(data)"
+            >
+              -
+            </b-button>
+            <h4 class="mr-1 mt-50">
+              <strong>
+                {{ data.item.stockToDisplay }}
+              </strong>
+            </h4>
+            <b-button
+              variant="outline-primary"
+              class="plus-button"
+              :disabled="data.item.stock === 0"
+              @click="addTotalToOrder(data)"
+            >
+              +
+            </b-button>
+          </b-row>
+          <b-row class="justify-content-center">
+            <h5 class="text-primary">
+              Stock tersedia: {{ data.item.stock }}
+            </h5>
+          </b-row>
+        </div>
+        <div v-else>
+          <h4>
+            <strong>
+              0
+            </strong>
+          </h4>
+        </div>
       </template>
 
       <template #cell(subtotal)>
@@ -136,44 +220,76 @@
     >
 
       <!-- Parent Variant -->
-      <div
-        v-for="(items, index) in itemsChooseVariation.item.variant"
-        :key="index+1"
-      >
-        <b-row class="ml-50">
-          <h4>
-            <strong>
-              {{ getNameVariantParent(items) }}
-            </strong>
-          </h4>
-        </b-row>
-        <b-row class="ml-50">
-          <div
-            v-for="(itemsVariant, indexVariant) in items.variant_option"
-            :key="indexVariant+1"
-          >
-            <div v-if="itemsChooseVariation.item.variant[1] !== undefined">
-              <b-button
-                :variant="isActiveVariant === itemsVariant.option_name ? 'outline-primary' : 'outline-dark'"
-                :class="itemsVariant.option_parent === 0 ? 'btn-icon m-50' : 'd-none'"
-                :pressed="isActiveVariant === itemsVariant.option_name"
-                @click="selectParentVariation(itemsVariant, itemsChooseVariation.item)"
-              >
-                {{ getNameFirstChildVariant(itemsVariant) }}
-              </b-button>
+      <div v-if="itemsChooseVariation.item.variant[1] !== undefined">
+        <div
+          v-for="(items, index) in itemsChooseVariation.item.variant"
+          :key="index+1"
+        >
+          <b-row class="ml-50">
+            <h4>
+              <strong>
+                {{ getNameVariantParent(items) }}
+              </strong>
+            </h4>
+          </b-row>
+          <b-row class="ml-50">
+            <div
+              v-for="(itemsVariant, indexVariant) in items.variant_option"
+              :key="indexVariant+1"
+            >
+              <div v-if="itemsChooseVariation.item.variant[1] !== undefined">
+                <b-button
+                  :variant="isActiveVariant === itemsVariant.option_name ? 'outline-primary' : 'outline-dark'"
+                  :class="itemsVariant.option_parent === 0 ? 'btn-icon m-50' : 'd-none'"
+                  :pressed="isActiveVariant === itemsVariant.option_name"
+                  @click="selectParentVariation(itemsVariant, itemsChooseVariation.item)"
+                >
+                  {{ getNameFirstChildVariant(itemsVariant) }}
+                </b-button>
+              </div>
+              <div v-else>
+                <b-button
+                  :variant="isActiveVariant === itemsVariant.name ? 'outline-primary' : 'outline-dark'"
+                  :class="itemsVariant.option_parent === 0 ? 'btn-icon m-50' : 'd-none'"
+                  :pressed="isActiveVariant === itemsVariant.name"
+                  @click="selectParentVariation(itemsVariant, itemsChooseVariation.item)"
+                >
+                  {{ getNameFirstChildVariant(itemsVariant) }}
+                </b-button>
+              </div>
             </div>
-            <div v-else>
+          </b-row>
+        </div>
+      </div>
+
+      <div v-else>
+        <div
+          v-for="(items, index) in itemsChooseVariation.item.variant"
+          :key="index+1"
+        >
+          <b-row class="ml-50">
+            <h4>
+              <strong>
+                {{ getNameVariantParent(items) }}
+              </strong>
+            </h4>
+          </b-row>
+          <b-row class="ml-50">
+            <div
+              v-for="(itemsVariant, indexVariant) in itemsChooseVariation.item.product_variant"
+              :key="indexVariant+1"
+            >
               <b-button
                 :variant="isActiveVariant === itemsVariant.name ? 'outline-primary' : 'outline-dark'"
-                :class="itemsVariant.option_parent === 0 ? 'btn-icon m-50' : 'd-none'"
+                class="btn-icon m-50"
                 :pressed="isActiveVariant === itemsVariant.name"
                 @click="selectParentVariation(itemsVariant, itemsChooseVariation.item)"
               >
-                {{ getNameFirstChildVariant(itemsVariant) }}
+                {{ itemsVariant.name }}
               </b-button>
             </div>
-          </div>
-        </b-row>
+          </b-row>
+        </div>
       </div>
 
       <!-- First Child -->
@@ -254,7 +370,7 @@
 
     <section class="view-order-summary">
       <div class="add-order-summary-text">
-        <span>{{ selectedItems.length }}</span> Produk ditambahkan
+        <span>{{ itemsOrder.length }}</span> Produk ditambahkan
       </div>
       <div class="add-order-summary-button-wrapper">
         <b-button
@@ -274,47 +390,12 @@
         </b-button>
         <b-button
           class="next-button"
-          :disabled="disableSubmitBtn"
           @click="onUpdateScreenViewParent"
         >
           Lanjutkan
         </b-button>
       </div>
     </section>
-    <!-- <b-modal
-      id="modal-1"
-      ref="modalVariationAddOrder"
-      hide-footer
-      hide-header
-      centered
-      no-close-on-backdrop
-    >
-      <div class="modal-add-order-variation">
-        <b-form-group
-          v-for="(selectedVar, indexVar) in selectedVariation.variant"
-          :key="indexVar+'selectedVar'"
-        >
-          <label :for="indexVar+'selectedVar'">{{ selectedVar.variant_name }}</label>
-          <b-button
-            v-for="(selectedVarItem, indexVarItem) in selectedVar.variant_option"
-            :key="indexVarItem+'selectedVarItem'"
-            :class="'add-order-modal-header-item-button' + (findVariantIndex(selectedVarItem.option_name, selectedVariation.selectedVariationData) > -1 ? ' add-order-modal-selected' : '')"
-            :disabled="!checkStock(selectedVariation.input, selectedVarItem.option_name, selectedVariation.product_variant)"
-            @click="updateSelectedVariation(selectedVarItem)"
-          >
-            {{ selectedVarItem.option_name }}
-          </b-button>
-        </b-form-group>
-        <div class="add-order-variation-modal-submit">
-          <b-button
-            class="next-button"
-            @click="() => handleUpdateSelectedVariationInsideList(selectedVariation)"
-          >
-            Ok
-          </b-button>
-        </div>
-      </div>
-    </b-modal> -->
   </div>
 </template>
 
@@ -402,6 +483,8 @@ export default {
       selectedProdukIndexOnModal: -1,
       disableSubmitBtn: this.disableSubmitButtonStatus,
 
+      dataTree: [],
+
       // Refactor
       itemsOrder: [],
       fieldsOrder: [
@@ -444,6 +527,7 @@ export default {
           ],
         },
       },
+      itemParentNoVariant: [],
       itemParentVariant: [],
       itemFirstChildVariant: [],
       itemSecondChildVariant: [],
@@ -463,6 +547,11 @@ export default {
       stock: null,
       total: null,
       subtotal: null,
+
+      stockAvailable: null,
+      totalToOrder: 1,
+
+      choosenProduct: '',
     }
   },
   methods: {
@@ -475,6 +564,11 @@ export default {
       if (this.isActiveVariantFirstChild !== '') this.isActiveVariantFirstChild = ''
       if (this.isActiveVariantSecondChild !== '') this.isActiveVariantSecondChild = ''
       this.itemsChooseVariation = data
+
+      if (data.item.variant[1] === undefined) {
+        this.itemParentNoVariant = data
+      }
+
       this.$root.$emit('bv::show::modal', 'modal-choose-variation')
     },
     selectParentVariation(itemsVariant, items) {
@@ -601,8 +695,51 @@ export default {
           }
         }
       }
-      this.$refs.tableAddOrderOne.refresh()
       console.log(data)
+      this.stockAvailable = data.itemSelected.stock - 1
+      this.$refs.tableAddOrderOne.refresh()
+      this.$root.$emit('bv::hide::modal', 'modal-choose-variation')
+    },
+    addTotalToOrder(data) {
+      // eslint-disable-next-line no-param-reassign
+      data.item.stockToDisplay += 1
+      if (data.item.itemSelected !== undefined) {
+        // eslint-disable-next-line no-param-reassign
+        data.item.itemSelected.stock -= 1
+        this.$refs.tableAddOrderOne.refresh()
+      } else {
+        // eslint-disable-next-line no-param-reassign
+        data.item.stock -= 1
+      }
+    },
+    reduceTotalToOrder(data) {
+      // eslint-disable-next-line no-param-reassign
+      data.item.stockToDisplay -= 1
+      if (data.item.itemSelected !== undefined) {
+        // eslint-disable-next-line no-param-reassign
+        data.item.itemSelected.stock += 1
+        this.$refs.tableAddOrderOne.refresh()
+      } else {
+        // eslint-disable-next-line no-param-reassign
+        data.item.stock += 1
+      }
+      if (data.item.stockToDisplay < 1) {
+        this.itemsOrder.splice(data.index, 1)
+        this.choosenProduct = ''
+        this.$refs.tableAddOrderOne.refresh()
+      }
+    },
+    disableNextButton() {
+      let result = true
+      // eslint-disable-next-line no-plusplus
+      for (let x = 0; x < this.itemsOrder.length; x++) {
+        if (!this.itemsOrder[x].itemSelected) {
+          result = true
+        } else {
+          result = false
+        }
+      }
+      return result
     },
     onChangeDate(ctx) {
       if (ctx && ctx.activeYMD) {
@@ -664,13 +801,23 @@ export default {
       this.$refs.tableAddOrderOne.refreshTable()
     },
     onAddProduct(itemSelected) {
+      Object.assign(itemSelected, { stockToDisplay: 1 })
+      if (itemSelected.itemSelected !== undefined) {
+        // eslint-disable-next-line no-param-reassign
+        delete itemSelected.itemSelected
+      }
       if (itemSelected) {
         this.itemsOrder.push(itemSelected)
+        // eslint-disable-next-line no-plusplus
+        for (let x = 0; x < this.itemsOrder.length; x++) {
+          if (this.itemsOrder[x].variant[0] === undefined) {
+            this.stockAvailable = this.itemsOrder[x].stock - 1
+          }
+        }
+        console.log(this.itemsOrder)
       } else if (itemSelected === null) {
         this.itemsOrder.splice(1, 1)
       }
-      console.log('itemsOrder')
-      console.log(this.itemsOrder)
     },
     updateAllSelectedProduct(newItemToPush, oldListSelected) {
       if (newItemToPush && oldListSelected && oldListSelected.length && oldListSelected.length > 0) {
@@ -753,6 +900,7 @@ export default {
     },
     onUpdateScreenViewParent() {
       const newInputScreen = this.screens === 'input' ? 'details' : 'input'
+      this.selectedItems = this.itemsOrder
       this.$emit('onUpdateScreenView', newInputScreen)
     },
     deleteAllSelectedItems() {
@@ -791,3 +939,6 @@ export default {
   },
 }
 </script>
+<style scoped>
+
+</style>
