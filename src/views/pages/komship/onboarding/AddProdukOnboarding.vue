@@ -1334,6 +1334,10 @@ export default {
   },
   methods: {
     submitPublish() {
+      setTimeout(() => {
+        if (this.profile.is_onboarding) this.$refs.onboardingElement.showModal()
+        this.loadingSubmitPublish = false
+      }, 2000)
       // eslint-disable-next-line no-plusplus
       for (let x = 0; x < this.formChoices1.length; x++) {
         if (this.formChoices1[x].choices === null) {

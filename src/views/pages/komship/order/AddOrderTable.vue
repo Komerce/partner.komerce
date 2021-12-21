@@ -11,9 +11,7 @@
         v-if="!isEditable"
         #head(input)="totalData"
       >
-        <div class="div-mid-text">
-          {{ totalData.label }}
-        </div>
+        <div class="div-mid-text">{{ totalData.label }}</div>
       </template>
       <template #cell(product_name)="nameData">
         <div class="add-product-name-wrapper">
@@ -21,9 +19,8 @@
             <img :src="nameData.item.product_image">
           </div>
           <div class="product-name-desc">
-            <div class="product-name-text">
-              {{ nameData.value }}
-            </div>
+            <div class="product-name-text">{{ nameData.value }}</div>
+            <!-- {{ test(nameData) }} -->
             <div v-if="isEditable && nameData.item.is_variant && nameData.item.selectedVariationData.length < 1 && nameData.item.product_variant.length > 0">
               <b-button
                 v-if="isEditable && nameData.item.is_variant && nameData.item.selectedVariationData.length < 1"
@@ -71,9 +68,7 @@
             >
               -
             </b-button>
-            <div class="input-text">
-              {{ inputData.value }}
-            </div>
+            <div class="input-text">{{ inputData.item.is_variant === '0' || (inputData.item.is_variant && inputData.item.selectedVariationData.length > 0) ? inputData.value : 0 }}</div>
             <b-button
               v-if="inputData.item.is_variant === '0' || (inputData.item.is_variant && inputData.item.selectedVariationData.length > 0)"
               class="plus-button"
@@ -84,6 +79,7 @@
               +
             </b-button>
           </div>
+          {{ test(inputData) }}
           <div
             v-if="isEditable && (inputData.item.is_variant !== '0' ? inputData.item.stockDisplay > 0 : true)"
             class="product-stock-input"
@@ -94,9 +90,7 @@
             v-if="!isEditable"
             class="product-total-input-wrapper no-mg"
           >
-            <div class="input-text div-mid-text">
-              {{ inputData.value }}
-            </div>
+            <div class="input-text div-mid-text">{{ inputData.value }}</div>
           </div>
         </div>
       </template>
@@ -137,8 +131,16 @@ export default {
       default: false,
     },
   },
+  mounted() {
+    this.test()
+  },
   methods: {
+    test(data) {
+      console.log('input data')
+      console.log(data)
+    },
     addTotalItem(param, itemSelectedIndex, itemSelected) {
+      console.log(itemSelected)
       this.$emit('onAddTotalItem', param, itemSelectedIndex, itemSelected)
     },
     handleShowVariation(selectedProduct) {
@@ -199,9 +201,7 @@ export default {
     },
   },
 }
-
 </script>
 
 <style>
-
 </style>

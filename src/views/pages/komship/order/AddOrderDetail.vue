@@ -593,7 +593,7 @@ export default {
       let selectedCost = {}
       if (dataArr && dataArr.length && dataArr.length > 0) {
         for (let j = 0; j < dataArr.length; j += 1) {
-          if (dataArr[j] && dataArr[j].shipping_type && dataArr[j].shipping_type === this.customerExpeditionOption) {
+          if (dataArr[j] && dataArr[j].shipping_type) {
             selectedCost = dataArr[j]
           }
         }
@@ -646,6 +646,19 @@ export default {
         },
         buttonsStyling: false,
       })
+    },
+    alertSuccess(textWarn) {
+      return this.$swal({
+        title: `<span class="font-weight-bold h4">${textWarn}</span>`,
+        imageUrl: require('@/assets/images/icons/success.svg'), // eslint-disable-line
+        showCloseButton: false,
+        focusConfirm: true,
+        confirmButtonText: 'Oke',
+        customClass: {
+          confirmButton: 'btn bg-green btn-primary rounded-lg',
+        },
+        buttonsStyling: false,
+      }).then(() => this.$router.push('/data-order'))
     },
     formCheck() {
       let countValidation = 0
@@ -748,6 +761,7 @@ export default {
         shipping_cashback: this.totalCostNumber.cashback,
         net_profit: this.totalCostNumberNetto,
       }
+      // console.log(this.totalCostNumber.shipping_cost)
       await this.storeSelectedItemsToCart(formData)
     },
     async storeSelectedItemsToCart(formData) {
@@ -789,22 +803,38 @@ export default {
         const { data } = response.data
         this.totalCostNumber = this.findCorrectData(data)
         this.calculateOnView()
-      }).catch(() => {
+      }).catch(err => {
+        const { message } = err.response.data
         this.isCalculating = false
-        this.alertFail('Unable to calculate the table data. Please check on Ekspedisi, Opsi Pengiriman, and Metode Pembayaran and try again later or contact support.')
+        this.alertFail(message !== '' || message !== null ? message : 'Unable to calculate the table data. Please check on Ekspedisi, Opsi Pengiriman, and Metode Pembayaran and try again later or contact support.')
       })
     },
     onPostOrder(formData) {
       this.isSubmitting = true
+      if (formData.bank === null) {
+        // eslint-disable-next-line no-param-reassign
+        formData.bank = 0
+      }
+      if (formData.bank_account_name === null) {
+        // eslint-disable-next-line no-param-reassign
+        formData.bank_account_name = 0
+      }
+      if (formData.bank_account_no === null) {
+        // eslint-disable-next-line no-param-reassign
+        formData.bank_account_no = 0
+      }
+      console.log(formData)
       return this.$http_komship.post(`v1/order/${this.profile.partner_id}/store`, formData).then(response => {
         const { data } = response.data
+        console.log(response)
+        this.alertSuccess('Berhasil tambah')
         if (data) {
-          this.isSubmitting = false
-          if (this.profile.is_onboarding) {
-            this.$emit('onBoardingShow')
-          } else {
-            this.handleShowPopUp()
-          }
+          // this.isSubmitting = false
+          // if (this.profile.is_onboarding) {
+          //   this.$emit('onBoardingShow')
+          // } else {
+          //   this.handleShowPopUp()
+          // }
         }
       }).catch(() => {
         this.isSubmitting = false

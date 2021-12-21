@@ -1,11 +1,7 @@
 <template>
   <div class="add-order-main-wrapper">
-    <b-card-title class="mb-4">
-      Tambah Order
-    </b-card-title>
-    <div class="add-order-dsc-title top-right">
-      {{ profile && profile.is_komship === 1 ? 'Pengiriman Kompship' : 'Pengiriman Non Kompship' }}
-    </div>
+    <b-card-title class="mb-4">Tambah Order</b-card-title>
+    <div class="add-order-dsc-title top-right">{{ profile && profile.is_komship === 1 ? 'Pengiriman Kompship' : 'Pengiriman Non Kompship' }}</div>
     <section class="add-order-form mb-4">
       <b-form-group
         class="add-order-label mb-2"
@@ -13,9 +9,7 @@
         label-cols-md="2"
         label-for="input-date"
       >
-        <div class="add-order-date-label">
-          {{ dateLabel }}
-        </div>
+        <div class="add-order-date-label">{{ dateLabel }}</div>
         <b-form-datepicker
           id="input-date"
           ref="dp1"
@@ -56,9 +50,7 @@
     />
 
     <section class="view-order-summary">
-      <div class="add-order-summary-text">
-        <span>{{ selectedItems.length }}</span> Produk ditambahkan
-      </div>
+      <div class="add-order-summary-text"><span>{{ selectedItems.length }}</span> Produk ditambahkan</div>
       <div class="add-order-summary-button-wrapper">
         <b-button
           v-if="selectedItems.length > 0"
@@ -143,7 +135,6 @@ function changeDate(dateString) {
   }
   return dateString
 }
-
 function checkSameById(itemId, listData) {
   const index = -1
   for (let i = 0; i < listData.length; i += 1) {
@@ -151,7 +142,6 @@ function checkSameById(itemId, listData) {
   }
   return index
 }
-
 function countStock(listData) {
   if (listData && listData.length && listData.length > 0) {
     let stockAmount = -1
@@ -164,7 +154,6 @@ function countStock(listData) {
   }
   return -1
 }
-
 export default {
   components: {
     BCardTitle,
@@ -260,7 +249,7 @@ export default {
                     currentSelectedVariation.selectedVariationData.push({ ...currentSelectedVariation.product_variant[variantSelectedIndex] })
                   }
                 }
-              } else if (searchParentIndex > -1) {
+              } else if (searchParentIndex > -1) { /* allow only one variant selected */
                 currentSelectedVariation.selectedVariationData.splice(searchParentIndex, 1)
               }
             }
@@ -272,6 +261,7 @@ export default {
     },
     handleUpdateSelectedVariationInsideList(productData) {
       this.selectedItems = this.updateAllSelectedProduct(productData, this.selectedItems)
+      /* reset the variable after update the variation option : when user click ok button on variation popup */
       this.$root.$emit('bv::hide::modal', 'modal-1')
       this.resetTmpContainerOnTable()
       this.onUpdateSelectedItemsOnParent()
@@ -291,9 +281,8 @@ export default {
         container.input = 1
         container.stockDisplay = itemSelected.stock
         container.isStockExist = itemSelected.is_variant === '0' ? (countStock(itemSelected.product_variant) > 0) : (itemSelected.stock > 0)
-
         const findIndex = checkSameById(container.id, this.selectedItems)
-        if (findIndex < 0) {
+        if (findIndex < 0) { /* push new item */
           selectedItemsContainer.push({ ...container })
         } else {
           selectedItemsContainer.push({ ...container })
@@ -308,16 +297,22 @@ export default {
       }
     },
     updateAllSelectedProduct(newItemToPush, oldListSelected) {
+      console.log('newItemToPush')
+      console.log(newItemToPush)
+      console.log('oldListSelected')
+      console.log(oldListSelected)
       if (newItemToPush && oldListSelected && oldListSelected.length && oldListSelected.length > 0) {
         let newListSelected = oldListSelected
-        let sameStock = -1
+        let sameStock = 0
         for (let j = 0; j < newListSelected.length; j += 1) {
+          /* update the current selected list item */
           if (newListSelected && newListSelected[j] && newListSelected[j].id && newListSelected[j].id === newItemToPush.id) {
+            /* update all stock based on variant */
             if (newListSelected[j].is_variant && newListSelected[j].stockDisplay < 1 && newListSelected[j].stockDisplay === 0) {
               newListSelected[j].stockDisplay = this.genStockByVariant(newListSelected[j].selectedVariationData)
             }
           }
-
+          /* generate same stock to set it later */
           if (newListSelected[j].product_name === newItemToPush.product_name
             && JSON.stringify(newListSelected[j].selectedVariationData) === JSON.stringify(newItemToPush.selectedVariationData)
           ) {
@@ -332,6 +327,7 @@ export default {
     updateAllSameStock(sameStock, newItemToPush, listData) {
       const newListSelected = listData
       for (let j = 0; j < listData.length; j += 1) {
+        /* update all same product with same stock */
         const fullStock = newItemToPush.is_variant !== '0' ? this.genStockByVariant(newListSelected[j].selectedVariationData) : newItemToPush.stock
         if (newListSelected[j].product_name === newItemToPush.product_name
           && JSON.stringify(newListSelected[j].selectedVariationData) === JSON.stringify(newItemToPush.selectedVariationData)
@@ -366,15 +362,21 @@ export default {
       return false
     },
     onChangeSelectedProduct(param, itemSelectedIndex, itemSelected) {
+      console.log('onChangeSelectedProduct')
+      console.log(itemSelected)
       if (itemSelected) {
         let currentAmount = itemSelected.input
-        currentAmount = param === '-' ? (currentAmount - 1) : (currentAmount + 1)
+        console.log(param)
+        console.log(currentAmount = param === '-' ? (currentAmount - 1) : (currentAmount + 1))
+        console.log('current amount')
+        console.log(currentAmount)
         if (currentAmount === 0) {
           this.selectedItems.splice(itemSelectedIndex, 1)
           this.productSelect = ''
         } else {
           this.selectedItems[itemSelectedIndex].input = currentAmount
         }
+        /* update all product with same characteristics */
         this.selectedItems = this.updateAllSelectedProduct(itemSelected, this.selectedItems)
         this.onUpdateSelectedItemsOnParent()
         this.checkValidButton()

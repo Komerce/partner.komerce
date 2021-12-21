@@ -1184,6 +1184,9 @@ export default {
 .bg-orange2 {
   background-color: #f95031 !important;
 }
+.bg-green {
+  background-color: #0faa60 !important;
+}
 .card,
 .rounded-16 {
   border-radius: 16px !important;

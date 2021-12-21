@@ -1,0 +1,44 @@
+.btn-custom{
+  border-radius: 16px;
+  width: 56px;
+  height: 56px;
+  &--edit{
+    width: 178px;
+    height: 56px;
+    border-radius: 12px;
+  }
+  &--editakseslayanan{
+    width: 261px;
+    height: 56px;
+
+    &btn{
+      width: 178px;
+      height: 56px;
+    }
+  }
+}
+.wrapperBtnFilter{
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+}
+.text-32-bold{
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 150%;
+  letter-spacing: 0.5px;
+  color: #222222;
+}
+text-20{
+  width: 671px;
+  height: 60px;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 150%;
+  letter-spacing: 0.5px;
+  color: #222222;
+  text-align: center;
+}
+.delete-daerah-wrapper{
+  display: grid;
+}

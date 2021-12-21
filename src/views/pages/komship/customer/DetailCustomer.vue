@@ -454,7 +454,6 @@ export default {
   },
   mounted() {
     this.getCustomerDetail()
-    console.log(this.currentDateTime())
   },
   methods: {
     getCustomerDetail() {
@@ -482,7 +481,6 @@ export default {
         this.loading = false
 
         // Result date
-        console.log(moment(this.lastOrder).fromNow())
 
         return this.itemsDetailCustomer
       })

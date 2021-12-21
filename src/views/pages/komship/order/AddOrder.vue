@@ -75,6 +75,8 @@ export default {
       if (dateVal) this.dateText = dateVal
     },
     updateSelectedItems(newListSelected) {
+      console.log('newListSelected')
+      console.log(newListSelected)
       if (newListSelected) this.listSelected = newListSelected
     },
     updateScreenView(value) {

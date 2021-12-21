@@ -172,6 +172,7 @@
                 <transition name="fade">
                   <b-avatar
                     v-if="fieldLogoBusiness.length > 0 && imageFile !== null"
+                    v-model="imageFile"
                     variant="light-primary"
                     size="50"
                     :src="imageFile ? fileUrl(imageFile) : imageInitialFile"
@@ -179,6 +180,7 @@
                   />
                   <b-avatar
                     v-else
+                    v-model="imageFile"
                     variant="light-primary"
                     size="50"
                     :src="imageFile ? fileUrl(imageFile) : imageInitialFile"
@@ -453,8 +455,6 @@ export default {
           formData.append('business_type_id', this.typeBusiness)
           formData.append('business_location', String(this.location))
           formData.append('email', this.emailUser)
-
-          console.log(this.imageFile)
 
           this.$http.post('/user/partner/update-profile-komship', formData).then(() => {
             this.$toast({

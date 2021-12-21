@@ -109,7 +109,7 @@
           v-model="searchFilterText"
           class="search-input"
           type="search"
-          placeholder="Example"
+          placeholder="Cari Nama Produk atau SKU"
           @input="updateSearchFilterText"
         />
         <div class="icon-magnify-glass">

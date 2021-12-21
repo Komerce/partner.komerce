@@ -37,8 +37,7 @@ export default {
     this.loadDataAwal = false
     this.dragAndDropCapable = this.determineDragAndDropCapable()
 
-    // eslint-disable-next-line func-names
-    this.$nextTick(function () {
+    this.$nextTick(() => {
       if (this.dragAndDropCapable) {
         ['drag', 'dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop'].forEach(evt => {
           this.$refs.fileform.addEventListener(evt, e => {

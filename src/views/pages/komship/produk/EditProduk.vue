@@ -179,11 +179,33 @@
                             #default="{errors}"
                             name="Variasi 1"
                           >
-                            <b-form-input
-                              v-model="variationName1"
-                              placeholder="Masukan nama variasi"
-                              :state="errors.length > 0 ? false:null"
-                            />
+                            <b-row class="d-flex align-items-center">
+                              <b-col
+                                cols="11"
+                                class=""
+                              >
+                                <b-form-input
+                                  v-model="variationName1"
+                                  placeholder="Masukan nama variasi"
+                                  :state="errors.length > 0 ? false:null"
+                                />
+                              </b-col>
+                              <b-col
+                                cols="1"
+                                class="pr-0 pl-0 text-center"
+                              >
+                                <b-button
+                                  class="btn-icon"
+                                  variant="light-dark"
+                                  size="sm"
+                                  @click="removeVariant1"
+                                >
+                                  <feather-icon
+                                    icon="Trash2Icon"
+                                  />
+                                </b-button>
+                              </b-col>
+                            </b-row>
                             <small class="text-danger">{{ errors[0] }}</small>
                           </validation-provider>
                         </b-form-group>
@@ -291,11 +313,33 @@
                             #default="{errors}"
                             name="Variasi 2"
                           >
-                            <b-form-input
-                              v-model="variationName2"
-                              placeholder="Masukan nama variasi"
-                              :state="errors.length > 0 ? false:null"
-                            />
+                            <b-row class="d-flex align-items-center">
+                              <b-col
+                                cols="11"
+                                class=""
+                              >
+                                <b-form-input
+                                  v-model="variationName2"
+                                  placeholder="Masukan nama variasi"
+                                  :state="errors.length > 0 ? false:null"
+                                />
+                              </b-col>
+                              <b-col
+                                cols="1"
+                                class="pr-0 pl-0 text-center"
+                              >
+                                <b-button
+                                  class="btn-icon"
+                                  variant="light-dark"
+                                  size="sm"
+                                  @click="removeVariant2"
+                                >
+                                  <feather-icon
+                                    icon="Trash2Icon"
+                                  />
+                                </b-button>
+                              </b-col>
+                            </b-row>
                           </validation-provider>
                         </b-form-group>
                       </b-col>
@@ -391,10 +435,32 @@
                           label="Nama"
                           label-cols-md="3"
                         >
-                          <b-form-input
-                            v-model="variationName3"
-                            placeholder="Masukan nama variasi"
-                          />
+                          <b-row class="d-flex align-items-center">
+                            <b-col
+                              cols="11"
+                              class=""
+                            >
+                              <b-form-input
+                                v-model="variationName3"
+                                placeholder="Masukan nama variasi"
+                              />
+                            </b-col>
+                            <b-col
+                              cols="1"
+                              class="pr-0 pl-0 text-center"
+                            >
+                              <b-button
+                                class="btn-icon"
+                                variant="light-dark"
+                                size="sm"
+                                @click="removeVariant3"
+                              >
+                                <feather-icon
+                                  icon="Trash2Icon"
+                                />
+                              </b-button>
+                            </b-col>
+                          </b-row>
                         </b-form-group>
                       </b-col>
 
@@ -645,7 +711,6 @@
                                   v-model="itemsVariant.price"
                                   type="number"
                                   class="mb-50"
-                                  @keypress="onlyNumber"
                                 />
                               </div>
                             </div>
@@ -661,7 +726,6 @@
                                 v-model="items.price"
                                 type="number"
                                 class="mb-50"
-                                @keypress="onlyNumber"
                               />
                             </div>
                           </div>
@@ -672,7 +736,6 @@
                               v-model="data.item.price"
                               type="number"
                               class="mb-50"
-                              @keypress="onlyNumber"
                             />
                           </div>
                         </div>
@@ -727,7 +790,6 @@
                                   v-model="itemsVariant.stock"
                                   type="number"
                                   class="mb-50"
-                                  @keypress="onlyNumber"
                                 />
                               </div>
                             </div>
@@ -743,7 +805,6 @@
                                 v-model="items.stock"
                                 type="number"
                                 class="mb-50"
-                                @keypress="onlyNumber"
                               />
                             </div>
                           </div>
@@ -754,7 +815,6 @@
                               v-model="data.item.stock"
                               type="number"
                               class="mb-50"
-                              @keypress="onlyNumber"
                             />
                           </div>
                         </div>
@@ -850,7 +910,6 @@
               >
                 <b-form-input
                   v-model="priceProduct"
-                  type="number"
                   placeholder="Rp  |  Masukan harga barang"
                 />
               </b-form-group>
@@ -976,9 +1035,9 @@
                 @click="submitDraft"
               >
                 <b-spinner
-                  v-if="loadingSubmit"
+                  v-if="loadingSubmitDraft"
                   small
-                  variant="light"
+                  variant="primary"
                 />
                 Simpan Draft
               </b-button>
@@ -1023,12 +1082,12 @@ import {
   BOverlay,
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
+import BCardActions from '@/@core/components/b-card-actions/BCardActions.vue'
 import draggable from 'vuedraggable'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { required } from '@validations'
 import { heightTransition } from '@core/mixins/ui/transition'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
-import BCardActions from '@/@core/components/b-card-actions/BCardActions.vue'
 import useJwt from '@/auth/jwt/useJwt'
 import httpKomship from '../setting-kompship/http_komship'
 
@@ -1065,6 +1124,7 @@ export default {
 
       loading: false,
       loadingSubmit: false,
+      loadingSubmitDraft: false,
       loadingSubmitVariant: false,
       partnerId: JSON.parse(localStorage.getItem('userData')),
 
@@ -1090,8 +1150,8 @@ export default {
       // Table
       fields: [],
       variantItems: [],
-      stock: '',
-      price: '',
+      stock: null,
+      price: null,
 
       fieldEditData: '',
 
@@ -1112,10 +1172,12 @@ export default {
       heightProduct: null,
       cod: false,
       transfer: false,
-      stockProduct: '',
-      priceProduct: '',
+      stockProduct: 0,
+      priceProduct: 0,
       variantStore: [],
       optionStore: [],
+
+      flavours: [],
 
       // Validation
       required,
@@ -1195,7 +1257,7 @@ export default {
         this.productName = data.product_name
         this.skuName = data.product_sku
         this.descriptionProduct = data.product_description
-        if (data.product_image[0].images_path) {
+        if (data.product_image[0] !== undefined) {
           this.imageInitialFile = data.product_image[0].images_path
         }
         this.stockProduct = data.product_stock
@@ -1205,8 +1267,20 @@ export default {
         this.widthProduct = data.product_width
         this.heightProduct = data.product_height
 
+        // eslint-disable-next-line no-plusplus
+        for (let i = 0; i < data.flavors.length; i++) {
+          if (data.flavors[i] === 'COD') {
+            this.cod = true
+          }
+          if (data.flavors[i] === 'BANK TRANSFER') {
+            this.transfer = true
+          }
+        }
+
         if (data.product_is_variant === '1') {
           this.isVariation = true
+          this.stockProduct = 0
+          this.priceProduct = 0
         }
 
         if (data.variants[0] !== undefined) {
@@ -1320,18 +1394,14 @@ export default {
             label: String(this.variationName3),
           })
         }
-        if (this.price !== null) {
-          this.fields.push({
-            key: 'price',
-            label: 'Harga',
-          })
-        }
-        if (this.stock !== null) {
-          this.fields.push({
-            key: 'stock',
-            label: 'Stok',
-          })
-        }
+        this.fields.push({
+          key: 'price',
+          label: 'Harga',
+        })
+        this.fields.push({
+          key: 'stock',
+          label: 'Stok',
+        })
         this.fields.push(
           {
             key: 'action',
@@ -1339,6 +1409,26 @@ export default {
             class: 'col-action',
           },
         )
+
+        // Delete Null Data
+        // eslint-disable-next-line no-plusplus
+        for (let x = 0; x < this.formChoices1.length; x++) {
+          if (this.formChoices1[x].choices === null) {
+            this.formChoices1.splice(x, 1)
+          }
+        }
+        // eslint-disable-next-line no-plusplus
+        for (let x = 0; x < this.formChoices2.length; x++) {
+          if (this.formChoices2[x].choices === null) {
+            this.formChoices2.splice(x, 1)
+          }
+        }
+        // eslint-disable-next-line no-plusplus
+        for (let x = 0; x < this.formChoices3.length; x++) {
+          if (this.formChoices3[x].choices === null) {
+            this.formChoices3.splice(x, 1)
+          }
+        }
 
         this.loading = false
       })
@@ -1513,18 +1603,14 @@ export default {
           label: String(this.variationName3),
         })
       }
-      if (this.price !== null) {
-        this.fields.push({
-          key: 'price',
-          label: 'Harga',
-        })
-      }
-      if (this.stock !== null) {
-        this.fields.push({
-          key: 'stock',
-          label: 'Stok',
-        })
-      }
+      this.fields.push({
+        key: 'price',
+        label: 'Harga',
+      })
+      this.fields.push({
+        key: 'stock',
+        label: 'Stok',
+      })
       this.fields.push(
         {
           key: 'action',
@@ -1536,353 +1622,383 @@ export default {
     submitPublish() {
       this.loadingSubmit = true
 
-      if (this.variationName3 !== null) {
-        this.variantStore.push(
-          {
-            val: this.variationName1,
-          },
-          {
-            val: this.variationName2,
-          },
-          {
-            val: this.variationName3,
-          },
-        )
-
-        // eslint-disable-next-line no-plusplus
-        for (let x = 0; x < this.variantItems.length; x++) {
-          this.optionStore.push(
-            {
-              val: this.variantItems[x].val,
-              parent: 0,
-              stock: null,
-              price: null,
-              sold: this.variantItems[x].sold,
-              option: [],
-            },
-          )
-          // eslint-disable-next-line no-plusplus
-          for (let y = 0; y < this.variantItems[x].option.length; y++) {
-            this.optionStore[x].option.push(
+      this.$refs.formRules.validate().then(success => {
+        if (success) {
+          if (this.variationName3 !== null) {
+            this.variantStore.push(
               {
-                val: this.variantItems[x].option[y].val,
-                parent: 0,
-                stock: null,
-                price: null,
-                sold: this.variantItems[x].option[y].sold,
-                option: [],
+                val: this.variationName1,
+              },
+              {
+                val: this.variationName2,
+              },
+              {
+                val: this.variationName3,
+              },
+            )
+
+            // eslint-disable-next-line no-plusplus
+            for (let x = 0; x < this.variantItems.length; x++) {
+              this.optionStore.push(
+                {
+                  val: this.variantItems[x].val,
+                  parent: 0,
+                  stock: null,
+                  price: null,
+                  sold: this.variantItems[x].sold,
+                  option: [],
+                },
+              )
+              // eslint-disable-next-line no-plusplus
+              for (let y = 0; y < this.variantItems[x].option.length; y++) {
+                this.optionStore[x].option.push(
+                  {
+                    val: this.variantItems[x].option[y].val,
+                    parent: 0,
+                    stock: null,
+                    price: null,
+                    sold: this.variantItems[x].option[y].sold,
+                    option: [],
+                  },
+                )
+                // eslint-disable-next-line no-plusplus
+                for (let z = 0; z < this.variantItems[x].option[y].option.length; z++) {
+                  this.optionStore[x].option[y].option.push(
+                    {
+                      val: this.variantItems[x].option[y].option[z].val,
+                      parent: 0,
+                      stock: this.variantItems[x].option[y].option[z].stock,
+                      price: this.variantItems[x].option[y].option[z].price,
+                      sold: this.variantItems[x].option[y].option[z].sold,
+                    },
+                  )
+                }
+              }
+            }
+          } else if (this.variationName3 === null && this.variationName2 !== null) {
+            this.variantStore.push(
+              {
+                val: this.variationName1,
+              },
+              {
+                val: this.variationName2,
               },
             )
             // eslint-disable-next-line no-plusplus
-            for (let z = 0; z < this.variantItems[x].option[y].option.length; z++) {
-              this.optionStore[x].option[y].option.push(
+            for (let x = 0; x < this.variantItems.length; x++) {
+              this.optionStore.push(
                 {
-                  val: this.variantItems[x].option[y].option[z].val,
+                  val: this.variantItems[x].val,
                   parent: 0,
-                  stock: this.variantItems[x].option[y].option[z].stock,
-                  price: this.variantItems[x].option[y].option[z].price,
-                  sold: this.variantItems[x].option[y].option[z].sold,
+                  stock: null,
+                  price: null,
+                  sold: this.variantItems[x].sold,
+                  option: [],
+                },
+              )
+              // eslint-disable-next-line no-plusplus
+              for (let y = 0; y < this.variantItems[x].option.length; y++) {
+                this.optionStore[x].option.push(
+                  {
+                    val: this.variantItems[x].option[y].val,
+                    parent: 0,
+                    stock: this.variantItems[x].option[y].stock,
+                    price: this.variantItems[x].option[y].price,
+                    sold: this.variantItems[x].option[y].sold,
+                  },
+                )
+              }
+            }
+          } else if (this.variationName3 === null && this.variationName2 === null && this.variationName1 !== null) {
+            this.variantStore.push(
+              {
+                val: this.variationName1,
+              },
+            )
+            // eslint-disable-next-line no-plusplus
+            for (let x = 0; x < this.variantItems.length; x++) {
+              this.optionStore.push(
+                {
+                  val: this.variantItems[x].val,
+                  parent: 0,
+                  stock: this.variantItems[x].stock,
+                  price: this.variantItems[x].price,
+                  sold: this.variantItems[x].sold,
                 },
               )
             }
           }
-        }
-      } else if (this.variationName3 === null && this.variationName2 !== null) {
-        this.variantStore.push(
-          {
-            val: this.variationName1,
-          },
-          {
-            val: this.variationName2,
-          },
-        )
-        // eslint-disable-next-line no-plusplus
-        for (let x = 0; x < this.variantItems.length; x++) {
-          this.optionStore.push(
-            {
-              val: this.variantItems[x].val,
-              parent: 0,
-              stock: null,
-              price: null,
-              sold: this.variantItems[x].sold,
-              option: [],
-            },
-          )
-          // eslint-disable-next-line no-plusplus
-          for (let y = 0; y < this.variantItems[x].option.length; y++) {
-            this.optionStore[x].option.push(
-              {
-                val: this.variantItems[x].option[y].val,
-                parent: 0,
-                stock: this.variantItems[x].option[y].stock,
-                price: this.variantItems[x].option[y].price,
-                sold: this.variantItems[x].option[y].sold,
-              },
-            )
+
+          if (this.cod === true) {
+            this.flavours.push('COD')
           }
-        }
-      } else if (this.variationName3 === null && this.variationName2 === null && this.variationName1 !== null) {
-        this.variantStore.push(
-          {
-            val: this.variationName1,
-          },
-        )
-        // eslint-disable-next-line no-plusplus
-        for (let x = 0; x < this.variantItems.length; x++) {
-          this.optionStore.push(
-            {
-              val: this.variantItems[x].val,
-              parent: 0,
-              stock: this.variantItems[x].stock,
-              price: this.variantItems[x].price,
-              sold: this.variantItems[x].sold,
-            },
-          )
-        }
-      }
+          if (this.transfer === true) {
+            this.flavours.push('BANK TRANSFER')
+          }
 
-      if (this.cod === true) {
-        this.flavours = 'COD'
-      } else if (this.transfer === true) {
-        this.flavours = 'BANK TRANSFER'
-      }
+          const params = {
+            product_name: this.productName,
+            sku: this.skuName,
+            description: this.descriptionProduct,
+            weight: this.weightProduct,
+            length: this.lengthProduct,
+            width: this.widthProduct,
+            height: this.heightProduct,
+            price: this.priceProduct !== 0 ? this.priceProduct : this.price,
+            stock: this.stockProduct !== 0 ? this.stockProduct : this.stock,
+            status: 1,
+            flavours: this.flavours,
+            variant_option: this.variantStore,
+            option: this.optionStore,
+          }
 
-      const params = {
-        product_name: this.productName,
-        sku: this.skuName,
-        description: this.descriptionProduct,
-        weight: this.weightProduct,
-        length: this.lengthProduct,
-        width: this.widthProduct,
-        height: this.heightProduct,
-        price: this.price,
-        stock: this.stock,
-        params: 1,
-        flavours: this.flavours,
-        variant_option: this.variantStore,
-        option: this.optionStore,
-      }
+          console.log(params)
 
-      httpKomship.put(`/v1/product/update/${this.productId}`, params, {
-        headers: { Authorization: `Bearer ${useJwt.getToken()}` },
-      }).then(() => {
-        // Update Image
-        const formData = new FormData()
-        formData.append('product_id', this.productId)
-        formData.append('image_path', this.images_path)
-        httpKomship.post('/v1/product/update-upload-img-product', formData, {
-          headers: { Authorization: `Bearer ${useJwt.getToken()}` },
-        }).then(() => {
-          this.loadingSubmit = false
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: 'Success',
-              icon: 'CheckIcon',
-              text: 'Success update produk',
-              variant: 'success',
-            },
+          httpKomship.put(`/v1/product/update/${this.productId}`, params, {
+            headers: { Authorization: `Bearer ${useJwt.getToken()}` },
+          }).then(() => {
+            if (this.imageFile) {
+              // Update Image
+              const formData = new FormData()
+              formData.append('product_id', this.productId)
+              formData.append('image_path', this.imageFile)
+              httpKomship.post('/v1/product/update-upload-img-product', formData, {
+                headers: { Authorization: `Bearer ${useJwt.getToken()}` },
+              }).then(() => {
+                this.loadingSubmit = false
+                this.$toast({
+                  component: ToastificationContent,
+                  props: {
+                    title: 'Success',
+                    icon: 'CheckIcon',
+                    text: 'Success update produk',
+                    variant: 'success',
+                  },
+                })
+                this.$router.push({ name: this.$route.meta.routeAllProduk, query: { tab: 'semua' } })
+              }).catch(() => {
+                this.loadingSubmit = false
+                this.$toast({
+                  component: ToastificationContent,
+                  props: {
+                    title: 'Failed',
+                    icon: 'AlertCircleIcon',
+                    text: 'Gagal update gambar produk, silahkan coba lagi!',
+                    variant: 'danger',
+                  },
+                })
+              })
+            } else {
+              this.loadingSubmit = false
+              this.$toast({
+                component: ToastificationContent,
+                props: {
+                  title: 'Success',
+                  icon: 'CheckIcon',
+                  text: 'Success update produk',
+                  variant: 'success',
+                },
+              })
+              this.$router.push({ name: this.$route.meta.routeAllProduk, query: { tab: 'semua' } })
+            }
+          }).catch(() => {
+            this.loadingSubmit = false
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: 'Failed',
+                icon: 'AlertCircleIcon',
+                text: 'Failed update produk',
+                variant: 'danger',
+              },
+            })
           })
-          this.$router.push({ name: this.$route.meta.routeAllProduk, query: { tab: 'semua' } })
-        }).catch(() => {
+        } else {
           this.loadingSubmit = false
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: 'Failed',
-              icon: 'AlertCircleIcon',
-              text: 'Gagal update gambar produk, silahkan coba lagi!',
-              variant: 'danger',
-            },
-          })
-        })
-      }).catch(() => {
-        this.loadingSubmit = false
-        this.$toast({
-          component: ToastificationContent,
-          props: {
-            title: 'Failed',
-            icon: 'AlertCircleIcon',
-            text: 'Failed update produk',
-            variant: 'danger',
-          },
-        })
+        }
       })
     },
     submitDraft() {
-      this.loadingSubmit = true
+      this.loadingSubmitDraft = true
 
-      if (this.formChoices3[0] !== undefined) {
-        this.variantStore.push(
-          {
-            val: this.variationName1,
-          },
-          {
-            val: this.variationName2,
-          },
-          {
-            val: this.variationName3,
-          },
-        )
-
-        // eslint-disable-next-line no-plusplus
-        for (let x = 0; x < this.variantItems.length; x++) {
-          this.optionStore.push(
-            {
-              val: this.variantItems[x].val,
-              parent: 0,
-              stock: null,
-              price: null,
-              sold: this.variantItems[x].sold,
-              option: [],
-            },
-          )
-          // eslint-disable-next-line no-plusplus
-          for (let y = 0; y < this.variantItems[x].option.length; y++) {
-            this.optionStore[x].option.push(
+      this.$refs.formRules.validate().then(success => {
+        if (success) {
+          if (this.variationName3 !== null) {
+            this.variantStore.push(
               {
-                val: this.variantItems[x].option[y].val,
-                parent: 0,
-                stock: null,
-                price: null,
-                sold: this.variantItems[x].option[y].sold,
-                option: [],
+                val: this.variationName1,
+              },
+              {
+                val: this.variationName2,
+              },
+              {
+                val: this.variationName3,
+              },
+            )
+
+            // eslint-disable-next-line no-plusplus
+            for (let x = 0; x < this.variantItems.length; x++) {
+              this.optionStore.push(
+                {
+                  val: this.variantItems[x].val,
+                  parent: 0,
+                  stock: null,
+                  price: null,
+                  sold: this.variantItems[x].sold,
+                  option: [],
+                },
+              )
+              // eslint-disable-next-line no-plusplus
+              for (let y = 0; y < this.variantItems[x].option.length; y++) {
+                this.optionStore[x].option.push(
+                  {
+                    val: this.variantItems[x].option[y].val,
+                    parent: 0,
+                    stock: null,
+                    price: null,
+                    sold: this.variantItems[x].option[y].sold,
+                    option: [],
+                  },
+                )
+                // eslint-disable-next-line no-plusplus
+                for (let z = 0; z < this.variantItems[x].option[y].option.length; z++) {
+                  this.optionStore[x].option[y].option.push(
+                    {
+                      val: this.variantItems[x].option[y].option[z].val,
+                      parent: 0,
+                      stock: this.variantItems[x].option[y].option[z].stock,
+                      price: this.variantItems[x].option[y].option[z].price,
+                      sold: this.variantItems[x].option[y].option[z].sold,
+                    },
+                  )
+                }
+              }
+            }
+          } else if (this.variationName3 === null && this.variationName2 !== null) {
+            this.variantStore.push(
+              {
+                val: this.variationName1,
+              },
+              {
+                val: this.variationName2,
               },
             )
             // eslint-disable-next-line no-plusplus
-            for (let z = 0; z < this.variantItems[x].option[y].option.length; z++) {
-              this.optionStore[x].option[y].option.push(
+            for (let x = 0; x < this.variantItems.length; x++) {
+              this.optionStore.push(
                 {
-                  val: this.variantItems[x].option[y].option[z].val,
+                  val: this.variantItems[x].val,
                   parent: 0,
-                  stock: this.variantItems[x].option[y].option[z].stock,
-                  price: this.variantItems[x].option[y].option[z].price,
-                  sold: this.variantItems[x].option[y].option[z].sold,
+                  stock: null,
+                  price: null,
+                  sold: this.variantItems[x].sold,
+                  option: [],
+                },
+              )
+              // eslint-disable-next-line no-plusplus
+              for (let y = 0; y < this.variantItems[x].option.length; y++) {
+                this.optionStore[x].option.push(
+                  {
+                    val: this.variantItems[x].option[y].val,
+                    parent: 0,
+                    stock: this.variantItems[x].option[y].stock,
+                    price: this.variantItems[x].option[y].price,
+                    sold: this.variantItems[x].option[y].sold,
+                  },
+                )
+              }
+            }
+          } else if (this.variationName3 === null && this.variationName2 === null && this.variationName1 !== null) {
+            this.variantStore.push(
+              {
+                val: this.variationName1,
+              },
+            )
+            // eslint-disable-next-line no-plusplus
+            for (let x = 0; x < this.variantItems.length; x++) {
+              this.optionStore.push(
+                {
+                  val: this.variantItems[x].val,
+                  parent: 0,
+                  stock: this.variantItems[x].stock,
+                  price: this.variantItems[x].price,
+                  sold: this.variantItems[x].sold,
                 },
               )
             }
           }
-        }
-      } else if (this.formChoices3[0] === undefined && this.formChoices2[0] !== undefined) {
-        this.variantStore.push(
-          {
-            val: this.variationName1,
-          },
-          {
-            val: this.variationName2,
-          },
-        )
-        // eslint-disable-next-line no-plusplus
-        for (let x = 0; x < this.variantItems.length; x++) {
-          this.optionStore.push(
-            {
-              val: this.variantItems[x].val,
-              parent: 0,
-              stock: null,
-              price: null,
-              sold: this.variantItems[x].sold,
-              option: [],
-            },
-          )
-          // eslint-disable-next-line no-plusplus
-          for (let y = 0; y < this.variantItems[x].option.length; y++) {
-            this.optionStore[x].option.push(
-              {
-                val: this.variantItems[x].option[y].val,
-                parent: 0,
-                stock: this.variantItems[x].option[y].stock,
-                price: this.variantItems[x].option[y].price,
-                sold: this.variantItems[x].option[y].sold,
-              },
-            )
+
+          if (this.cod === true) {
+            this.flavours.push('COD')
           }
-        }
-      } else if (this.formChoices3[0] === undefined && this.formChoices2[0] === undefined && this.formChocies1[0] !== undefined) {
-        this.variantStore.push(
-          {
-            val: this.variationName1,
-          },
-        )
-        // eslint-disable-next-line no-plusplus
-        for (let x = 0; x < this.variantItems.length; x++) {
-          this.optionStore.push(
-            {
-              val: this.variantItems[x].val,
-              parent: 0,
-              stock: this.variantItems[x].stock,
-              price: this.variantItems[x].price,
-              sold: this.variantItems[x].sold,
-            },
-          )
-        }
-      }
+          if (this.transfer === true) {
+            this.flavours.push('BANK TRANSFER')
+          }
 
-      if (this.cod === true) {
-        this.flavours = 'COD'
-      } else if (this.transfer === true) {
-        this.flavours = 'BANK TRANSFER'
-      }
+          const params = {
+            product_name: this.productName,
+            sku: this.skuName,
+            description: this.descriptionProduct,
+            weight: this.weightProduct,
+            length: this.lengthProduct,
+            width: this.widthProduct,
+            height: this.heightProduct,
+            price: this.priceProduct !== 0 ? this.priceProduct : this.price,
+            stock: this.stockProduct !== 0 ? this.stockProduct : this.stock,
+            status: 0,
+            flavours: this.flavours,
+            variant_option: this.variantStore,
+            option: this.optionStore,
+          }
 
-      const params = {
-        product_name: this.productName,
-        sku: this.skuName,
-        description: this.descriptionProduct,
-        weight: this.weightProduct,
-        length: this.lengthProduct,
-        width: this.widthProduct,
-        height: this.heightProduct,
-        price: this.price,
-        stock: this.stock,
-        flavours: this.flavours,
-        variant_option: this.variantStore,
-        option: this.optionStore,
-      }
-
-      httpKomship.put(`/v1/product/update/${this.productId}`, params, {
-        headers: { Authorization: `Bearer ${useJwt.getToken()}` },
-      }).then(() => {
-        // Update Image
-        const formData = new FormData()
-        formData.append('_method', 'post')
-        formData.append('product_id', this.productId)
-        formData.append('image_path', this.imageFile)
-        httpKomship.post('/v1/product/update-upload-img-product', formData, {
-          headers: { Authorization: `Bearer ${useJwt.getToken()}` },
-        }).then(() => {
-          this.loadingSubmit = false
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: 'Success',
-              icon: 'CheckIcon',
-              text: 'Success update produk',
-              variant: 'success',
-            },
+          httpKomship.put(`/v1/product/update/${this.productId}`, params, {
+            headers: { Authorization: `Bearer ${useJwt.getToken()}` },
+          }).then(() => {
+            // Update Image
+            const formData = new FormData()
+            formData.append('product_id', this.productId)
+            formData.append('image_path', this.imageFile)
+            httpKomship.post('/v1/product/update-upload-img-product', formData, {
+              headers: { Authorization: `Bearer ${useJwt.getToken()}` },
+            }).then(() => {
+              this.loadingSubmitDraft = false
+              this.$toast({
+                component: ToastificationContent,
+                props: {
+                  title: 'Success',
+                  icon: 'CheckIcon',
+                  text: 'Success update produk',
+                  variant: 'success',
+                },
+              })
+              this.$router.push({ name: this.$route.meta.routeAllProduk, query: { tab: 'semua' } })
+            }).catch(() => {
+              this.loadingSubmitDraft = false
+              this.$toast({
+                component: ToastificationContent,
+                props: {
+                  title: 'Failed',
+                  icon: 'AlertCircleIcon',
+                  text: 'Gagal update gambar produk, silahkan coba lagi!',
+                  variant: 'danger',
+                },
+              })
+            })
+          }).catch(() => {
+            this.loadingSubmitDraft = false
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: 'Failed',
+                icon: 'AlertCircleIcon',
+                text: 'Failed update produk',
+                variant: 'danger',
+              },
+            })
           })
-        }).catch(() => {
-          this.loadingSubmit = false
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: 'Failed',
-              icon: 'AlertCircleIcon',
-              text: 'Gagal update gambar produk',
-              variant: 'danger',
-            },
-          })
-        })
-        this.$router.push({ name: this.$route.meta.routeAllProduk, query: { tab: 'semua' } })
-      }).catch(() => {
-        this.loadingSubmit = false
-        this.$toast({
-          component: ToastificationContent,
-          props: {
-            title: 'Failed',
-            icon: 'AlertCircleIcon',
-            text: 'Failed update produk',
-            variant: 'danger',
-          },
-        })
+        } else {
+          this.loadingSubmitDraft = false
+        }
       })
     },
     addVariation() {
@@ -1926,6 +2042,32 @@ export default {
     },
     updateTable() {
       this.editMode = false
+    },
+    removeVariant1() {
+      this.variationName1 = ''
+      this.variationFields1 = false
+      if (this.variationFields2 === false && this.variationFields3 === false) {
+        this.isVariation = false
+      }
+      this.formChoices1 = [{ choices: null }]
+    },
+    removeVariant2() {
+      this.variationName2 = ''
+      this.variationFields2 = false
+      this.activeAddChoices1 = true
+      if (this.variationFields1 === false && this.variationFields3 === false) {
+        this.isVariation = false
+      }
+      this.formChoices2 = [{ choices: null }]
+    },
+    removeVariant3() {
+      this.variationName3 = ''
+      this.variationFields3 = false
+      this.activeAddChoices2 = true
+      if (this.variationFields1 === false && this.variationFields2 === false) {
+        this.isVariation = false
+      }
+      this.formChoices3 = [{ choices: null }]
     },
     formatPrice(value) {
       const val = value

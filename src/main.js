@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import { ToastPlugin, ModalPlugin, PopoverPlugin } from 'bootstrap-vue'
+
 import VueCompositionAPI from '@vue/composition-api'
 import VueLodash from 'vue-lodash'
-
 import lodash from 'lodash'
 import money from 'v-money'
 import Dropdown from 'vue-simple-search-dropdown'
@@ -10,6 +10,7 @@ import router from './router'
 import store from './store'
 import App from './App.vue'
 
+import './index.css'
 // Global Components
 import './global-components'
 

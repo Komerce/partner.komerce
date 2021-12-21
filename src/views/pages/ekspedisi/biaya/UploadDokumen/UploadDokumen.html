@@ -1,0 +1,167 @@
+<section id="cod-rincian-penarikan-saldo">
+  <div v-if="!loadDataAwal">
+    <b-card no-body>
+      <b-card-header>
+        <div class="d-flex align-items-center">
+          <b-button
+            variant="primary"
+            size="sm"
+            class="mr-2 btn-custom"
+            @click="$router.go(-1)"
+          >
+            <feather-icon
+              size="2x"
+              icon="ChevronLeftIcon"
+            />
+          </b-button>
+          <h4
+            class="card-title text-24-bold"
+          >
+            Dokumen Data Wilayah
+          </h4>
+        </div>
+      </b-card-header>
+      <b-card-body>
+        <div class="mb-2 container-upload">
+          <h3
+            class="text-24-bold text-center"
+            style="font-size: 32px;color:#222222;"
+          >
+            Upload Data Wilayah
+          </h3>
+          <b-card no-body>
+            <b-card-body style="padding:0 inherit;">
+              <div
+                ref="dropuploadarea"
+                class="wrapper-upload mb-1"
+                @click="clickUploadButton()"
+              >
+                <input
+                  id="filebuktitransfer"
+                  ref="filebuktitransfer"
+                  type="file"
+                  accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                  multiple
+                  name="filebuktitransfer"
+                  style="display: none;"
+                  @change="previewFiles"
+                >
+                <b-img
+                  :src="require('@/assets/images/elements/folder-open.png')"
+                  height="76"
+                  width="76"
+                  class="mb-1"
+                  alt="Folder Image"
+                />
+                <span
+                  class="text-16-normal mb-2"
+                  style="color: #828282;"
+                >
+                  Excel atau CSV file yang diperbolehkan
+                </span>
+                <span
+                  class="text-24-bold mb-4"
+                  style="color: #222222;font-size: 20px;"
+                >
+                  Drag dan drop atau telusuri untuk memilih file
+                </span>
+                <b-button
+                  variant="primary"
+                  class="btn-custom-upload"
+                >
+                  Browse
+                </b-button>
+              </div>
+              <span
+                class="text-24-normal"
+                style="color: #222222;"
+              >
+                {{ fileUploadCount }} dari {{ filesSettled.length }} diupload
+              </span>
+              <div
+                class="mt-1"
+              >
+                <b-card no-body>
+                  <b-card-body
+                    style="padding:0;"
+                  >
+                    <div
+                      v-for="filebeingUpload in filesSettled"
+                      :key="filebeingUpload.lastModified + 1"
+                      style="display: grid;grid-row-gap: 1rem;"
+                    >
+                      <div
+                        class="d-flex align-items-center"
+                      >
+                        <div class="icon-uploaded d-flex justify-content-center align-items-center">
+                          <feather-icon
+                            icon="FileIcon"
+                            size="2x"
+                          />
+                        </div>
+                        <div class="progressUpload">
+                          <div
+                            class="d-flex justify-content-between"
+                          >
+                            <span
+                              class="text-bukti-transfer"
+                            >
+                              {{ filebeingUpload.name }}
+                            </span>
+                            <span
+                              @click="batalkanUpload"
+                              class="text-bukti-transfer"
+                              style="color: #E31A1A;cursor: pointer;"
+                            >
+                              Batal
+                            </span>
+                          </div>
+                          <b-progress
+                            :value="valueProgressUpload"
+                            :max="maxProgressUpload"
+                            class="my-1"
+                          />
+                          <div
+                            class="d-flex justify-content-between"
+                          >
+                            <span class="text-filesize-bukti-transfer">
+                              {{ calculateSizeFile(filebeingUpload.size) }}
+                            </span>
+                            <span class="text-filesize-bukti-transfer">
+                              {{ valueProgressUpload }}%
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </b-card-body>
+                </b-card>
+              </div>
+              <div style="display: flex;justify-content:center;">
+                <b-button
+                  v-if="filesSettled.length > 0"
+                  variant="primary"
+                  class="btn-custom-upload"
+                  @click="handleKonfirmasi()"
+                >
+                  Konfirmasi
+                </b-button>
+              </div>
+            </b-card-body>
+          </b-card>
+
+        </div>
+      </b-card-body>
+    </b-card>
+  </div>
+
+  <div
+    v-else
+    class="text-center"
+  >
+    <b-spinner
+      variant="primary"
+      label="Text Centered"
+    />
+  </div>
+</section>

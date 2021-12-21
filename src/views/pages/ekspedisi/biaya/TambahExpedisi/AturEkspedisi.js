@@ -1,3 +1,5 @@
+/* eslint-disable no-return-assign */
+/* eslint-disable consistent-return */
 import vSelect from 'vue-select'
 import axioskomsipdev from '@/libs/axioskomsipdev'
 
@@ -10,6 +12,7 @@ import {
   BFormInvalidFeedback,
   // BListGroup,
   // BListGroupItem,
+  BFormTimepicker,
   BInputGroup,
   BButton,
   BFormSelect,
@@ -37,6 +40,7 @@ export default {
     BFormSelect,
     BFormValidFeedback,
     BFormInvalidFeedback,
+    BFormTimepicker,
     // BListGroupItem,
     BButton,
     BCard,
@@ -48,13 +52,13 @@ export default {
     return {
       loadDataAwal: true,
       shipping_name: '',
+      max_pickup_time: '09:00',
       service_name: null,
       cashback_from: null,
       service_fee_from: null,
       service_fee_to: null,
       cashback_to: null,
-      max_pickup_time: '',
-      vehicles: '',
+      vehicles: [],
       criteriasData: [{ ...initCriteria }],
       optionsKota: [
         { value: null, text: 'Pilih layanan kota' },
@@ -67,7 +71,6 @@ export default {
         { text: 'Exclude', value: 'exclude' },
         { text: 'Include', value: 'include' },
       ],
-      selected: null,
       optionsServiceName: [
         { value: null, text: 'Pilih jenis service' },
         { text: 'Oke', value: 'oke' },
@@ -93,34 +96,56 @@ export default {
     },
   },
   watch: {
-    vehicles: {
-      handler(val, val2) {
-        const el = document.getElementById(`choice${val}`)
-        const el2 = document.getElementById(`choice${val2}`)
-        if (val2) {
-          el.classList.add('activeChoice')
-          el2.classList.remove('activeChoice')
-        } else {
-          el.classList.add('activeChoice')
-        }
-      },
+    value() {
+      this.value = this.value.split(':').slice(0, 2).join(':')
     },
-    // criteriasData: {
-    //   handler(val) {
-    //     console.log(val)
-    //   },
-    //   deep: true,
-    // },
   },
   mounted() {
-    //
+    this.getIsland()
   },
   created() {
-    setTimeout(() => {
-      this.loadDataAwal = false
-    }, 1000)
+    //
   },
   methods: {
+    changeCashbackTo(val) {
+      if (val > 100 || val.length > 3) {
+        return this.cashback_to = 100
+      }
+    },
+    changeSff(val) {
+      if (val > 100 || val.length > 3) {
+        return this.service_fee_from = 100
+      }
+    },
+    changeSft(val) {
+      if (val > 100 || val.length > 3) {
+        return this.service_fee_to = 100
+      }
+    },
+    changeCashbackFrom(val) {
+      if (val > 100 || val.length > 3) {
+        return this.cashback_from = 100
+      }
+    },
+    onlyNumber($event) {
+      const keyCode = ($event.keyCode ? $event.keyCode : $event.which)
+      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) { // 46 is dot
+        $event.preventDefault()
+      }
+
+      // console.log($event.keyCode); //keyCodes value
+    },
+    getTimeFormatted(timeText) {
+      if (timeText) {
+        const splitTime = timeText.split(':')
+        return `${splitTime[0]} : ${splitTime[1]}`
+      }
+      return timeText
+    },
+    onChangeTime(ctx) {
+      if (ctx && ctx.formatted) this.timeValueText = this.getTimeFormatted(ctx.formatted)
+    },
+
     tambahKriteria(criteriasDataParams) {
       criteriasDataParams.push({ ...initCriteria })
     },
@@ -151,11 +176,12 @@ export default {
         service_fee_to: this.service_fee_to,
         cashback_to: this.cashback_to,
         max_pickup_time: this.max_pickup_time,
-        vehicles: [this.vehicles],
+        vehicles: this.vehicles,
         criterias: this.changeCriteriasData,
       })
       getData.then(data => {
         console.log(data)
+        this.$router.push('/biaya-ekspedisi')
         // {
         // status: "success",
         // code: 200,
@@ -186,11 +212,32 @@ export default {
         this.$bvModal.hide('modal-edit-akseslayanan')
       })
     },
-    simpanFormEdit() {
-      // calling api for simpan data
-    },
     handleChoiceTypeVehicle(val) {
-      this.vehicles = val
+      const vhc = [...this.vehicles]
+      const index = vhc.indexOf(val.toUpperCase())
+      const el = document.getElementById(`choice${val}`)
+      if (index > -1) {
+        el.classList.toggle('activeChoice')
+        vhc.splice(index, 1)
+      } else {
+        vhc.push(val.toUpperCase())
+        el.classList.toggle('activeChoice')
+      }
+      this.vehicles = vhc
+    },
+    getIsland() {
+      const endpoint = '/v1/island'
+      axioskomsipdev.get(endpoint)
+        .then(({ data }) => {
+          const parseData = JSON.parse(JSON.stringify(data.data))
+          this.optionsKota = parseData
+        })
+        .catch(e => {
+          console.log('error', e)
+        })
+        .finally(() => {
+          this.loadDataAwal = false
+        })
     },
   },
 }

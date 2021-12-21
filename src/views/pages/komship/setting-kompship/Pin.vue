@@ -316,20 +316,6 @@
         </small>
       </b-col>
 
-      <!-- <b-row class="d-flex justify-content-center ml-1">
-        <b-col md="6">
-          <div class="demo-inline-spacing">
-            <b-button
-              v-b-modal.modal-forgot-no-pin
-              block
-              variant="primary"
-            >
-              SMS
-            </b-button>
-          </div>
-        </b-col>
-      </b-row> -->
-
       <b-row class="d-flex justify-content-center ml-1 pb-2">
         <b-col md="6">
           <div class="demo-inline-spacing">
@@ -486,6 +472,7 @@
     <b-modal
       ref="modal-forgot-email-pin"
       no-close-on-backdrop
+      no-close-on-esc
       hide-header-close
       hide-footer
       hide-header
@@ -540,6 +527,7 @@
         <b-button
           v-b-modal.forgot-create-new-pin-email
           variant="primary"
+          :disabled="dataPin === null || dataPin.length < 4"
         >
           Ganti PIN
         </b-button>
@@ -550,6 +538,7 @@
     <b-modal
       id="forgot-create-new-pin-email"
       no-close-on-backdrop
+      no-close-on-esc
       hide-header-close
       hide-footer
       hide-header
@@ -576,6 +565,7 @@
         <b-button
           v-b-modal.forgot-confirm-new-pin-email
           variant="primary"
+          @click="handleChangeNewPin"
         >
           Ganti PIN
         </b-button>
@@ -586,6 +576,7 @@
     <b-modal
       id="forgot-confirm-new-pin-email"
       no-close-on-backdrop
+      no-close-on-esc
       hide-header-close
       hide-footer
       hide-header
@@ -611,6 +602,7 @@
       <b-col class="d-flex justify-content-center mt-1 pb-2">
         <b-button
           variant="primary"
+          :disabled="matchesPin !== dataPin || dataPin === null"
           @click="tes()"
         >
           Ganti PIN
@@ -664,6 +656,7 @@ export default {
 
       errorConfirmPin: '',
       errorMatchesPin: '',
+      errorMatchesConfirmPin: '',
 
       matchesPin: null,
 
@@ -684,7 +677,7 @@ export default {
     },
     // ==================================================================
     createPin() {
-      httpKomship.post('https://komshipdev.komerce.id/api/v1/pin/store', {
+      httpKomship.post('/v1/pin/store', {
         pin: this.dataPin,
       }, {
         headers: { Authorization: `Bearer ${useJwt.getToken()}` },
@@ -742,7 +735,7 @@ export default {
       })
     },
     confirmCreatePin() {
-      httpKomship.get('https://komshipdev.komerce.id/api/v1/pin/check', {
+      httpKomship.get('/v1/pin/check', {
         headers: { Authorization: `Bearer ${useJwt.getToken()}` },
       }).then(() => {
         this.$swal({
@@ -858,7 +851,7 @@ export default {
       this.loadingSubmit = true
       const formData = new FormData()
       formData.append('_method', 'post')
-      httpKomship.post('v1/send-otp', formData, {
+      httpKomship.post('/v1/send-otp', formData, {
         headers: { Authorization: `Bearer ${useJwt.getToken()}` },
       }).then(() => {
         this.loadingSubmit = false
@@ -894,6 +887,10 @@ export default {
         })
       })
       this.countDownTimerOtp()
+    },
+    handleChangeNewPin() {
+      this.matchesPin = this.dataPin
+      this.dataPin = null
     },
   },
 }

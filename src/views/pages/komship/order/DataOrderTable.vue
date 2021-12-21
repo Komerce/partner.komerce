@@ -1,5 +1,6 @@
 <template>
   <section :class="'view-data-order-table-wrapper'">
+
     <b-table
       :ref="tableRefName"
       :filter="searchText"
@@ -156,7 +157,7 @@
           class="minmax-button-wrapper"
           @click="() => handleSetCollapseContent(productData.value.isClose, productData.index)"
         >
-          <div v-if="!productData.value.isClose">
+          <div v-if="productData.value.isClose">
             Tutup
             <b-icon-chevron-up
               aria-hidden="true"
@@ -286,6 +287,55 @@
       </template>
 
     </b-table>
+    <div class="flex justify-between">
+      <b-form-group
+        label="Per Page"
+        label-cols="6"
+        label-align="left"
+        label-size="sm"
+        label-for="sortBySelect"
+        class="text-nowrap mb-md-0 mr-1"
+      >
+        <b-form-select
+          id="perPageSelect"
+          v-model="perPage"
+          size="sm"
+          inline
+          :options="pageOptions"
+        />
+      </b-form-group>
+
+      <!-- pagination -->
+      <div>
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="totalRows"
+          :per-page="perPage"
+          first-number
+          last-number
+          prev-class="prev-item"
+          next-class="next-item"
+          class="mb-0"
+        >
+          <template #prev-text>
+            <feather-icon
+              icon="ChevronLeftIcon"
+              size="18"
+            />
+          </template>
+          <template #next-text>
+            <feather-icon
+              icon="ChevronRightIcon"
+              size="18"
+            />
+          </template>
+        </b-pagination>
+      </div>
+    </div>
+
+    <p class="mt-3">
+      Current Page: {{ currentPage }}
+    </p>
   </section>
 </template>
 
@@ -301,17 +351,21 @@ import {
   BIconCircle,
   BPopover,
   BFormGroup,
+  BFormSelect,
   BCollapse,
+  BPagination,
 } from 'bootstrap-vue'
 
 export default {
   components: {
     BTable,
     BButton,
+    BPagination,
     BIconFront,
     BIconChevronUp,
     BIconChevronDown,
     BIconInfoCircle,
+    BFormSelect,
     BIconCheckCircleFill,
     BIconCircle,
     BPopover,
@@ -349,6 +403,7 @@ export default {
       openId: '',
       selectedOrder: [],
       isCheckedAll: false,
+      pageOptions: [5, 10, 20],
     }
   },
   mounted() {

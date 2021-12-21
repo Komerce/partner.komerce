@@ -1,0 +1,270 @@
+<section id="cod-data-partner-detail">
+  <div v-if="!loadDataAwal">
+    <b-card no-body>
+      <b-card-body>
+        <div class="d-flex align-items-center">
+          <b-button
+            variant="primary"
+            size="sm"
+            class="mr-2 btn-custom"
+            @click="$router.go(-1)"
+          >
+            <feather-icon
+              size="2x"
+              icon="ChevronLeftIcon"
+            />
+          </b-button>
+          <h4
+            class="text-32-bold"
+          >
+            Daerah Tanpa Akses COD
+          </h4>
+        </div>
+
+        <b-row>
+          <b-col lg="3" />
+          <b-col lg="3" />
+          <b-col lg="3">
+            <b-button
+              block
+              variant="outline-primary"
+              class="btn-custom--editakseslayanan"
+              @click="handleImportExcelDaerahCOD"
+            >
+              Import Excel / CSV
+            </b-button>
+          </b-col>
+          <b-col
+            sm="12"
+            lg="3"
+            class="d-flex"
+          >
+            <b-input-group class="input-group-merge mr-1">
+              <b-input-group-prepend is-text>
+                <feather-icon icon="SearchIcon" />
+              </b-input-group-prepend>
+              <b-form-input
+                id="field-search-for-tbl"
+                v-model="searchTerm"
+                placeholder="Search"
+                style="height: 56px;"
+              />
+            </b-input-group>
+            <b-dropdown
+              id="dropdown-search-tbl"
+              ref="dropdownFilter"
+              dropleft
+              no-caret
+              variant="primary"
+            >
+              <template
+                #button-content
+              >
+                <feather-icon icon="SlidersIcon" />
+              </template>
+              <b-dropdown-form
+                style="width: 417px;"
+              >
+                <b-form-group
+                  label="Kota / Kabupaten"
+                  label-for="dropdown-form-kota"
+                >
+                  <b-form-input
+                    id="dropdown-form-kota"
+                    v-model="filterDropdown.city_name"
+                    size="lg"
+                    placeholder="Masukkan Kota / Kabupaten"
+                  />
+                </b-form-group>
+                <b-form-group
+                  label="Kecamatan"
+                  label-for="dropdown-form-camat"
+                >
+                  <b-form-input
+                    id="dropdown-form-camat"
+                    v-model="filterDropdown.district_name"
+                    size="lg"
+                    placeholder="Masukkan Kecamatan"
+                  />
+                </b-form-group>
+                <b-form-group
+                  label="Kodepos"
+                  label-for="dropdown-form-kodepos"
+                >
+                  <b-form-input
+                    id="dropdown-form-kodepos"
+                    v-model="filterDropdown.zip_code"
+                    size="lg"
+                    placeholder="Masukkan Kodepos"
+                  />
+                </b-form-group>
+                <div class="d-flex justify-content-end">
+                  <b-button
+                    variant="outline-primary"
+                    size="lg"
+                    class="mr-2"
+                    @click="onClickResetFilterDropdown"
+                  >
+                    Reset
+                  </b-button>
+                  <b-button
+                    variant="primary"
+                    size="lg"
+                    @click="onClickTerapkanFilterDropdown"
+                  >
+                    Terapkan
+                  </b-button>
+                </div>
+              </b-dropdown-form>
+            </b-dropdown>
+          </b-col>
+          <b-col
+            lg="12"
+            class="mt-2"
+          >
+            <b-table
+              id="tableTanpaAksesCOD"
+              striped
+              hover
+              responsive
+              show-empty
+              :per-page="perPage"
+              :current-page="currentPage"
+              :items="getItemsData"
+              :busy="isLoadTable"
+              :fields="fields"
+              :sort-by.sync="sortBy"
+              :sort-desc.sync="sortDesc"
+              :sort-direction="sortDirection"
+              :filter="filter"
+              :filter-included-fields="filterOn"
+              @filtered="onFiltered"
+            >
+              <template slot="empty">
+                <b-row class="justify-content-center">
+                  <b-col cols="12">
+                    <span>
+                      Sepertinya kamu belum menambahkan daerah yang tidak memiliki akses COD, Yuk mulai tambahkan sekarang!
+                    </span>
+                  </b-col>
+                  <b-col cols="12">
+                     <b-button
+                      variant="outline-primary"
+                      class="btn-custom--editakseslayanan"
+                      @click="handleImportExcelDaerahCOD"
+                    >
+                      Tambahkan Daerah
+                    </b-button>
+                  </b-col>
+                </b-row>
+              </template>
+              <template #cell(deleteDaerahTanpaAksesCOD)="data">
+                <b-button
+                  variant="flat-default"
+                  @click="deleteDaerahTanpaAksesCOD(data.item)"
+                >
+                  <feather-icon icon="TrashIcon" />
+                </b-button>
+              </template>
+              <template #table-busy>
+                <div class="text-center text-danger my-2">
+                  <b-spinner
+                    class="align-middle"
+                  />
+                  <strong>Loading...</strong>
+                </div>
+              </template>
+            </b-table>
+            <b-row align-h="between">
+              <b-col
+                sm="4"
+                md="4"
+              >
+                <b-form-group
+                  class="mb-0"
+                >
+                  <div
+                    style="display: flex;align-items: center;"
+                  >
+                    <label class="d-inline-block text-sm-left mr-50">Per page</label>
+                    <b-form-select
+                      id="perPageSelect"
+                      v-model="perPage"
+                      :options="pageOptions"
+                      size="sm"
+                      style="width: 65px;"
+                    />
+                  </div>
+                </b-form-group>
+              </b-col>
+              <b-col cols="8">
+                <b-pagination
+                  v-model="currentPage"
+                  :total-rows="totalRows"
+                  :per-page="perPage"
+                  align="right"
+                  size="sm"
+                  class="my-0"
+                />
+              </b-col>
+            </b-row>
+          </b-col>
+        </b-row>
+      </b-card-body>
+    </b-card>
+    <b-modal
+      id="modal-delete-daerah"
+      ref="modal-delete-daerah"
+      centered
+      hide-header
+      hide-header-close
+      hide-footer
+      size="md"
+      no-stacking
+    >
+      <div class="text-center">
+        <div class="py-1 delete-daerah-wrapper">
+          <span
+            class="text-20-bold"
+            style="color: #222222;"
+          >
+            Hapus Wilayah Dari Daftar
+          </span>
+          <span
+            class="text-16-normal mb-3 mt-1"
+            style="color: #222222;"
+          >
+            Apakah kamu yakin untuk menghapus data wilayah tersebut dari daftar tanpa akses COD?
+          </span>
+          <div class="d-flex justify-content-center">
+            <b-button
+              variant="outline-primary"
+              class="btn-custom-modal-delete mr-1 text-center"
+              style="border-color: unset;"
+              @click="handleTidakModal"
+            >
+              Batal
+            </b-button>
+            <b-button
+              variant="primary"
+              class="btn-custom-modal-delete text-center"
+              @click="handleOkModal"
+            >
+              Lanjutkan
+            </b-button>
+          </div>
+        </div>
+      </div>
+    </b-modal>
+  </div>
+
+  <div
+    v-else
+    class="text-center"
+  >
+    <b-spinner
+      variant="primary"
+      label="Text Centered"
+    />
+  </div>
+</section>

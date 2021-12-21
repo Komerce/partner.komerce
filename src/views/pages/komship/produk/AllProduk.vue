@@ -15,7 +15,7 @@
                   </b-input-group-prepend>
                   <b-form-input
                     v-model="searchProduct"
-                    placeholder="Example"
+                    placeholder="Cari Nama Produk atau SKU"
                     @input="getProduct"
                   />
                 </b-input-group>
@@ -200,7 +200,7 @@
                             variant="light-primary"
                             square
                             size="50px"
-                            :src="itemsData.product_image[0].image"
+                            :src="itemsData.product_image[0].images_path"
                           />
                           <b-avatar
                             v-else
@@ -402,11 +402,28 @@
                   class="d-flex justify-content-end mb-2"
                 >
                   <b-col cols="auto">
-                    <b-button
-                      v-b-toggle="`collapse-${String(index)}`"
-                      variant="flat-dark"
-                      size="sm"
-                    />
+                    <div>
+                      <b-button
+                        v-b-toggle="`collapse-${String(index)}`"
+                        variant="flat-dark"
+                        size="sm"
+                      >
+                        <span class="when-opened">
+                          Tutup
+                        </span>
+                        <span class="when-closed">
+                          Tampilkan variasi lainnya
+                        </span>
+                        <feather-icon
+                          icon="ChevronDownIcon"
+                          class="when-closed"
+                        />
+                        <feather-icon
+                          icon="ChevronUpIcon"
+                          class="when-opened"
+                        />
+                      </b-button>
+                    </div>
                   </b-col>
                 </b-row>
                 <hr>
@@ -615,9 +632,19 @@
                 variant="flat-dark"
                 size="sm"
               >
-                Tampilkan variasi lainnya
+                <span class="when-opened">
+                  Tutup
+                </span>
+                <span class="when-closed">
+                  Tampilkan variasi lainnya
+                </span>
                 <feather-icon
                   icon="ChevronDownIcon"
+                  class="when-closed"
+                />
+                <feather-icon
+                  icon="ChevronUpIcon"
+                  class="when-opened"
                 />
               </b-button>
             </template>
@@ -793,6 +820,7 @@ export default {
       searchProduct: '',
 
       nameButton: [],
+      expandCollapseIsActive: false,
 
       // Filter
       name: '',
@@ -906,9 +934,6 @@ export default {
     [dir] .table-list-product {
         display: none;
     }
-    /* [dir] .item-student-responsive {
-        display: inline-block;
-    } */
 }
 
 @media only screen and (min-width: 923px) {
@@ -919,5 +944,10 @@ export default {
         display: none;
     }
 }
+
+.collapsed > .when-opened,
+    :not(.collapsed) > .when-closed {
+        display: none;
+    }
 
 </style>

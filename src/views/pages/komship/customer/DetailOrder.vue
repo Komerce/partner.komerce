@@ -468,8 +468,6 @@ export default {
         this.shippingCashback = data.shipping_cashback
         this.shippingCost = data.shipping_cost
         this.penghasilanBersih = this.totalPriceProduct - this.serviceFee - this.shippingCost + this.shippingCashback
-        console.log(this.items)
-        console.log(data)
         this.loading = false
         return this.items
       })
@@ -479,7 +477,6 @@ export default {
         headers: { Authorization: `Bearer ${useJwt.getToken()}` },
       }).then(response => {
         const { data } = response.data
-        console.log(data)
         this.nameUser = data.user_fullname
       })
     },

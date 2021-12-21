@@ -1,18 +1,6 @@
 <template>
   <div class="data-order-detail-wrapper">
     <div
-      :class="`top-right space-top ${detailOrder.order_status.toLowerCase() === 'perlu dikirim' ? 'mr-5' : ''}`"
-    >
-      <b-button
-        v-if="!detailOrder.airway_bill"
-        class="header-button mid-part org-button"
-        @click="showModalInputResi"
-      >
-        Masukan No Resi
-      </b-button>
-    </div>
-
-    <div
       v-if="detailOrder.order_status.toLowerCase() === 'perlu dikirim'"
       class="details-wrapper top-right delete-button space-top"
     >

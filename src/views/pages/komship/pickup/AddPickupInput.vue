@@ -390,7 +390,7 @@ export default {
         orders: this.selectedOrderId,
       }
       // console.log('formData', formData)
-      if (this.userData.is_onboarding) {
+      if (this.$route.name === 'ajukan-pickup') {
         await this.storePickupReq(formData)
       } else {
         await this.storePickupReqOb(formData)

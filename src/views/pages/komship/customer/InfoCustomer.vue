@@ -10,7 +10,7 @@
           </b-input-group-prepend>
           <b-form-input
             v-model="customerName"
-            placeholder="Example"
+            placeholder="Masukan Nama Customer"
             @input="filterCustomer"
           />
         </b-input-group>
@@ -49,7 +49,6 @@
                       :reduce="items => items.city_name"
                       placeholder="Ketik untuk mencari..."
                       @search="onSearchDestination"
-                      @input="tes"
                     />
                   </b-form-group>
                 </b-col>
@@ -369,7 +368,6 @@ export default {
       }).then(response => {
         const { data } = response.data
         this.itemsCustomer = data
-        console.log(this.itemsCustomer)
         this.loading = false
         return this.itemsCustomer
       })
@@ -393,15 +391,10 @@ export default {
         headers: { Authorization: `Bearer ${useJwt.getToken()}` },
       }).then(response => {
         const { data } = response.data
-        console.log(data)
         this.itemsCustomer = data
-        console.log(this.itemsCustomer)
         this.loading = false
         return this.itemsCustomer
       })
-    },
-    tes() {
-      console.log(this.destination)
     },
     onSearchDestination(search, loading) {
       if (search.length) {

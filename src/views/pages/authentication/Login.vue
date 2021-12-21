@@ -443,7 +443,6 @@ export default {
 
           if (role === 'KOMSHIP MEMBER') {
             const itemMember = await this.getAccessKomship(data.id)
-            console.log(itemMember)
             // eslint-disable-next-line no-plusplus
             for (let x = 0; x < itemMember.length; x++) {
               if (itemMember[x].access !== 'No Data Access.') {

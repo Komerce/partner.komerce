@@ -96,7 +96,7 @@
 
                 <b-col cols="10">
                   <b-form-group
-                    label="Kode Post/Kecamatan"
+                    label="Kota/Kecamatan"
                     label-cols-md="3"
                   >
                     <div v-if="editMode === true && editIdAddress === data.address_id">

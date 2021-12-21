@@ -250,7 +250,7 @@ export default {
       this.filterForm = {
         date: {},
         product: '',
-        method: null,
+        method: '',
       }
       this.$emit('onResetForm', this.filterForm)
     },

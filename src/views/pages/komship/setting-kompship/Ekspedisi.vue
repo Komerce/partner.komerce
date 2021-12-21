@@ -140,7 +140,7 @@ export default {
 
       itemsSendKompship: [
         {
-          send_kompship: 'Ketika mengaktifkan pengiriman mandiri kamu akan berhenti berlangganan membership komship dan tidak dapat menggunakan sebagian fitur Komship.',
+          send_kompship: 'Ketika mengaktifkan pengiriman Non Komship, maka kamu tidak mendapatkan cashback dan fitur lainnya yang ada di membership Komship (Mandiri menjadi Non Komship) ',
         },
       ],
 
@@ -159,7 +159,6 @@ export default {
           headers: { Authorization: `Bearer ${useJwt.getToken()}` },
         }).then(response => {
         const { data } = response.data
-        console.log(data)
         this.listEkspedisi = data
         // eslint-disable-next-line no-plusplus
         for (let x = 0; x < this.listEkspedisi.length; x++) {
@@ -187,7 +186,6 @@ export default {
       }
       // eslint-disable-next-line no-plusplus
       for (let x = 0; x < this.listEkspedisi.length; x++) {
-        console.log(this.listEkspedisi[x])
         httpKomship.put(`/v1/partner/shipment/update/${this.listEkspedisi[x].id}`, {
           shipping_name: this.listEkspedisi[x].shipping_name,
           is_komship: 1,

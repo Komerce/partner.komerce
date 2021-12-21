@@ -32,7 +32,6 @@ axiosIns.interceptors.response.use(
     // Do something with response error
     if (error?.response?.status === 403) {
       window.location = '/unauthenticated'
-      console.log('tes')
     }
     /* eslint-disable comma-dangle */
     return Promise.reject(error)
@@ -46,7 +45,6 @@ komshipAxiosIns.interceptors.response.use(
     // Do something with response error
     if (error?.response?.status === 403) {
       window.location = '/unauthenticated'
-      console.log('tes')
     }
     /* eslint-disable comma-dangle */
     return Promise.reject(error)
