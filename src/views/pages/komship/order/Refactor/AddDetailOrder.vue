@@ -247,10 +247,10 @@
 
         <template #cell(price)="data">
           <div v-if="data.item.variant[0] === undefined">
-            {{ data.item.price }}
+            Rp. {{ formatPrice(data.item.price) }}
           </div>
           <div v-else>
-            {{ data.item.itemSelected.price }}
+            Rp. {{ formatPrice(data.item.itemSelected.price) }}
           </div>
         </template>
 
@@ -262,14 +262,14 @@
           <div v-if="data.item.variant[0] === undefined">
             <h4>
               <strong>
-                {{ data.item.price * data.item.stockToDisplay }}
+                Rp. {{ formatPrice(data.item.price * data.item.stockToDisplay) }}
               </strong>
             </h4>
           </div>
           <div v-else>
             <h4>
               <strong>
-                {{ data.item.itemSelected.price * data.item.stockToDisplay }}
+                Rp. {{ formatPrice(data.item.itemSelected.price * data.item.stockToDisplay) }}
               </strong>
             </h4>
           </div>
@@ -477,15 +477,27 @@ function genBasePrice(pointedVariant) {
 }
 
 function countTotalPrice(listData) {
-//   if (listData && listData.length && listData.length > 0) {
-//     let totalPrice = 0
-//     for (let i = 0; i < listData.length; i += 1) {
-//       const basePrice = listData[i].is_variant ? genBasePrice(listData[i].selectedVariationData) : listData[i].price
-//       const subtotalPrice = basePrice * listData[i].input
-//       totalPrice += subtotalPrice
-//     }
-//     return totalPrice
-//   }
+  // Refactor
+  if (listData.length > 0) {
+    let totalPrice = 0
+    // eslint-disable-next-line no-plusplus
+    for (let x = 0; x < listData.length; x++) {
+      const basePrice = listData[x].variant[0] !== undefined ? listData[x].itemSelected.price : listData[x].price
+      const subtotalPrice = basePrice * listData[x].stockToDisplay
+      totalPrice += subtotalPrice
+    }
+    return totalPrice
+  }
+
+  //   if (listData && listData.length && listData.length > 0) {
+  //     let totalPrice = 0
+  //     for (let i = 0; i < listData.length; i += 1) {
+  //       const basePrice = listData[i].is_variant ? genBasePrice(listData[i].selectedVariationData) : listData[i].price
+  //       const subtotalPrice = basePrice * listData[i].input
+  //       totalPrice += subtotalPrice
+  //     }
+  //     return totalPrice
+  //   }
   console.log(listData)
   return 0
 }
@@ -946,6 +958,10 @@ export default {
       }).catch(() => {
         this.alertFail('Unable to Update Your Cart. Please and try again later or contact support.')
       })
+    },
+    formatPrice(value) {
+      const val = value
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
     },
   },
 }

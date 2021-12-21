@@ -45,16 +45,6 @@
       </b-form-group>
     </section>
 
-    <!-- <add-order-table
-      ref="tableAddOrderOne"
-      :items="selectedItems"
-      :fields="fields"
-      table-ref-name="tableAddOrder"
-      :is-editable="true"
-      @onShowPopUp="handleShowVariationPopUp"
-      @onAddTotalItem="onChangeSelectedProduct"
-    /> -->
-
     <b-table
       ref="tableAddOrderOne"
       :items="itemsOrder"
@@ -114,14 +104,14 @@
         <div v-if="data.item.itemSelected !== undefined">
           <h4>
             <strong>
-              {{ data.item.itemSelected.price }}
+              Rp. {{ formatPrice(data.item.itemSelected.price) }}
             </strong>
           </h4>
         </div>
         <div v-else-if="data.item.variant[0] === undefined">
           <h4>
             <strong>
-              {{ data.item.price }}
+              Rp. {{ formatPrice(data.item.price) }}
             </strong>
           </h4>
         </div>
@@ -206,21 +196,21 @@
         <div v-if="data.item.variant[0] === undefined">
           <h4>
             <strong>
-              {{ data.item.price * data.item.stockToDisplay }}
+              Rp. {{ formatPrice(data.item.price * data.item.stockToDisplay) }}
             </strong>
           </h4>
         </div>
         <div v-else-if="data.item.itemSelected !== undefined">
           <h4>
             <strong>
-              {{ data.item.itemSelected.price * data.item.stockToDisplay }}
+              Rp. {{ formatPrice(data.item.itemSelected.price * data.item.stockToDisplay) }}
             </strong>
           </h4>
         </div>
         <div v-else>
           <h4>
             <strong>
-              {{ data.item.price * data.item.stockToDisplay }}
+              Rp. {{ formatPrice(data.item.price * data.item.stockToDisplay) }}
             </strong>
           </h4>
         </div>
@@ -952,6 +942,10 @@ export default {
     },
     onUpdateEnableSubmitButton(value) {
       this.$emit('onUpdateSubmitButtonStatus', value)
+    },
+    formatPrice(value) {
+      const val = value
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
     },
   },
 }
