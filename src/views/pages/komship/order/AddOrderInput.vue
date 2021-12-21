@@ -202,12 +202,28 @@
         </div>
       </template>
 
-      <template #cell(subtotal)>
-        <h4>
-          <strong>
-            0
-          </strong>
-        </h4>
+      <template #cell(subtotal)="data">
+        <div v-if="data.item.variant[0] === undefined">
+          <h4>
+            <strong>
+              {{ data.item.price * data.item.stockToDisplay }}
+            </strong>
+          </h4>
+        </div>
+        <div v-else-if="data.item.itemSelected !== undefined">
+          <h4>
+            <strong>
+              {{ data.item.itemSelected.price * data.item.stockToDisplay }}
+            </strong>
+          </h4>
+        </div>
+        <div v-else>
+          <h4>
+            <strong>
+              {{ data.item.price * data.item.stockToDisplay }}
+            </strong>
+          </h4>
+        </div>
       </template>
     </b-table>
 
@@ -390,7 +406,8 @@
         </b-button>
         <b-button
           class="next-button"
-          @click="onUpdateScreenViewParent"
+          tag="router-link"
+          :to="{ name: $route.meta.routeDetail, params: { itemsOrder } }"
         >
           Lanjutkan
         </b-button>

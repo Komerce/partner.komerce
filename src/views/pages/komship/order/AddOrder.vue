@@ -95,6 +95,7 @@ export default {
         const { data } = response.data
         // console.log('this.profile', data)
         this.profile = data
+        console.log(this.profile)
       }).catch(() => {
         console.log('failed to get the profile data')
       })
