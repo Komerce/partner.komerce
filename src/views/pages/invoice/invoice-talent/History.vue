@@ -177,10 +177,10 @@ import {
   BPagination,
 } from 'bootstrap-vue'
 import vSelect from 'vue-select'
-import filters from '@/libs/filters'
 import flatPickr from 'vue-flatpickr-component'
 import MonthSelectPlugin from 'flatpickr/dist/plugins/monthSelect/index'
 import 'flatpickr/dist/plugins/monthSelect/style.css'
+import filters from '@/libs/filters'
 
 export default {
   components: {

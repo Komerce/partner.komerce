@@ -38,9 +38,18 @@ export default {
     BCol,
   },
   props: {
-    listAccess: Array,
-    selectedPosition: Object,
-    refreshMethod: Function,
+    listAccess: {
+      type: Array,
+      default: () => [],
+    },
+    selectedPosition: {
+      type: Object,
+      default: () => ({}),
+    },
+    refreshMethod: {
+      type: Function,
+      default: () => {},
+    },
   },
   methods: {
     show() {

@@ -245,11 +245,11 @@ import {
   BDropdown,
   BDropdownForm,
 } from 'bootstrap-vue'
-import FeatherIcon from '@/@core/components/feather-icon/FeatherIcon.vue'
-import Ripple from 'vue-ripple-directive'
-import useJwt from '@/auth/jwt/useJwt'
-import { dateFormat } from '@core/mixins/ui/date'
 import vSelect from 'vue-select'
+import Ripple from 'vue-ripple-directive'
+import { dateFormat } from '@core/mixins/ui/date'
+import FeatherIcon from '@/@core/components/feather-icon/FeatherIcon.vue'
+import useJwt from '@/auth/jwt/useJwt'
 import httpKomship from '../setting-kompship/http_komship'
 
 export default {

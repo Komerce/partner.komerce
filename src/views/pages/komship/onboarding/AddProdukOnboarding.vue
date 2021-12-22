@@ -1139,7 +1139,9 @@
           height="134.43px"
           class="modalUploadWarning__img"
         >
-        <p class="modalUploadWarning__text">Maaf, maksimal file hanya 2 MB.</p>
+        <p class="modalUploadWarning__text">
+          Maaf, maksimal file hanya 2 MB.
+        </p>
         <b-button
           variant="danger"
           class="modalUploadWarning__btn"
@@ -1170,12 +1172,12 @@ import {
   BOverlay,
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
-import BCardActions from '@/@core/components/b-card-actions/BCardActions.vue'
 import draggable from 'vuedraggable'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { required } from '@validations'
 import { heightTransition } from '@core/mixins/ui/transition'
 import ToastificationContentVue from '@/@core/components/toastification/ToastificationContent.vue'
+import BCardActions from '@/@core/components/b-card-actions/BCardActions.vue'
 import useJwt from '@/auth/jwt/useJwt'
 import Onboarding from './Onboarding.vue'
 import httpKomship from '../setting-kompship/http_komship'

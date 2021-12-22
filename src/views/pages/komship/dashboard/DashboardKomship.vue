@@ -710,10 +710,10 @@ import { mapFields } from 'vuex-map-fields'
 import {
   BFormGroup, BModal, BFormInput, BFormSelect,
 } from 'bootstrap-vue'
-import useJwt from '@/auth/jwt/useJwt'
 import PincodeInput from 'vue-pincode-input'
 import vSelect from 'vue-select'
 import moment from 'moment'
+import useJwt from '@/auth/jwt/useJwt'
 // import DateRangePicker from 'vue2-daterange-picker'
 import ChartPenghasilan from '../../../components/chart/ChartPenghasilan.vue'
 // import ChartPerforma from '../../../components/chart/ChartPerforma.vue'

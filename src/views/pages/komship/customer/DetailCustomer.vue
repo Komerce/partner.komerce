@@ -384,8 +384,8 @@ import {
   BCollapse,
   VBToggle,
 } from 'bootstrap-vue'
-import useJwt from '@/auth/jwt/useJwt'
 import moment from 'moment'
+import useJwt from '@/auth/jwt/useJwt'
 import httpKomship from '../setting-kompship/http_komship'
 
 export default {

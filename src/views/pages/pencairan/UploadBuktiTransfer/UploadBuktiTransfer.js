@@ -1,5 +1,4 @@
 /* eslint-disable no-plusplus */
-import axioskomsipdev from '@/libs/axioskomsipdev'
 import {
   BImg,
   BCard,
@@ -10,6 +9,7 @@ import {
   BCardHeader,
   BModal,
 } from 'bootstrap-vue'
+import axioskomsipdev from '@/libs/axioskomsipdev'
 
 export default {
   components: {

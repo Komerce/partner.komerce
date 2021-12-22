@@ -607,18 +607,6 @@ export default {
       obj: null,
     }
   },
-  mounted() {
-    if (!window.snapScriptLoaded) {
-      const snapScriptEl = document.createElement('script')
-      snapScriptEl.setAttribute(
-        'src',
-        'https://app.sandbox.midtrans.com/snap/snap.js',
-      )
-      snapScriptEl.setAttribute('data-client-key', this.clientKey)
-      document.head.appendChild(snapScriptEl)
-      window.snapScriptLoaded = 1
-    }
-  },
   computed: {
     ...mapFields('saldo', [
       'dateRange',
@@ -651,6 +639,18 @@ export default {
   },
   beforeMount() {
     this.$store.dispatch('saldo/init')
+  },
+  mounted() {
+    if (!window.snapScriptLoaded) {
+      const snapScriptEl = document.createElement('script')
+      snapScriptEl.setAttribute(
+        'src',
+        'https://app.sandbox.midtrans.com/snap/snap.js',
+      )
+      snapScriptEl.setAttribute('data-client-key', this.clientKey)
+      document.head.appendChild(snapScriptEl)
+      window.snapScriptLoaded = 1
+    }
   },
   methods: {
     formatRibuan(x) {

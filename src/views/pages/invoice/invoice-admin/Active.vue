@@ -179,12 +179,12 @@ import {
   BAvatar,
   BPagination,
 } from 'bootstrap-vue'
-import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import vSelect from 'vue-select'
-import filters from '@/libs/filters'
 import flatPickr from 'vue-flatpickr-component'
 import MonthSelectPlugin from 'flatpickr/dist/plugins/monthSelect/index'
 import 'flatpickr/dist/plugins/monthSelect/style.css'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import filters from '@/libs/filters'
 
 export default {
   components: {

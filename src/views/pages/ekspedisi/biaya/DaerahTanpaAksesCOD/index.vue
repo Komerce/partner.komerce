@@ -1,6 +1,5 @@
 <template src="./DaerahTanpaAksesCOD.html" />
 <script>
-import axioskomsipdev from '@/libs/axioskomsipdev'
 
 import {
   BRow,
@@ -20,6 +19,7 @@ import {
   BFormSelect,
   BCardBody,
 } from 'bootstrap-vue'
+import axioskomsipdev from '@/libs/axioskomsipdev'
 
 export default {
   components: {

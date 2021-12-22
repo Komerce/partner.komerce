@@ -92,23 +92,28 @@ import { BRow, BCol, BModal } from 'bootstrap-vue'
 export default {
   components: { BRow, BCol, BModal },
   props: {
-    sk_number: {
+    skNumber: {
       type: String,
+      default: '',
     },
-    document_url: {
+    documentUrl: {
       type: String,
+      default: '',
     },
-    release_date: {
+    releaseDate: {
       type: String,
+      default: '',
     },
     loadingSubmit: {
       type: Boolean,
     },
     save: {
       type: Function,
+      default: () => {},
     },
     assignments: {
       type: Array,
+      default: () => [],
     },
   },
   methods: {

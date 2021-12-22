@@ -1,8 +1,6 @@
 /* eslint-disable no-return-assign */
 /* eslint-disable consistent-return */
 import vSelect from 'vue-select'
-import axioskomsipdev from '@/libs/axioskomsipdev'
-
 import {
   BRow,
   BCol,
@@ -20,6 +18,7 @@ import {
   BSpinner,
   BCardBody,
 } from 'bootstrap-vue'
+import axioskomsipdev from '@/libs/axioskomsipdev'
 
 const initCriteria = {
   origin: [],

@@ -72,7 +72,7 @@ export default [
   {
     path: '/komship-register',
     name: 'kompship-daftar',
-    component: () => import('@/views/pages/authentication/RegisterKompship'),
+    component: () => import('@/views/pages/authentication/RegisterKompship.vue'),
     meta: {
       layout: 'full',
       resource: 'Auth',

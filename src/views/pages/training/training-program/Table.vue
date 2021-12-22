@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import CardTable from '@/views/components/CardTable.vue'
 import { dateFormat } from '@core/mixins/ui/date'
+import CardTable from '@/views/components/CardTable.vue'
 
 export default {
   components: {
