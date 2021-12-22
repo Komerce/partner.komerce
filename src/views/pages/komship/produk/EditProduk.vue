@@ -1740,7 +1740,7 @@ export default {
             product_name: this.productName,
             sku: this.skuName,
             description: this.descriptionProduct,
-            weight: this.weightProduct,
+            weight: Number(this.weightProduct),
             length: this.lengthProduct,
             width: this.widthProduct,
             height: this.heightProduct,

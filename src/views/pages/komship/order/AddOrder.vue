@@ -92,6 +92,7 @@ export default {
       return this.$http_komship.post('v1/my-profile').then(response => {
         const { data } = response.data
         this.profile = data
+        console.log(this.profile)
       }).catch(() => {
         console.log('failed to get the profile data')
       })
