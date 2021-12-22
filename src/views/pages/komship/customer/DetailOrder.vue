@@ -343,7 +343,6 @@
 </template>
 
 <script>
-import useJwt from '@/auth/jwt/useJwt'
 import {
   BCol,
   BListGroup,
@@ -356,6 +355,7 @@ import {
   BCard,
   BOverlay,
 } from 'bootstrap-vue'
+import useJwt from '@/auth/jwt/useJwt'
 import httpKomship from '../setting-kompship/http_komship'
 
 export default {

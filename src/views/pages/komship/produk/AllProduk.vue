@@ -730,9 +730,9 @@ import {
   BCollapse,
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
+import { heightTransition } from '@core/mixins/ui/transition'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import useJwt from '@/auth/jwt/useJwt'
-import { heightTransition } from '@core/mixins/ui/transition'
 import httpKomship from '../setting-kompship/http_komship'
 
 export default {

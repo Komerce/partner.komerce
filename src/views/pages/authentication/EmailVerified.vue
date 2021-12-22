@@ -48,8 +48,8 @@
 <script>
 /* eslint-disable global-require */
 import { BLink, BButton, BImg } from 'bootstrap-vue'
-import store from '@/store/index'
 import { $themeConfig } from '@themeConfig'
+import store from '@/store/index'
 
 export default {
   components: {

@@ -2,7 +2,7 @@ export default [
   {
     path: '/admin-dashboard-komship',
     name: 'cod-dashboard',
-    component: () => import('@/views/pages/dashboard-cod/Index'),
+    component: () => import('@/views/pages/dashboard-cod/Index.vue'),
     meta: {
       resource: 'Dashboard',
       action: 'read',
@@ -11,7 +11,7 @@ export default [
   {
     path: '/',
     name: 'dashboard-analytics',
-    component: () => import('@/views/pages/dashboard/Index'),
+    component: () => import('@/views/pages/dashboard/Index.vue'),
     meta: {
       resource: 'Dashboard',
       action: 'read',
@@ -20,7 +20,7 @@ export default [
   {
     path: '/dashboard',
     name: 'partner-home',
-    component: () => import('@/views/pages/dashboard/PartnerHome'),
+    component: () => import('@/views/pages/dashboard/PartnerHome.vue'),
     meta: {
       resource: 'PartnerHome',
       action: 'read',
@@ -29,7 +29,7 @@ export default [
   {
     path: '/home',
     name: 'talent-home',
-    component: () => import('@/views/pages/dashboard/Home'),
+    component: () => import('@/views/pages/dashboard/Home.vue'),
     meta: {
       resource: 'TalentHome',
       action: 'read',

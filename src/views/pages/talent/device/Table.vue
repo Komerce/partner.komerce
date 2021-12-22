@@ -13,8 +13,8 @@
 </template>
 
 <script>
-import CardTable from '@/views/components/CardTable.vue'
 import { min, required } from '@core/utils/validations/validations'
+import CardTable from '@/views/components/CardTable.vue'
 
 export default {
   components: {

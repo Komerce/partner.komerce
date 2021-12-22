@@ -305,10 +305,7 @@
 </template>
 
 <script>
-import BCardActionsContainer from '@core/components/b-card-actions/BCardActionsContainer.vue'
-import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import Ripple from 'vue-ripple-directive'
-import filters from '@/libs/filters'
 
 import {
   BFormRow,
@@ -332,6 +329,9 @@ import {
   BCardText,
   VBTooltip,
 } from 'bootstrap-vue'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import BCardActionsContainer from '@core/components/b-card-actions/BCardActionsContainer.vue'
+import filters from '@/libs/filters'
 
 export default {
   directives: {

@@ -190,15 +190,6 @@ export default {
       tableHeadInfos: [3, 4],
     }
   },
-  methods: {
-    formatRibuan(x) {
-      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-    },
-    formatRupiah(x) {
-      if (x === '-') return x
-      return `Rp ${this.formatRibuan(x)}`
-    },
-  },
   computed: {
     ...mapState('saldoPenarikan', [
       'dateStart',
@@ -213,6 +204,15 @@ export default {
   beforeMount() {
     this.$store.commit('saldoPenarikan/UPDATE_ID', this.$route.params.id)
     this.$store.dispatch('saldoPenarikan/init')
+  },
+  methods: {
+    formatRibuan(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    },
+    formatRupiah(x) {
+      if (x === '-') return x
+      return `Rp ${this.formatRibuan(x)}`
+    },
   },
 }
 </script>

@@ -213,11 +213,11 @@ import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import {
   BRow, BCol, BAlert, BLink, BFormGroup, BFormInput, BInputGroupAppend, BInputGroup, BCardText, BCardTitle, BImg, BForm, BSpinner, BButton, VBTooltip,
 } from 'bootstrap-vue'
-import useJwt from '@/auth/jwt/useJwt'
 import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
-import store from '@/store/index'
 import { $themeConfig } from '@themeConfig'
+import useJwt from '@/auth/jwt/useJwt'
+import store from '@/store/index'
 
 export default {
   directives: {
@@ -250,7 +250,7 @@ export default {
       username: '',
       userEmail: '',
       password: '',
-      sideImg: require('@/assets/images/illustration/auth-illustration.png'),
+      sideImg: require('@/assets/images/illustration/auth-illustration-v2.png'),
       loading: false,
 
       // validation rules
@@ -277,7 +277,7 @@ export default {
     imgUrl() {
       if (store.state.appConfig.layout.skin === 'dark') {
         // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.sideImg = require('@/assets/images/illustration/auth-illustration.png')
+        this.sideImg = require('@/assets/images/illustration/auth-illustration-v2.png')
         return this.sideImg
       }
       return this.sideImg

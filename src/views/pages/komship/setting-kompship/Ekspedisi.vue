@@ -80,7 +80,6 @@
 </template>
 
 <script>
-import { heightTransition } from '@core/mixins/ui/transition'
 import {
   BCard,
   BRow,
@@ -90,8 +89,9 @@ import {
   VBModal,
   BOverlay,
 } from 'bootstrap-vue'
-import useJwt from '@/auth/jwt/useJwt'
+import { heightTransition } from '@core/mixins/ui/transition'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import useJwt from '@/auth/jwt/useJwt'
 import httpKomship from './http_komship'
 
 export default {

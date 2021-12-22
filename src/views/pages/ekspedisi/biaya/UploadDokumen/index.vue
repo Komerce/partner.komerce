@@ -1,6 +1,5 @@
 <template src="./UploadDokumen.html" />
 <script>
-import axioskomsipdev from '@/libs/axioskomsipdev'
 import {
   // BRow,
   // BCol,
@@ -12,6 +11,7 @@ import {
   BCardBody,
   BCardHeader,
 } from 'bootstrap-vue'
+import axioskomsipdev from '@/libs/axioskomsipdev'
 
 export default {
   components: {

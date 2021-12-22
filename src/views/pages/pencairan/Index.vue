@@ -249,8 +249,8 @@ import {
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
 
-import axioskomsipdev from '@/libs/axioskomsipdev'
 import { kFormatter } from '@core/utils/filter'
+import axioskomsipdev from '@/libs/axioskomsipdev'
 
 export default {
   components: {

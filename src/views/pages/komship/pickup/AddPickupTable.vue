@@ -84,7 +84,7 @@
         Lihat detail...
       </div>
       <div class="add-pickup-input-notice-filled-desc">
-        Total Produk : <span class="ml-2">{{ this.genTotalAmount(items) }}</span>
+        Total Produk : <span class="ml-2">{{ genTotalAmount(items) }}</span>
       </div>
     </div>
   </div>
