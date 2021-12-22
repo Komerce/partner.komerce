@@ -362,15 +362,30 @@
         </b-row>
       </div>
 
-      <b-row class="d-flex justify-content-end">
-        <b-button
-          variant="primary"
-          class="btn-icon mr-3 mb-2"
-          @click="addOrderToTable(itemsChooseVariation.item)"
-        >
-          Ok
-        </b-button>
-      </b-row>
+      <div v-if="itemSecondChildVariant !== []">
+        <b-row class="d-flex justify-content-end">
+          <b-button
+            variant="primary"
+            class="btn-icon mr-3 mb-2"
+            @click="addOrderToTable(itemsChooseVariation.item)"
+          >
+            Ok
+          </b-button>
+        </b-row>
+      </div>
+
+      <div v-else>
+        <b-row class="d-flex justify-content-end">
+          <b-button
+            variant="primary"
+            class="btn-icon mr-3 mb-2"
+            :disabled="checkButtonVariationSecondIsActive()"
+            @click="addOrderToTable(itemsChooseVariation.item)"
+          >
+            Ok
+          </b-button>
+        </b-row>
+      </div>
 
     </b-modal>
 
@@ -396,6 +411,7 @@
         </b-button>
         <b-button
           class="next-button"
+          :disabled="buttonNext"
           tag="router-link"
           :to="{ name: $route.meta.routeDetail, params: { itemsOrder } }"
         >
@@ -554,11 +570,16 @@ export default {
       stock: null,
       total: null,
       subtotal: null,
+      optionId: null,
 
       stockAvailable: null,
       totalToOrder: 1,
 
       choosenProduct: '',
+
+      buttonNext: true,
+      buttonVariationSecond: true,
+      buttonVariationFirst: true,
     }
   },
   methods: {
@@ -579,6 +600,10 @@ export default {
       this.$root.$emit('bv::show::modal', 'modal-choose-variation')
     },
     selectParentVariation(itemsVariant, items) {
+      console.log('items')
+      console.log(items)
+      console.log('itemsVariant')
+      console.log(itemsVariant)
       if (this.itemFirstChildVariant !== []) {
         this.itemFirstChildVariant = []
       }
@@ -603,6 +628,7 @@ export default {
           }
           this.isActiveVariant = itemsVariant.option_name
           this.variationProduct = itemsVariant.option_name
+          this.optionId = itemsVariant.options_id
           if (items.price !== undefined) this.price = itemsVariant.price
           if (items.stock !== undefined) this.stock = itemsVariant.stock
         }
@@ -610,6 +636,7 @@ export default {
       if (items.variant[1] === undefined) {
         this.isActiveVariant = itemsVariant.name
         this.variationProduct = itemsVariant.name
+        this.optionId = itemsVariant.options_id
         if (items.price !== undefined) this.price = itemsVariant.price
         if (items.stock !== undefined) this.stock = itemsVariant.stock
       }
@@ -633,15 +660,19 @@ export default {
       if (items.variant[2] === undefined) {
         this.isActiveVariantFirstChild = data.name
         this.variationProductFirstChild = data.name
+        this.optionId = data.options_id
         if (items.price !== undefined) this.price = data.price
         if (items.stock !== undefined) this.stock = data.stock
       }
+      this.checkButtonVariationSecondIsActive()
     },
     selectVariationSecondChild(items) {
       this.isActiveVariantSecondChild = items.name
       this.variationProductSecondChild = items.name
+      this.optionId = items.options_id
       if (items.price !== undefined) this.price = items.price
       if (items.stock !== undefined) this.stock = items.stock
+      // this.checkButtonVariationSecondIsActive()
     },
     getNameVariantParent(data) {
       let nameVariant = ''
@@ -668,6 +699,7 @@ export default {
             Object.assign(this.itemsOrder[x],
               {
                 itemSelected: {
+                  option_id: this.optionId,
                   variation: `${this.variationProduct}, ${this.variationProductFirstChild}, ${this.variationProductSecondChild}`,
                   price: this.price,
                   stock: this.stock,
@@ -680,6 +712,7 @@ export default {
             Object.assign(this.itemsOrder[x],
               {
                 itemSelected: {
+                  option_id: this.optionId,
                   variation: `${this.variationProduct}, ${this.variationProductFirstChild}`,
                   price: this.price,
                   stock: this.stock,
@@ -692,6 +725,7 @@ export default {
             Object.assign(this.itemsOrder[x],
               {
                 itemSelected: {
+                  option_id: this.optionId,
                   variation: `${this.variationProduct}`,
                   price: this.price,
                   stock: this.stock,
@@ -705,6 +739,7 @@ export default {
       console.log(data)
       this.stockAvailable = data.itemSelected.stock - 1
       this.$refs.tableAddOrderOne.refresh()
+      this.nextButtonIsActive()
       this.$root.$emit('bv::hide::modal', 'modal-choose-variation')
     },
     addTotalToOrder(data) {
@@ -825,6 +860,7 @@ export default {
       } else if (itemSelected === null) {
         this.itemsOrder.splice(1, 1)
       }
+      this.nextButtonIsActive()
     },
     updateAllSelectedProduct(newItemToPush, oldListSelected) {
       if (newItemToPush && oldListSelected && oldListSelected.length && oldListSelected.length > 0) {
@@ -946,6 +982,38 @@ export default {
     formatPrice(value) {
       const val = value
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    },
+    nextButtonIsActive() {
+      this.itemsOrder.every(this.checkButtonNextIsActive)
+    },
+    checkButtonNextIsActive(data) {
+      if (data.variant[0] !== undefined) {
+        if (data.itemSelected !== undefined) {
+          console.log('false')
+          this.buttonNext = false
+        } else {
+          console.log('true')
+          this.buttonNext = true
+        }
+      }
+    },
+    checkButtonVariationSecondIsActive() {
+      let finalResult = true
+      this.itemSecondChildVariant.every(this.checkButtonVariationSecond)
+      if (this.buttonVariationSecond === false) {
+        finalResult = false
+      } else {
+        finalResult = true
+      }
+      console.log(this.isActiveVariantSecondChild)
+      return finalResult
+    },
+    checkButtonVariationSecond(data) {
+      if (data.name === this.isActiveVariantSecondChild) {
+        this.buttonVariationSecond = false
+      } else {
+        this.buttonVariationSecond = true
+      }
     },
   },
 }

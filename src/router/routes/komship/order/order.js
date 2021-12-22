@@ -38,6 +38,7 @@ export default [
     component: () => import('@/views/pages/komship/order/Refactor/AddDetailOrder.vue'),
     meta: {
       resource: 'Order',
+      routeDataOrder: 'data-order',
       action: 'manage',
       breadcrumb: [
         {

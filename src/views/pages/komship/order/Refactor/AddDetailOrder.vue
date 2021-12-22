@@ -425,7 +425,8 @@
           </div>
           <b-button
             class="next-button no-mg"
-            @click="handleRedirectToDataOrder"
+            tag="router-link"
+            :to="{ name: $route.meta.routeDataOrder }"
           >
             Oke
           </b-button>
@@ -463,18 +464,18 @@ function numberWithCommas(x) {
   return x
 }
 
-function genBasePrice(pointedVariant) {
-  if (pointedVariant && pointedVariant.length && pointedVariant.length > 0) {
-    let newPrice = 0
-    for (let j = 0; j < pointedVariant.length; j += 1) {
-      if (pointedVariant[j]) {
-        newPrice += pointedVariant[j].price
-      }
-    }
-    return newPrice
-  }
-  return 0
-}
+// function genBasePrice(pointedVariant) {
+//   if (pointedVariant && pointedVariant.length && pointedVariant.length > 0) {
+//     let newPrice = 0
+//     for (let j = 0; j < pointedVariant.length; j += 1) {
+//       if (pointedVariant[j]) {
+//         newPrice += pointedVariant[j].price
+//       }
+//     }
+//     return newPrice
+//   }
+//   return 0
+// }
 
 function countTotalPrice(listData) {
   // Refactor
@@ -503,13 +504,18 @@ function countTotalPrice(listData) {
 }
 
 function getVariantPerItem(listData) {
-  if (listData && listData.selectedVariationData && listData.selectedVariationData.length && listData.selectedVariationData.length > 0) {
+  console.log('listData')
+  console.log(listData)
+  if (listData && listData.itemSelected !== {}) {
     const variantData = {}
-    for (let i = 0; i < listData.selectedVariationData.length; i += 1) {
-      variantData.id = i === 0 || i === (listData.selectedVariationData.length - 1) ? listData.selectedVariationData[i].options_id : (`${listData.selectedVariationData[i].options_id}, `)
-      variantData.name = i === 0 || i === (listData.selectedVariationData.length - 1) ? listData.selectedVariationData[i].name : (`${listData.selectedVariationData[i].name} - `)
-      variantData.price = genBasePrice(listData.selectedVariationData)
-    }
+    // for (let i = 0; i < listData.selectedVariationData.length; i += 1) {
+    //   variantData.id = i === 0 || i === (listData.selectedVariationData.length - 1) ? listData.selectedVariationData[i].options_id : (`${listData.selectedVariationData[i].options_id}, `)
+    //   variantData.name = i === 0 || i === (listData.selectedVariationData.length - 1) ? listData.selectedVariationData[i].name : (`${listData.selectedVariationData[i].name} - `)
+    //   variantData.price = genBasePrice(listData.selectedVariationData)
+    // }
+    variantData.id = listData.itemSelected.option_id
+    variantData.name = listData.itemSelected.variation
+    variantData.price = listData.itemSelected.price
     return variantData
   }
   return {}
@@ -695,6 +701,8 @@ export default {
       this.customerShippingMethod = itemSelected
     },
     onAddExpeditionOption(itemSelected) {
+      console.log('onAddExpeditionOption')
+      console.log(itemSelected)
       this.customerExpeditionOption = itemSelected
     },
     onAddPaymentMethod(itemSelected) {
@@ -713,14 +721,18 @@ export default {
       this.$router.push('data-order')
     },
     findCorrectData(dataArr) {
+      console.log(dataArr)
       let selectedCost = {}
       if (dataArr && dataArr.length && dataArr.length > 0) {
         for (let j = 0; j < dataArr.length; j += 1) {
-          if (dataArr[j] && dataArr[j].shipping_type && dataArr[j].shipping_type === this.customerExpeditionOption) {
+          if (dataArr[j].shipping_type) {
             selectedCost = dataArr[j]
+            console.log('tes')
           }
         }
       }
+      console.log('selectedCost')
+      console.log(selectedCost)
       return selectedCost
     },
     calculateOnView() {
@@ -739,7 +751,7 @@ export default {
       if (dataArr && dataArr.length && dataArr.length > 0) {
         for (let j = 0; j < dataArr.length; j += 1) {
           if (dataArr[j]) {
-            const isVariant = dataArr[j].is_variant === '1'
+            const isVariant = dataArr[j].variant[0] !== undefined
             const variantData = isVariant ? getVariantPerItem(dataArr[j]) : {}
             cartItem = {
               product_id: dataArr[j].product_id,
@@ -748,9 +760,13 @@ export default {
               variant_name: isVariant ? variantData.name : null,
               product_price: isVariant ? variantData.price : dataArr[j].price,
               product_weight: dataArr[j].weight,
-              qty: dataArr[j].input,
-              subtotal: dataArr[j].input * (isVariant ? variantData.price : dataArr[j].price),
+              qty: dataArr[j].stockToDisplay,
+              subtotal: dataArr[j].stockToDisplay * (isVariant ? variantData.price : dataArr[j].price),
             }
+            console.log('cartItem')
+            console.log(cartItem)
+            console.log('dataArr')
+            console.log(dataArr)
             newCart.push({ ...cartItem })
           }
         }
@@ -874,7 +890,7 @@ export default {
       await this.storeSelectedItemsToCart(formData)
     },
     async storeSelectedItemsToCart(formData) {
-      const allItemsToPost = this.genCart(this.selectedItems)
+      const allItemsToPost = this.genCart(this.itemsCheckoutOrder)
       await this.onPostCart(allItemsToPost)
       Object.assign(formData, { cart: this.cartOrder })
       this.storeOrder(formData)
@@ -912,6 +928,8 @@ export default {
       }).then(response => {
         const { data } = response.data
         // console.log('dataCost', data)
+        console.log('totalCostNumber')
+        console.log(data)
         this.totalCostNumber = this.findCorrectData(data)
         this.calculateOnView()
       }).catch(() => {
@@ -939,7 +957,7 @@ export default {
         // console.log('detail post order', data)
         if (data) {
           this.isSubmitting = false
-          if (this.profile.is_onboarding) {
+          if (this.profile.is_onboarding !== true) {
             this.$emit('onBoardingShow')
           } else {
             this.handleShowPopUp()
@@ -951,6 +969,7 @@ export default {
       })
     },
     onPostCart(cartItem) {
+      console.log(cartItem)
       return this.$http_komship.post('v1/cart/bulk-store', cartItem).then(response => {
         const { data } = response.data
         // console.log('detail post cart', data)
