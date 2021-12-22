@@ -67,8 +67,6 @@
                   #default="{errors}"
                   name="Upload Gambar"
                 >
-
-                  <!-- Preview Image -->
                   <transition name="fade">
                     <b-avatar
                       v-if="imageInitialFile !== null || imageFile !== null"
@@ -78,7 +76,6 @@
                       class="mr-50"
                     />
                   </transition>
-                  <!-- Button Upload Image -->
                   <label
                     for="uploadImage"
                   >
@@ -105,8 +102,6 @@
                       size="20"
                     />
                   </label>
-
-                  <!-- Field Gambar -->
                   <b-form-file
                     id="uploadImage"
                     v-model="imageFile"
@@ -900,6 +895,7 @@
                 <b-form-input
                   v-model="stockProduct"
                   placeholder="Masukan jumlah stok barang"
+                  @keypress="onlyNumber"
                 />
               </b-form-group>
             </b-col>
@@ -1027,8 +1023,6 @@
                 </div>
               </b-form-group>
             </b-col>
-
-            <!-- submit and reset -->
             <b-col
               cols="12"
               class="d-flex justify-content-end pb-2 pr-2"
@@ -1088,12 +1082,12 @@ import {
   BOverlay,
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
-import BCardActions from '@/@core/components/b-card-actions/BCardActions.vue'
 import draggable from 'vuedraggable'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { required } from '@validations'
 import { heightTransition } from '@core/mixins/ui/transition'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import BCardActions from '@/@core/components/b-card-actions/BCardActions.vue'
 import useJwt from '@/auth/jwt/useJwt'
 import httpKomship from '../setting-kompship/http_komship'
 
@@ -1244,6 +1238,12 @@ export default {
     this.loadProduct()
   },
   methods: {
+    onlyNumber($event) {
+      const keyCode = ($event.keyCode ? $event.keyCode : $event.which)
+      if (keyCode < 48 || keyCode > 57) {
+        $event.preventDefault()
+      }
+    },
     loadProduct() {
       this.loading = true
       if (this.variantItems !== []) {

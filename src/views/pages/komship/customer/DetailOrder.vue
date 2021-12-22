@@ -142,7 +142,7 @@
           <b-list-group class="ml-1 mt-2">
             <b-list-group-item class="border-0 mb-2">
               <h5 class="text-danger">
-                <strong>Pengiriman Kompship</strong>
+                <strong>Pengiriman Komship</strong>
               </h5>
             </b-list-group-item>
             <b-list-group-item class="border-0">
@@ -343,7 +343,6 @@
 </template>
 
 <script>
-import useJwt from '@/auth/jwt/useJwt'
 import {
   BCol,
   BListGroup,
@@ -356,6 +355,7 @@ import {
   BCard,
   BOverlay,
 } from 'bootstrap-vue'
+import useJwt from '@/auth/jwt/useJwt'
 import httpKomship from '../setting-kompship/http_komship'
 
 export default {

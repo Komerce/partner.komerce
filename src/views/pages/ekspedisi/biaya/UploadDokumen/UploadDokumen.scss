@@ -1,0 +1,59 @@
+.btn-custom{
+  border-radius: 16px;
+  width: 56px;
+  height: 56px;
+}
+.container-upload{
+  display: grid;
+  align-content: center;
+  justify-content: center;
+}
+.wrapper-upload{
+  width: 70vw;
+  height: 364px;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  grid-row-gap: 0;
+  background: #F1F2F6;
+  border: 2px dashed #828282;
+  box-sizing: border-box;
+  border-radius: 16px;
+}
+.btn-custom-upload{
+  width: 274px;
+  height: 56px;
+  border-radius: 12px;
+}
+
+.text-bukti-transfer{
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 150%;
+  letter-spacing: 0.5px;
+  color: #444444;
+}
+.text-filesize-bukti-transfer{
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 150%;
+  /* identical to box height, or 27px */
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.5px;
+  /* Grayscale/Label */
+  color: #828282;
+}
+.icon-uploaded{
+  background: #F1F2F6;
+  border: 1px solid #444444;
+  box-sizing: border-box;
+  width: 57px;
+  height: 65px;
+  margin-right: 10px;
+  border-radius: 12px;
+}
+.progressUpload{
+  display: grid;
+  width: 100%;
+}

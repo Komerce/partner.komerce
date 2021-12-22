@@ -32,25 +32,43 @@
       <!-- /Left Text-->
 
       <!-- Login-->
-      <b-col lg="4" class="d-flex align-items-center auth-bg px-2 p-lg-5">
+      <b-col
+        lg="4"
+        class="d-flex align-items-center auth-bg px-2 p-lg-5"
+      >
         <!-- Brand logo-->
         <b-link class="brand-logo d-flex d-lg-none">
-          <b-img :src="appLogoImage" alt="logo" style="width: 36px" />
+          <b-img
+            :src="appLogoImage"
+            alt="logo"
+            style="width: 36px"
+          />
           <h2 class="brand-text text-primary ml-50 mt-auto mb-auto">
             {{ appName }}
           </h2>
         </b-link>
         <!-- /Brand logo-->
 
-        <b-col sm="8" md="6" lg="12" class="px-xl-2 mx-auto">
-          <b-card-title class="mb-1 font-weight-bold" title-tag="h2">
+        <b-col
+          sm="8"
+          md="6"
+          lg="12"
+          class="px-xl-2 mx-auto"
+        >
+          <b-card-title
+            class="mb-1 font-weight-bold"
+            title-tag="h2"
+          >
             Masuk
           </b-card-title>
           <b-card-text class="mb-2">
             Silahkan masuk menggunakan akun Anda
           </b-card-text>
 
-          <b-alert variant="danger" :show="!!error">
+          <b-alert
+            variant="danger"
+            :show="!!error"
+          >
             <div class="alert-body">
               <span>{{ error }}</span>
               <b-link
@@ -64,10 +82,19 @@
           </b-alert>
 
           <!-- form -->
-          <validation-observer ref="loginForm" #default="{ invalid }">
-            <b-form class="auth-login-form mt-2" @submit.prevent="login">
+          <validation-observer
+            ref="loginForm"
+            #default="{ invalid }"
+          >
+            <b-form
+              class="auth-login-form mt-2"
+              @submit.prevent="login"
+            >
               <!-- email -->
-              <b-form-group label="Username atau Email" label-for="login-email">
+              <b-form-group
+                label="Username atau Email"
+                label-for="login-email"
+              >
                 <validation-provider
                   #default="{ errors }"
                   label="Username atau Email"
@@ -142,7 +169,10 @@
                 block
                 :disabled="invalid || loading"
               >
-                <b-spinner v-if="loading" small />
+                <b-spinner
+                  v-if="loading"
+                  small
+                />
                 Masuk
               </b-button>
             </b-form>
@@ -175,12 +205,12 @@ import {
   BButton,
   VBTooltip,
 } from 'bootstrap-vue'
-import useJwt from '@/auth/jwt/useJwt'
-import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
-import store from '@/store/index'
-import { getHomeRouteForLoggedInUser } from '@/auth/utils'
 import { $themeConfig } from '@themeConfig'
+import { required, email } from '@validations'
+import { getHomeRouteForLoggedInUser } from '@/auth/utils'
+import useJwt from '@/auth/jwt/useJwt'
+import store from '@/store/index'
 
 export default {
   directives: {
@@ -214,7 +244,7 @@ export default {
       showResendEmailVerification: false,
       usernameEmail: '',
       password: '',
-      sideImg: require('@/assets/images/illustration/auth-illustration.png'),
+      sideImg: require('@/assets/images/illustration/auth-illustration-v2.png'),
       loading: false,
 
       // validation rules
@@ -239,7 +269,7 @@ export default {
     imgUrl() {
       if (store.state.appConfig.layout.skin === 'dark') {
         // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.sideImg = require('@/assets/images/illustration/auth-illustration.png')
+        this.sideImg = require('@/assets/images/illustration/auth-illustration-v2.png')
         return this.sideImg
       }
       return this.sideImg
@@ -499,7 +529,7 @@ export default {
           this.$store.commit('auth/UPDATE_USER_DATA', data)
 
           this.$router
-            .replace(getHomeRouteForLoggedInUser(role))
+            .go(getHomeRouteForLoggedInUser(role))
             .then(() => {})
             .catch(error => {
               this.$refs.loginForm.setErrors(error.response.data.error)

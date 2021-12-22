@@ -1,5 +1,8 @@
 <template>
-  <card-table :endpoint-get-all="endpointGetAll" :fields="fields" />
+  <card-table
+    :endpoint-get-all="endpointGetAll"
+    :fields="fields"
+  />
 </template>
 
 <script>

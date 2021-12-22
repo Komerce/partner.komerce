@@ -9,60 +9,114 @@
       :class="`pickup-label-wrapper ${selectedOptions === 1 || selectedOptions === 2 ? 'pickup-label-wrapper-2' : (selectedOptions === 150 ? 'pickup-label-wrapper-150' : (selectedOptions === 100 ? 'pickup-label-wrapper-100' : ''))} ${selectedOptions === 1 ? 'pickup-label-wrapper-1' : ''}`"
     >
       <div class="pickup-label-receiver-wrapper">
-        <div class="pickup-label-title">Penerima</div>
-        <div class="pickup-label-txt-wrapper">
-          <div class="pickup-label-key">Nama Penerima</div>
-          <div class="pickup-label-value">{{ item.customer_name }}</div>
+        <div class="pickup-label-title">
+          Penerima
         </div>
         <div class="pickup-label-txt-wrapper">
-          <div class="pickup-label-key">Alamat</div>
-          <div class="pickup-label-value">{{ item.detail_address }}</div>
+          <div class="pickup-label-key">
+            Nama Penerima
+          </div>
+          <div class="pickup-label-value">
+            {{ item.customer_name }}
+          </div>
+        </div>
+        <div class="pickup-label-txt-wrapper">
+          <div class="pickup-label-key">
+            Alamat
+          </div>
+          <div class="pickup-label-value">
+            {{ item.detail_address }}
+          </div>
         </div>
       </div>
       <div class="pickup-label-sender-wrapper">
-        <div class="pickup-label-title">Pengirim</div>
-        <div class="pickup-label-txt-wrapper">
-          <div class="pickup-label-key">Nama Pengirim</div>
-          <div class="pickup-label-value">{{ profile.user_name }}</div>
+        <div class="pickup-label-title">
+          Pengirim
         </div>
         <div class="pickup-label-txt-wrapper">
-          <div class="pickup-label-key">Kota / Kabupaten</div>
-          <div class="pickup-label-value">{{ profile.user_address }}</div>
+          <div class="pickup-label-key">
+            Nama Pengirim
+          </div>
+          <div class="pickup-label-value">
+            {{ profile.user_name }}
+          </div>
         </div>
         <div class="pickup-label-txt-wrapper">
-          <div class="pickup-label-key">No HP</div>
-          <div class="pickup-label-value">{{ profile.user_phone }}</div>
+          <div class="pickup-label-key">
+            Kota / Kabupaten
+          </div>
+          <div class="pickup-label-value">
+            {{ profile.user_address }}
+          </div>
+        </div>
+        <div class="pickup-label-txt-wrapper">
+          <div class="pickup-label-key">
+            No HP
+          </div>
+          <div class="pickup-label-value">
+            {{ profile.user_phone }}
+          </div>
         </div>
       </div>
       <div class="pickup-label-details-wrapper">
-        <div class="pickup-label-title">Detail Pengiriman</div>
-        <div class="pickup-label-txt-wrapper">
-          <div class="pickup-label-key">No Resi</div>
-          <div class="pickup-label-value">{{ item.airway_bill }}</div>
+        <div class="pickup-label-title">
+          Detail Pengiriman
         </div>
         <div class="pickup-label-txt-wrapper">
-          <div class="pickup-label-key">Nama Ekspedisi</div>
-          <div class="pickup-label-value">{{ item.shipping }}</div>
+          <div class="pickup-label-key">
+            No Resi
+          </div>
+          <div class="pickup-label-value">
+            {{ item.airway_bill }}
+          </div>
         </div>
         <div class="pickup-label-txt-wrapper">
-          <div class="pickup-label-key">No Orderan</div>
-          <div class="pickup-label-value">{{ item.order_no }}</div>
+          <div class="pickup-label-key">
+            Nama Ekspedisi
+          </div>
+          <div class="pickup-label-value">
+            {{ item.shipping }}
+          </div>
         </div>
         <div class="pickup-label-txt-wrapper">
-          <div class="pickup-label-key">SKU</div>
-          <div class="pickup-label-value">{{ item.product[0].product_sku }}</div>
+          <div class="pickup-label-key">
+            No Orderan
+          </div>
+          <div class="pickup-label-value">
+            {{ item.order_no }}
+          </div>
         </div>
         <div class="pickup-label-txt-wrapper">
-          <div class="pickup-label-key">Variasi</div>
-          <div class="pickup-label-value">{{ item.product[0].variant_name }}</div>
+          <div class="pickup-label-key">
+            SKU
+          </div>
+          <div class="pickup-label-value">
+            {{ item.product[0].product_sku }}
+          </div>
         </div>
         <div class="pickup-label-txt-wrapper">
-          <div class="pickup-label-key">Kuantiti</div>
-          <div class="pickup-label-value">{{ item.product[0].qty }}</div>
+          <div class="pickup-label-key">
+            Variasi
+          </div>
+          <div class="pickup-label-value">
+            {{ item.product[0].variant_name }}
+          </div>
         </div>
         <div class="pickup-label-txt-wrapper">
-          <div class="pickup-label-key">Metode Pembayaran</div>
-          <div class="pickup-label-value">{{ item.payment_method }}</div>
+          <div class="pickup-label-key">
+            Kuantiti
+          </div>
+          <div class="pickup-label-value">
+            {{ item.product[0].qty }}
+          </div>
+        </div>
+        <div class="pickup-label-txt-wrapper">
+          <div class="pickup-label-key">
+            Metode Pembayaran
+          </div>
+          <div class="pickup-label-value">
+            {{ item.payment_method }}
+          </div>
         </div>
       </div>
     </div>

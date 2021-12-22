@@ -1,7 +1,7 @@
 <template>
   <b-button
-    tabindex="0"
     v-b-popover.focus.bottom="text"
+    tabindex="0"
     variant="transparent"
     class="ml-1"
   >
@@ -17,6 +17,7 @@ export default {
   props: {
     text: {
       type: String,
+      default: '',
     },
   },
 }

@@ -98,12 +98,10 @@ router.beforeEach((to, _, next) => {
   const isLoggedIn = isUserLoggedIn()
 
   if (to.name === 'unauthenticated' || to.name === 'error-404') {
-    console.log('unauthenticated', isLoggedIn)
     return next()
   }
 
   if (!canNavigate(to) && !isLoggedIn) {
-    console.log('canNavigate', isLoggedIn)
     // Redirect to login if not logged in
     return next({ name: 'auth-login' })
   }

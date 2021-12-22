@@ -1124,6 +1124,32 @@
       :current-stage="2"
     />
 
+    <b-modal
+      ref="modal-validation-upload"
+      body-class="modalUploadWarning__body"
+      hide-header
+      hide-footer
+      hide-header-close
+    >
+      <div class="d-block text-center">
+        <img
+          :src="require('@/assets/images/icons/warning.svg')"
+          alt="warning"
+          width="142px"
+          height="134.43px"
+          class="modalUploadWarning__img"
+        >
+        <p class="modalUploadWarning__text">
+          Maaf, maksimal file hanya 2 MB.
+        </p>
+        <b-button
+          variant="danger"
+          class="modalUploadWarning__btn"
+          @click="handleOkModalValidationUpload"
+        >Oke</b-button>
+      </div>
+    </b-modal>
+
   </b-card-actions>
 </template>
 
@@ -1146,12 +1172,12 @@ import {
   BOverlay,
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
-import BCardActions from '@/@core/components/b-card-actions/BCardActions.vue'
 import draggable from 'vuedraggable'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { required } from '@validations'
 import { heightTransition } from '@core/mixins/ui/transition'
 import ToastificationContentVue from '@/@core/components/toastification/ToastificationContent.vue'
+import BCardActions from '@/@core/components/b-card-actions/BCardActions.vue'
 import useJwt from '@/auth/jwt/useJwt'
 import Onboarding from './Onboarding.vue'
 import httpKomship from '../setting-kompship/http_komship'
@@ -1285,6 +1311,17 @@ export default {
     itemsProvider() {
       const fields = [...this.fields]
       return fields
+    },
+  },
+  watch: {
+    imageFile: {
+      handler(val) {
+        if (val) {
+          if (val.size > 2 * 1024 * 1024) {
+            this.$refs['modal-validation-upload'].show()
+          }
+        }
+      },
     },
   },
   mounted() {
@@ -1513,6 +1550,10 @@ export default {
                   },
                 })
                 this.loadingSubmitPublish = false
+                setTimeout(() => {
+                  if (this.profile.is_onboarding) this.$refs.onboardingElement.showModal()
+                  this.loadingSubmitPublish = false
+                }, 2000)
               }).catch(() => {
                 this.loadingSubmit = false
                 this.$toast({
@@ -1768,6 +1809,10 @@ export default {
       }
     },
     fileUrl: file => (file ? URL.createObjectURL(file) : null),
+    handleOkModalValidationUpload() {
+      this.imageFile = null
+      this.$refs['modal-validation-upload'].hide()
+    },
   },
 }
 </script>
@@ -1776,5 +1821,32 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 * {
   font-family: Poppins;
+}
+.modalUploadWarning__body {
+  padding: 0px;
+}
+.modalUploadWarning__text {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 150%;
+  letter-spacing: 0.5px;
+  color: #222222;
+  margin: 27.79px 0px 40px;
+}
+.modalUploadWarning__img {
+  margin-top: 47.79px;
+}
+.modalUploadWarning__btn {
+  margin-bottom: 40px;
+  width: 120px;
+  height: 56px;
+  background: #F95031 !important;
+  border-radius: 12px;
+  border: none;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.5px;
+  color: #FFFFFF;
 }
 </style>

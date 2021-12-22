@@ -11,67 +11,99 @@
         v-if="currentStages === 0"
         class="onboarding-popup-wrapper"
       >
-        <div class="onboarding-popup-title">Halo, Selamat datang di Komship!</div>
-        <div class="onboarding-popup-subtitle">Yuk coba lakukan transaksi pertamamu di Komship dengan 3 langkah dan dapatkan berbagai benefitnya</div>
+        <div class="onboarding-popup-title">
+          Halo, Selamat datang di Komship!
+        </div>
+        <div class="onboarding-popup-subtitle">
+          Yuk coba lakukan transaksi pertamamu di Komship dengan 3 langkah dan dapatkan berbagai benefitnya
+        </div>
         <div class="onboarding-popup-icon">
           <div class="grey-box-wrapper">
             <div class="grey-box-wrapper-small">
               <div class="grey-box" />
             </div>
-            <div class="grey-box-text">Tambah Produk</div>
+            <div class="grey-box-text">
+              Tambah Produk
+            </div>
           </div>
-          <div class="grey-box-arrow"><b-icon-chevron-right /></div>
+          <div class="grey-box-arrow">
+            <b-icon-chevron-right />
+          </div>
           <div class="grey-box-wrapper">
             <div class="grey-box-wrapper-small">
               <div class="grey-box" />
             </div>
-            <div class="grey-box-text">Tambah Order</div>
+            <div class="grey-box-text">
+              Tambah Order
+            </div>
           </div>
-          <div class="grey-box-arrow"><b-icon-chevron-right /></div>
+          <div class="grey-box-arrow">
+            <b-icon-chevron-right />
+          </div>
           <div class="grey-box-wrapper">
             <div class="grey-box-wrapper-small">
               <div class="grey-box" />
             </div>
-            <div class="grey-box-text">Ajukan Pickup</div>
+            <div class="grey-box-text">
+              Ajukan Pickup
+            </div>
           </div>
         </div>
-        <div class="onboarding-popup-desc">Mari kita coba simulasi belajar menggunakan Komship dengan data percobaan</div>
+        <div class="onboarding-popup-desc">
+          Mari kita coba simulasi belajar menggunakan Komship dengan data percobaan
+        </div>
       </div>
 
       <div
         v-if="currentStages === 1"
         class="onboarding-popup-wrapper"
       >
-        <div class="onboarding-popup-title">Pertama, yuk kita coba masukan produk</div>
-        <div class="onboarding-popup-subtitle">Kamu cukup memasukan setiap produk satu kali maka produk akan otomatis tersimpan. Kamu dapat memantau penjualan setiap produk dan melihat produk paling laris.</div>
+        <div class="onboarding-popup-title">
+          Pertama, yuk kita coba masukan produk
+        </div>
+        <div class="onboarding-popup-subtitle">
+          Kamu cukup memasukan setiap produk satu kali maka produk akan otomatis tersimpan. Kamu dapat memantau penjualan setiap produk dan melihat produk paling laris.
+        </div>
         <div class="onboarding-popup-icon">
           <div class="grey-box-wrapper-full">
             <div class="grey-box" />
           </div>
         </div>
-        <div class="onboarding-popup-desc">Selain itu kamu juga dapat mengatur stok produkmu dan akan mendapat peringatan jika stok produkmu menipis.</div>
+        <div class="onboarding-popup-desc">
+          Selain itu kamu juga dapat mengatur stok produkmu dan akan mendapat peringatan jika stok produkmu menipis.
+        </div>
       </div>
 
       <div
         v-if="currentStages === 2"
         class="onboarding-popup-wrapper"
       >
-        <div class="onboarding-popup-title">Selamat! kamu telah berhasil menyimpan produk pertamamu di Komship</div>
-        <div class="onboarding-popup-subtitle">Kamu dapat menambahkan produk yang lain dengan mobila yang sama</div>
+        <div class="onboarding-popup-title">
+          Selamat! kamu telah berhasil menyimpan produk pertamamu di Komship
+        </div>
+        <div class="onboarding-popup-subtitle">
+          Kamu dapat menambahkan produk yang lain dengan mobila yang sama
+        </div>
         <div class="onboarding-popup-icon">
           <div class="grey-box-wrapper-full">
             <div class="grey-box" />
           </div>
         </div>
-        <div class="onboarding-popup-desc">Langkah selanjutnya adalah masukan orderan yang kamu miliki.</div>
+        <div class="onboarding-popup-desc">
+          Langkah selanjutnya adalah masukan orderan yang kamu miliki.
+        </div>
       </div>
 
       <div
         v-if="currentStages === 3"
         class="onboarding-popup-wrapper"
       >
-        <div class="onboarding-popup-title">Sekarang mari kita coba tambahkan orderan</div>
-        <div class="onboarding-popup-subtitle">Setelah menambahkan orderan kamu akan dapat melakukan penarikan saldo kapanpun, monitoring dan ekspor data penjualan hingga keuangan, megetahui customer loyal, persebaran lokasi customer, top order entry.</div>
+        <div class="onboarding-popup-title">
+          Sekarang mari kita coba tambahkan orderan
+        </div>
+        <div class="onboarding-popup-subtitle">
+          Setelah menambahkan orderan kamu akan dapat melakukan penarikan saldo kapanpun, monitoring dan ekspor data penjualan hingga keuangan, megetahui customer loyal, persebaran lokasi customer, top order entry.
+        </div>
         <div class="onboarding-popup-icon">
           <div class="grey-box-wrapper-full">
             <div class="grey-box" />
@@ -83,41 +115,57 @@
         v-if="currentStages === 4"
         class="onboarding-popup-wrapper"
       >
-        <div class="onboarding-popup-title">Yeay, berhasil menambahkan order</div>
-        <div class="onboarding-popup-subtitle">Kamu dapat menambahkan banyak orderan dengan mobila yang sama.</div>
+        <div class="onboarding-popup-title">
+          Yeay, berhasil menambahkan order
+        </div>
+        <div class="onboarding-popup-subtitle">
+          Kamu dapat menambahkan banyak orderan dengan mobila yang sama.
+        </div>
         <div class="onboarding-popup-icon">
           <div class="grey-box-wrapper-full">
             <div class="grey-box" />
           </div>
         </div>
-        <div class="onboarding-popup-desc">Langkah selanjutnya adalah ajukan pickup agar paket orderanmu dijemout kurir.</div>
+        <div class="onboarding-popup-desc">
+          Langkah selanjutnya adalah ajukan pickup agar paket orderanmu dijemout kurir.
+        </div>
       </div>
 
       <div
         v-if="currentStages === 5"
         class="onboarding-popup-wrapper"
       >
-        <div class="onboarding-popup-title">Satu langkah lagi, mari kita coba ajukan pickup</div>
-        <div class="onboarding-popup-subtitle">Kamu cukup mengisi form ajukan pickup, nanti kurir akan datang ke alamat yang sudah kamu tentukan untuk menjemput paket orderan. Kamu juga dapat mencetak label sesuai keinginan kamu.</div>
+        <div class="onboarding-popup-title">
+          Satu langkah lagi, mari kita coba ajukan pickup
+        </div>
+        <div class="onboarding-popup-subtitle">
+          Kamu cukup mengisi form ajukan pickup, nanti kurir akan datang ke alamat yang sudah kamu tentukan untuk menjemput paket orderan. Kamu juga dapat mencetak label sesuai keinginan kamu.
+        </div>
         <div class="onboarding-popup-icon">
           <div class="grey-box-wrapper-full">
             <div class="grey-box" />
           </div>
         </div>
-        <div class="onboarding-popup-desc">Pastikan semua paket sudah siap untuk dikirim yaa!</div>
+        <div class="onboarding-popup-desc">
+          Pastikan semua paket sudah siap untuk dikirim yaa!
+        </div>
       </div>
 
       <div
         v-if="currentStages === 6"
         class="onboarding-popup-wrapper"
       >
-        <div class="onboarding-popup-title">Yeay!</div>
+        <div class="onboarding-popup-title">
+          Yeay!
+        </div>
         <div class="onboarding-popup-icon">
           <div class="grey-box-wrapper-full">
             <div class="grey-box" />
           </div>
         </div>
-        <div class="onboarding-popup-desc">Selamat kamu telah berhasil menyelesaikan latihan menggunakan Kompship. Selanjutnya kamu dapat langsung menggunakan layanan Kompship dan dapatkan segudang benefitnya.</div>
+        <div class="onboarding-popup-desc">
+          Selamat kamu telah berhasil menyelesaikan latihan menggunakan Komship. Selanjutnya kamu dapat langsung menggunakan layanan Komship dan dapatkan segudang benefitnya.
+        </div>
       </div>
 
       <div

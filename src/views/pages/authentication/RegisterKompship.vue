@@ -171,7 +171,7 @@
                         :state="errors.length > 0 || submitErrors.agree ? false:null"
                         required
                       >
-                        Saya setuju dengan syarat dan ketentuan Kompship
+                        Saya setuju dengan syarat dan ketentuan Komship
                       </b-form-checkbox>
                     </validation-provider>
                   </b-form-group>
@@ -218,10 +218,6 @@
 </template>
 <script>
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
-import ToastificationContentVue from '@/@core/components/toastification/ToastificationContent.vue'
-import { togglePasswordVisibility } from '@core/mixins/ui/forms'
-import { required, email } from '@validations'
-import httpKomship from '@/views/pages/komship/setting-kompship/http_komship'
 import {
   BCol,
   BNavbarBrand,
@@ -235,6 +231,10 @@ import {
   BSpinner,
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
+import { togglePasswordVisibility } from '@core/mixins/ui/forms'
+import { required, email } from '@validations'
+import httpKomship from '@/views/pages/komship/setting-kompship/http_komship'
+import ToastificationContentVue from '@/@core/components/toastification/ToastificationContent.vue'
 
 export default {
   components: {

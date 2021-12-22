@@ -57,7 +57,7 @@ import {
   BIconChevronLeft,
   BBadge,
 } from 'bootstrap-vue'
-import DataOrderTable from '../order/DataOrderTable.vue'
+import DataOrderTable from '../order/DataOrderDetail.vue'
 import AddPickupPopupPrint from './AddPickupPopupPrint.vue'
 import PickupLabelPrint from './PickupLabelPrint.vue'
 

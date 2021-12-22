@@ -3,7 +3,9 @@
     <div class="card">
       <div class="card-header align-items-start">
         <div>
-          <p class="h-text-lg mb-0">Rincian Penarikan</p>
+          <p class="h-text-lg mb-0">
+            Rincian Penarikan
+          </p>
           <p class="h-text-sm font-weight-normal">
             {{ dateStart }} - {{ dateEnd }}
           </p>
@@ -11,60 +13,60 @@
         <span
           v-if="statusPenerimaan.toLowerCase() === 'completed'"
           class="font-weight-bold rounded status-success"
-          >{{ statusPenerimaan }}</span
-        >
+        >{{ statusPenerimaan }}</span>
         <span
           v-else-if="statusPenerimaan.toLowerCase() === 'on_review'"
           class="font-weight-bold rounded status-warning"
-          >{{ statusPenerimaan }}</span
-        >
+        >{{ statusPenerimaan }}</span>
         <span
           v-else-if="statusPenerimaan.toLowerCase() === 'requested'"
           class="font-weight-bold rounded status-warning"
-          >{{ statusPenerimaan }}</span
-        >
+        >{{ statusPenerimaan }}</span>
         <span
           v-else-if="statusPenerimaan.toLowerCase() === 'canceled'"
           class="font-weight-bold rounded status-danger"
-          >{{ statusPenerimaan }}</span
-        >
-        <span v-else class="font-weight-bold rounded status-danger">{{
+        >{{ statusPenerimaan }}</span>
+        <span
+          v-else
+          class="font-weight-bold rounded status-danger"
+        >{{
           statusPenerimaan
         }}</span>
       </div>
       <div class="card-body px-0">
-          <div class="row px-2">
-            <div class="col-12 col-md-4">
-              <div class="rounded border p-1">
-                <p class="h-text-md mb-0">
-                  <span class="font-weight-normal">Total Saldo: </span>
-                  <span class="text-orange">{{
-                    formatRupiah(totalSaldo)
-                  }}</span>
-                </p>
-              </div>
+        <div class="row px-2">
+          <div class="col-12 col-md-4">
+            <div class="rounded border p-1">
+              <p class="h-text-md mb-0">
+                <span class="font-weight-normal">Total Saldo: </span>
+                <span class="text-orange">{{
+                  formatRupiah(totalSaldo)
+                }}</span>
+              </p>
             </div>
-            <div class="col-12 col-md-5">
-              <div class="rounded border p-1">
-                <p class="h-text-md mb-0">
-                  <span class="font-weight-normal"
-                    >Nominal Penarikan Saldo:
-                  </span>
-                  {{ formatRupiah(nominalPenarikan) }}
-                </p>
-                <p class="h-text-md mb-0">
-                  <span class="font-weight-normal">Sisa Saldo: </span>
-                  {{ formatRupiah(sisaSaldo) }}
-                </p>
-              </div>
+          </div>
+          <div class="col-12 col-md-5">
+            <div class="rounded border p-1">
+              <p class="h-text-md mb-0">
+                <span
+                  class="font-weight-normal"
+                >Nominal Penarikan Saldo:
+                </span>
+                {{ formatRupiah(nominalPenarikan) }}
+              </p>
+              <p class="h-text-md mb-0">
+                <span class="font-weight-normal">Sisa Saldo: </span>
+                {{ formatRupiah(sisaSaldo) }}
+              </p>
             </div>
-            <table class="table table-borderless mt-3">
-              <thead>
-                <tr>
-                  <th
-                    v-for="title in tableTitles"
-                    :key="title"
-                    class="
+          </div>
+          <table class="table table-borderless mt-3">
+            <thead>
+              <tr>
+                <th
+                  v-for="title in tableTitles"
+                  :key="title"
+                  class="
                       h-text-sm
                       transform-none
                       h-text-dark
@@ -72,83 +74,92 @@
                       h-border-bottom
                       pb-2
                     "
-                    scope="col"
-                  >
-                    {{ title }}
-                    <popover-info
+                  scope="col"
+                >
+                  {{ title }}
+                  <popover-info
                     v-if="
-                        tableTitles.indexOf(title) == 3
-                      "
-                      text="Ongkos kirim dari orderan."
-                    />
-                                       <popover-info
+                      tableTitles.indexOf(title) == 3
+                    "
+                    text="Ongkos kirim dari orderan."
+                  />
+                  <popover-info
                     v-if="
-                        tableTitles.indexOf(title) == 4
-                      "
-                      text="Biaya COD dari orderan yang menggunakan layanan COD."
-                    />
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="h-text-xs">
-                <tr
-                  v-for="rincian in rincianSaldos"
-                  :key="rincianSaldos.indexOf(rincian)"
-                  :class="
-                    'py-1' +
+                      tableTitles.indexOf(title) == 4
+                    "
+                    text="Biaya COD dari orderan yang menggunakan layanan COD."
+                  />
+                </th>
+              </tr>
+            </thead>
+            <tbody class="h-text-xs">
+              <tr
+                v-for="rincian in rincianSaldos"
+                :key="rincianSaldos.indexOf(rincian)"
+                :class="
+                  'py-1' +
                     (rincianSaldos.indexOf(rincian) != rincianSaldos.length - 1
                       ? ' border-bottom'
                       : '')
+                "
+              >
+                <th>
+                  <p class="mb-0 h-text-dark">
+                    {{ rincian.tanggal }}
+                  </p>
+                </th>
+                <td>
+                  <p class="mb-0 h-text-dark font-weight-bold">
+                    {{ rincian.jenisOrder }}
+                  </p>
+                  <p
+                    v-if="rincian.retur"
+                    class="text-xxs mb-0"
+                  >
+                    Retur
+                  </p>
+                </td>
+                <td class="h-text-dark font-weight-bold">
+                  {{ formatRupiah(rincian.nilaiOrder) }}
+                </td>
+                <td>
+                  <p class="mb-0 h-text-dark font-weight-bold">
+                    {{ formatRupiah(rincian.ongkir) }}
+                  </p>
+                  <p
+                    v-if="rincian.ongkirTambahan"
+                    class="text-xxs mb-0 font-weight-bold"
+                  >
+                    {{ formatRupiah(rincian.ongkirTambahan) }}
+                  </p>
+                </td>
+                <td class="h-text-dark font-weight-bold">
+                  {{
+                    rincian.biayaCod !== null
+                      ? formatRupiah(rincian.biayaCod)
+                      : '-'
+                  }}
+                </td>
+                <td
+                  :class="
+                    'font-weight-bold ' +
+                      (rincian.negative ? 'text-danger' : 'text-success')
                   "
                 >
-                  <th>
-                    <p class="mb-0 h-text-dark">{{ rincian.tanggal }}</p>
-                  </th>
-                  <td>
-                    <p class="mb-0 h-text-dark font-weight-bold">
-                      {{ rincian.jenisOrder }}
-                    </p>
-                    <p v-if="rincian.retur" class="text-xxs mb-0">Retur</p>
-                  </td>
-                  <td class="h-text-dark font-weight-bold">
-                    {{ formatRupiah(rincian.nilaiOrder) }}
-                  </td>
-                  <td>
-                    <p class="mb-0 h-text-dark font-weight-bold">
-                      {{ formatRupiah(rincian.ongkir) }}
-                    </p>
-                    <p
-                      v-if="rincian.ongkirTambahan"
-                      class="text-xxs mb-0 font-weight-bold"
-                    >
-                      {{ formatRupiah(rincian.ongkirTambahan) }}
-                    </p>
-                  </td>
-                  <td class="h-text-dark font-weight-bold">
-                    {{
-                      rincian.biayaCod !== null
-                        ? formatRupiah(rincian.biayaCod)
-                        : '-'
-                    }}
-                  </td>
-                  <td
-                    :class="
-                      'font-weight-bold ' +
-                      (rincian.negative ? 'text-danger' : 'text-success')
-                    "
-                  >
-                    {{
-                      (rincian.negative ? '-' : '+') +
+                  {{
+                    (rincian.negative ? '-' : '+') +
                       formatRupiah(rincian.saldo)
-                    }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+                  }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
       <div class="card-footer">
-        <p class="font-weight-bold mb-0">Catatan:</p>
+        <p class="font-weight-bold mb-0">
+          Catatan:
+        </p>
         <p>
           Penarikan saldo kamu memerlukan review oleh pihak admin, dikarenakan
           adanya kejanggalan dalam pendapatan kamu.
@@ -179,15 +190,6 @@ export default {
       tableHeadInfos: [3, 4],
     }
   },
-  methods: {
-    formatRibuan(x) {
-      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-    },
-    formatRupiah(x) {
-      if (x === '-') return x
-      return `Rp ${this.formatRibuan(x)}`
-    },
-  },
   computed: {
     ...mapState('saldoPenarikan', [
       'dateStart',
@@ -202,6 +204,15 @@ export default {
   beforeMount() {
     this.$store.commit('saldoPenarikan/UPDATE_ID', this.$route.params.id)
     this.$store.dispatch('saldoPenarikan/init')
+  },
+  methods: {
+    formatRibuan(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    },
+    formatRupiah(x) {
+      if (x === '-') return x
+      return `Rp ${this.formatRibuan(x)}`
+    },
   },
 }
 </script>

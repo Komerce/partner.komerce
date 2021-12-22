@@ -19,15 +19,27 @@
           opacity=".5"
           rounded="sm"
         >
-          <b-table striped hover :fields="fields" :items="items" show-empty>
+          <b-table
+            striped
+            hover
+            :fields="fields"
+            :items="items"
+            show-empty
+          >
             <template #cell(minimum_income)="data">
               {{ data.value | rupiah }}
             </template>
             <template #cell(sharing_fee_type)="data">
-              <b-badge variant="success" v-if="data.value == 'rp'"
-                >Nominal Rupiah</b-badge
+              <b-badge
+                v-if="data.value == 'rp'"
+                variant="success"
+              >Nominal Rupiah</b-badge>
+              <b-badge
+                v-else
+                variant="primary"
               >
-              <b-badge variant="primary" v-else>Presentase %</b-badge>
+                Presentase %
+              </b-badge>
             </template>
             <template #cell(sharing_fee_value)="data">
               <span v-if="data.item.sharing_fee_type == 'rp'">{{

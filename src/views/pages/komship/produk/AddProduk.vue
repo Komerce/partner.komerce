@@ -73,6 +73,7 @@
                 <label
                   for="uploadImage"
                 >
+
                   <b-avatar
                     v-if="imageFile === null"
                     variant="light-dark"
@@ -589,16 +590,18 @@
                     <b-col md="4">
                       <b-form-input
                         v-model="price"
-                        type="number"
+                        type="text"
                         placeholder="Rp | Harga"
+                        @keypress="onlyNumber"
                       />
                     </b-col>
 
                     <b-col md="2">
                       <b-form-input
                         v-model="stock"
-                        type="number"
+                        type="text"
                         placeholder="Stok"
+                        @keypress="onlyNumber"
                       />
                     </b-col>
 
@@ -755,7 +758,8 @@
                               >
                                 <b-form-input
                                   v-model="itemsVariant.variant3.price"
-                                  type="number"
+                                  type="text"
+                                  @keypress="onlyNumber"
                                 />
                               </div>
                             </b-col>
@@ -770,7 +774,8 @@
                             >
                               <b-form-input
                                 v-model="item.variant2.price"
-                                type="number"
+                                type="text"
+                                @keypress="onlyNumber"
                               />
                             </b-col>
                           </div>
@@ -779,7 +784,8 @@
                           >
                             <b-form-input
                               v-model="data.item.variant1.price"
-                              type="number"
+                              type="text"
+                              @keypress="onlyNumber"
                             />
                           </div>
                         </div>
@@ -835,7 +841,8 @@
                               >
                                 <b-form-input
                                   v-model="itemsVariant.variant3.stock"
-                                  type="number"
+                                  type="text"
+                                  @keypress="onlyNumber"
                                 />
                               </div>
                             </b-col>
@@ -850,7 +857,8 @@
                             >
                               <b-form-input
                                 v-model="item.variant2.stock"
-                                type="number"
+                                type="text"
+                                @keypress="onlyNumber"
                               />
                             </b-col>
                           </div>
@@ -859,7 +867,8 @@
                           >
                             <b-form-input
                               v-model="data.item.variant1.stock"
-                              type="number"
+                              type="text"
+                              @keypress="onlyNumber"
                             />
                           </div>
                         </div>
@@ -945,6 +954,7 @@
                   type="number"
                   placeholder="Masukan jumlah stok barang"
                   :state="errors.length > 0 ? false:null"
+                  @keypress="onlyNumber"
                 />
                 <small class="text-primary">{{ errors[0] }}</small>
               </validation-provider>
@@ -969,6 +979,7 @@
                   type="number"
                   placeholder="Rp  |  Masukan harga barang"
                   :state="errors.length > 0 ? false:null"
+                  @keypress="onlyNumber"
                 />
                 <small class="text-primary">{{ errors[0] }}</small>
               </validation-provider>
@@ -993,14 +1004,16 @@
                   #default="{errors}"
                   name="Berat"
                   rules="required"
+                  @keypress="onlyNumber"
                 >
                   <b-input-group class="input-group-merge">
                     <b-form-input
                       id="hi-first-name"
                       v-model="weightProduct"
-                      type="number"
+                      type="text"
                       placeholder="1000"
                       :state="errors.length > 0 ? false:null"
+                      @keypress="onlyNumber"
                     />
                     <b-input-group-append is-text>
                       gram
@@ -1027,8 +1040,9 @@
                     <b-form-input
                       id="hi-first-name"
                       v-model="lengthProduct"
-                      type="number"
+                      type="text"
                       placeholder="P"
+                      @keypress="onlyNumber"
                     />
                     <b-input-group-append is-text>
                       cm
@@ -1040,8 +1054,9 @@
                     <b-form-input
                       id="hi-first-name"
                       v-model="widthProduct"
-                      type="number"
+                      type="text"
                       placeholder="L"
+                      @keypress="onlyNumber"
                     />
                     <b-input-group-append is-text>
                       cm
@@ -1053,8 +1068,9 @@
                     <b-form-input
                       id="hi-first-name"
                       v-model="heightProduct"
-                      type="number"
+                      type="text"
                       placeholder="T"
+                      @keypress="onlyNumber"
                     />
                     <b-input-group-append is-text>
                       cm
@@ -1156,11 +1172,11 @@ import {
   BOverlay,
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
-import BCardActions from '@/@core/components/b-card-actions/BCardActions.vue'
 import draggable from 'vuedraggable'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { required } from '@validations'
 import { heightTransition } from '@core/mixins/ui/transition'
+import BCardActions from '@/@core/components/b-card-actions/BCardActions.vue'
 import ToastificationContentVue from '@/@core/components/toastification/ToastificationContent.vue'
 import useJwt from '@/auth/jwt/useJwt'
 import httpKomship from '../setting-kompship/http_komship'
@@ -1295,6 +1311,12 @@ export default {
     },
   },
   methods: {
+    onlyNumber($event) {
+      const keyCode = ($event.keyCode ? $event.keyCode : $event.which)
+      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) { // 46 is dot
+        $event.preventDefault()
+      }
+    },
     submitPublish() {
       // eslint-disable-next-line no-plusplus
       for (let x = 0; x < this.formChoices1.length; x++) {
@@ -1477,7 +1499,6 @@ export default {
           }).then(response => {
             this.productId = response.data.data.product_id
             if (this.imageFile !== null) {
-              // Store image
               const formData = new FormData()
               formData.append('product_id', response.data.data.product_id)
               formData.append('image_path', this.imageFile)

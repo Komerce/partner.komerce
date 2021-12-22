@@ -16,7 +16,7 @@
             Besaran Biaya' }}
           </h4>
         </div>
-        <b-form @submit.prevent="submitData()">
+        <b-form  novalidate class="needs-validation" @submit.prevent="submitData()">
           <div class="d-flex justify-content-end mb-1">
             <div class="d-flex">
               <b-button
@@ -33,8 +33,7 @@
                 size="sm"
                 style="font-weight: 400;font-size:16px;"
                 class="btn-custom btn-custom--edit"
-                @click="simpanFormEdit"
-                >Simpan
+              >Simpan
               </b-button>
             </div>
           </div>
@@ -89,15 +88,23 @@
                 >
               </b-col>
               <b-col cols="3">
-                <b-form-select v-model="selected" :options="options" />
+                <b-form-select v-model="service_name" :options="optionsServiceName" />
               </b-col>
               <b-col cols="3">
                 <b-input-group append="%">
                   <b-form-input
                     id="cashback_from"
                     v-model="cashback_from"
+                    :state="cashback_from >= 0"
+                    type="number"
+                    min="0"
+                    max="100"
+                    inputmode="decimal"
                     placeholder="100"
                   />
+                  <b-form-invalid-feedback tooltip>
+                    Please provide a valid data.
+                  </b-form-invalid-feedback>
                 </b-input-group>
               </b-col>
               <b-col cols="3">
@@ -105,8 +112,16 @@
                   <b-form-input
                     id="cashback_to"
                     v-model="cashback_to"
+                    :state="cashback_to >= 0"
+                    type="number"
+                    min="0"
+                    max="100"
+                    inputmode="decimal"
                     placeholder="100"
                   />
+                  <b-form-invalid-feedback tooltip>
+                    Please provide a valid data.
+                  </b-form-invalid-feedback>
                 </b-input-group>
               </b-col>
             </b-row>
@@ -122,8 +137,16 @@
                   <b-form-input
                     id="service_fee_from"
                     v-model="service_fee_from"
+                    :state="service_fee_from >= 0"
+                    type="number"
+                    min="0"
+                    max="100"
+                    inputmode="decimal"
                     placeholder="2.5"
                   />
+                  <b-form-invalid-feedback tooltip>
+                    Please provide a valid data.
+                  </b-form-invalid-feedback>
                 </b-input-group>
               </b-col>
               <b-col cols="3">
@@ -131,258 +154,245 @@
                   <b-form-input
                     id="service_fee_to"
                     v-model="service_fee_to"
+                    :state="service_fee_to >= 0"
+                    type="number"
+                    min="0"
+                    max="100"
+                    inputmode="decimal"
                     placeholder="2.5"
                   />
+                  <b-form-invalid-feedback tooltip>
+                    Please provide a valid data.
+                  </b-form-invalid-feedback>
                 </b-input-group>
               </b-col>
             </b-row>
           </div>
-        </b-form>
 
-        <div class="mt-2">
-          <h3 style="font-weight: 600;font-size: 20px;color: #222222;">
-            Penjemputan Barang
-          </h3>
-          <b-row class="mt-1 align-items-center">
-            <b-col md="3">
-              <span style="font-weight: 400;font-size:16px;color:#222222;">
-                Maksimal Penjemputan
-              </span>
-            </b-col>
-            <b-col md="3">
-              <b-form-input
-                id="max_pickup_time"
+          <div class="mt-2">
+            <h3 style="font-weight: 600;font-size: 20px;color: #222222;">
+              Penjemputan Barang
+            </h3>
+            <b-row class="mt-1 align-items-center">
+              <b-col md="3">
+                <span style="font-weight: 400;font-size:16px;color:#222222;">
+                  Maksimal Penjemputan
+                </span>
+              </b-col>
+              <b-col md="3">
+                <b-form-timepicker
+                ref="max_pickup_time"
                 v-model="max_pickup_time"
-                placeholder="15:00 WIB"
-              />
-            </b-col>
-          </b-row>
-          <b-row class="mt-1 align-items-center">
-            <b-col md="3">
-              <span style="font-weight: 400;font-size:16px;color:#222222;">
-                Kendaraan
-              </span>
-            </b-col>
-            <b-col md="3">
-              <div class="d-flex justify-content-between">
-                <div
-                  id="choicemotor"
-                  class="choiceTypeVehicle"
-                  @click="handleChoiceTypeVehicle('motor')"
-                >
-                  <img
-                    :src="require('@/assets/images/elements/expedisimotor.png')"
-                    alt="motor"
-                    width="40px"
-                    height="26px"
-                  />
-                  <span>Motor</span>
-                </div>
+                right
+                aria-controls="example-input"
+                locale="en"
+                :hour12="false"
+                @context="onChangeTime"
+                />
+              </b-col>
+            </b-row>
+            <b-row class="mt-1 align-items-center">
+              <b-col md="3">
+                <span style="font-weight: 400;font-size:16px;color:#222222;">
+                  Kendaraan
+                </span>
+              </b-col>
+              <b-col md="3">
+                <div class="d-flex justify-content-between">
+                  <div
+                    id="choicemotor"
+                    class="choiceTypeVehicle"
+                    @click="handleChoiceTypeVehicle('motor')"
+                  >
+                    <img
+                      :src="require('@/assets/images/elements/expedisimotor.png')"
+                      alt="motor"
+                      width="40px"
+                      height="26px"
+                    />
+                    <span>Motor</span>
+                  </div>
 
-                <div
-                  id="choicemobil"
-                  class="choiceTypeVehicle"
-                  @click="handleChoiceTypeVehicle('mobil')"
-                >
-                  <img
-                    :src="require('@/assets/images/elements/expedisimobil.png')"
-                    alt="mobil"
-                    width="54px"
-                    height="24px"
-                  />
-                  <span>Mobil</span>
-                </div>
+                  <div
+                    id="choicemobil"
+                    class="choiceTypeVehicle"
+                    @click="handleChoiceTypeVehicle('mobil')"
+                  >
+                    <img
+                      :src="require('@/assets/images/elements/expedisimobil.png')"
+                      alt="mobil"
+                      width="54px"
+                      height="24px"
+                    />
+                    <span>Mobil</span>
+                  </div>
 
-                <div
-                  id="choicetruk"
-                  class="choiceTypeVehicle"
-                  @click="handleChoiceTypeVehicle('truk')"
-                >
-                  <img
-                    :src="require('@/assets/images/elements/expedisitruk.png')"
-                    alt="truk"
-                    width="34px"
-                    height="30px"
-                  />
-                  <span>Truk</span>
+                  <div
+                    id="choicetruk"
+                    class="choiceTypeVehicle"
+                    @click="handleChoiceTypeVehicle('truk')"
+                  >
+                    <img
+                      :src="require('@/assets/images/elements/expedisitruk.png')"
+                      alt="truk"
+                      width="34px"
+                      height="30px"
+                    />
+                    <span>Truk</span>
+                  </div>
                 </div>
-              </div>
-            </b-col>
-          </b-row>
-        </div>
+              </b-col>
+            </b-row>
+          </div>
 
-        <div class="mt-3">
-          <h3 style="font-weight: 600;font-size:20px;color:#222222;">
-            Pembatasan Daerah Akses COD
-          </h3>
-          <b-row class="mt-1 align-items-center">
-            <b-col md="4">
-              <span style="font-weight: 400;font-size:16px;color:#222222;">
-                Data Daerah Tanpa Akses
-              </span>
-            </b-col>
-            <b-col md="3">
+          <div class="mt-3">
+            <h3 style="font-weight: 600;font-size:20px;color:#222222;">
+              Pembatasan Daerah Akses COD
+            </h3>
+            <b-row class="mt-1 align-items-center">
+              <b-col md="4">
+                <span style="font-weight: 400;font-size:16px;color:#222222;">
+                  Data Daerah Tanpa Akses
+                </span>
+              </b-col>
+              <b-col md="3">
+                <b-button
+                  block
+                  variant="outline-primary"
+                  style="font-weight: 400;font-size:16px;"
+                  class="btn-custom--editakseslayanan"
+                  @click="$router.push(`/biaya-ekspedisi/daerah-tanpa-akses`)"
+                >
+                  Lihat Data
+                </b-button>
+              </b-col>
+            </b-row>
+          </div>
+
+          <div class="mt-3">
+            <h3 style="font-weight: 600;font-size:20px;color:#222222;">
+              Kriteria Ongkir
+            </h3>
+            <div
+              v-for="(inputCriteria, index) in criteriasData"
+              :key="`inputCriteria-${index}`"
+              class="mt-2"
+            >
+              <b-row class="align-items-center justify-content-start">
+                <b-col>
+                  <div
+                    style="display: flex;align-items: center;"
+                  >
+                    <span
+                      style="font-weight: 500;font-size:18px;color:#222222;"
+                    >
+                      Kriteria {{ index + 1 }}
+                    </span>
+                    <b-button
+                      v-show="index !== 0"
+                      @click="hapusKriteria(index)"
+                      variant="outline-primary"
+                      style="margin-left: 1em;"
+                    >
+                      Hapus
+                    </b-button>
+                  </div>
+                </b-col>
+              </b-row>
+              <b-row class="my-1">
+                <b-col cols="3">
+                  <span style="font-weight: 400;font-size:16px;color:#222222;">
+                    Daerah</span
+                  >
+                </b-col>
+                <b-col cols="3">
+                  <b-form-select
+                    v-model="inputCriteria.type"
+                    :id="`inputCriteria-type-${index}`"
+                    :options="optionsCriteria"
+                  />
+                </b-col>
+                <b-col cols="3">
+                  <v-select
+                    v-model="inputCriteria.destination"
+                    :id="`inputCriteria-destination-${index}`"
+                    :options="optionsKota"
+                    :reduce="optionsKota => optionsKota.value"
+                    multiple
+                    label="label"
+                  />
+                </b-col>
+              </b-row>
+              <b-row class="mt-1">
+                <b-col cols="3">
+                  <span style="font-weight: 400;font-size:16px;color:#222222;">
+                    Biaya</span
+                  >
+                </b-col>
+                <b-col cols="3">
+                  <span style="font-weight: 400;font-size:16px;color:#222222;">
+                    Pengiriman</span
+                  >
+                </b-col>
+                <b-col cols="3">
+                  <span style="font-weight: 400;font-size:16px;color:#222222;">
+                    Return</span
+                  >
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col cols="3" />
+                <b-col cols="3">
+                  <b-input-group append="%">
+                    <b-form-input
+                      v-model="inputCriteria.delivery"
+                      :id="`inputCriteria-delivery-${index}`"
+                      :state="inputCriteria.delivery >= 0"
+                      type="number"
+                      min="0"
+                      max="100"
+                      inputmode="decimal"
+                      placeholder="100"
+                    />
+                    <b-form-invalid-feedback tooltip>
+                      Please provide a valid data.
+                    </b-form-invalid-feedback>
+                  </b-input-group>
+                </b-col>
+                <b-col cols="3">
+                  <b-input-group append="%">
+                    <b-form-input
+                      v-model="inputCriteria.retur"
+                      :state="inputCriteria.retur >= 0"
+                      :id="`inputCriteria-retur-${index}`"
+                      type="number"
+                      min="0"
+                      max="100"
+                      inputmode="decimal"
+                      placeholder="100"
+                    />
+                    <b-form-invalid-feedback tooltip>
+                      Please provide a valid data.
+                    </b-form-invalid-feedback>
+                  </b-input-group>
+                </b-col>
+              </b-row>
+            </div>
+          </div>
+
+          <b-row class="justify-content-end">
+            <b-col class="justify-content-end" style="display: flex;">
               <b-button
-                block
                 variant="outline-primary"
+                size="sm"
+                class="mt-1 btn-custom btn-custom--edit"
                 style="font-weight: 400;font-size:16px;"
-                class="btn-custom--editakseslayanan"
-                @click="$router.push(`/biaya-ekspedisi/daerah-tanpa-akses`)"
-              >
-                Lihat Data
+                @click="tambahKriteria(criteriasData)"
+              >Tambahkan Kriteria
               </b-button>
             </b-col>
           </b-row>
-        </div>
-
-        <div class="mt-3">
-          <h3 style="font-weight: 600;font-size:20px;color:#222222;">
-            Kriteria Ongkir
-          </h3>
-          <b-row class="mt-1 align-items-center">
-            <b-col md="3">
-              <span style="font-weight: 500;font-size:18px;color:#222222;">
-                Kriteria 1
-              </span>
-            </b-col>
-          </b-row>
-          <b-row class="my-1">
-            <b-col cols="3">
-              <span style="font-weight: 400;font-size:16px;color:#222222;">
-                Daerah</span
-              >
-            </b-col>
-            <b-col cols="3">
-              <b-form-select
-                v-model="selectedCriteria"
-                :options="optionsCriteria"
-              />
-            </b-col>
-            <b-col cols="3">
-              <Dropdown
-                :options="optionsKota"
-                v-on:selected="selectedKota"
-                v-on:filter="optionsKota"
-                :disabled="false"
-                class="custom-dropdown"
-                name="zipcode"
-                :maxItem="10"
-                placeholder="Please select an option"
-              >
-              </Dropdown>
-            </b-col>
-          </b-row>
-          <b-row class="mt-1">
-            <b-col cols="3">
-              <span style="font-weight: 400;font-size:16px;color:#222222;">
-                Biaya</span
-              >
-            </b-col>
-            <b-col cols="3">
-              <span style="font-weight: 400;font-size:16px;color:#222222;">
-                Pengiriman</span
-              >
-            </b-col>
-            <b-col cols="3">
-              <span style="font-weight: 400;font-size:16px;color:#222222;">
-                Return</span
-              >
-            </b-col>
-          </b-row>
-          <b-row>
-            <b-col cols="3" />
-            <b-col cols="3">
-              <b-input-group append="%">
-                <b-form-input
-                  id="delivery"
-                  v-model="delivery"
-                  placeholder="100"
-                />
-              </b-input-group>
-            </b-col>
-            <b-col cols="3">
-              <b-input-group append="%">
-                <b-form-input id="retur" v-model="retur" placeholder="0" />
-              </b-input-group>
-            </b-col>
-          </b-row>
-        </div>
-
-        <div class="mt-2">
-          <b-row class="mt-1 align-items-center">
-            <b-col md="3">
-              <span style="font-weight: 500;font-size:18px;color:#222222;">
-                Kriteria 2
-              </span>
-            </b-col>
-          </b-row>
-          <b-row class="my-1">
-            <b-col cols="3">
-              <span style="font-weight: 400;font-size:16px;color:#222222;">
-                Daerah</span
-              >
-            </b-col>
-            <b-col cols="3">
-              <b-form-select
-                v-model="selectedCriteria"
-                :options="optionsCriteria"
-              />
-            </b-col>
-            <b-col cols="3">
-              <Dropdown
-                :options="optionsKota"
-                v-on:selected="selectedKota"
-                v-on:filter="optionsKota"
-                :disabled="false"
-                class="custom-dropdown"
-                name="zipcode"
-                :maxItem="10"
-                placeholder="Please select an option"
-              >
-              </Dropdown>
-            </b-col>
-          </b-row>
-          <b-row class="mt-1">
-            <b-col cols="3">
-              <span style="font-weight: 400;font-size:16px;color:#222222;">
-                Biaya</span
-              >
-            </b-col>
-            <b-col cols="3">
-              <span style="font-weight: 400;font-size:16px;color:#222222;">
-                Pengiriman</span
-              >
-            </b-col>
-            <b-col cols="3">
-              <span style="font-weight: 400;font-size:16px;color:#222222;">
-                Return</span
-              >
-            </b-col>
-          </b-row>
-          <b-row>
-            <b-col cols="3" />
-            <b-col cols="3">
-              <b-input-group append="%">
-                <b-form-input id="name" v-model="name" placeholder="100" />
-              </b-input-group>
-            </b-col>
-            <b-col cols="3">
-              <b-input-group append="%">
-                <b-form-input id="name" v-model="name" placeholder="0" />
-              </b-input-group>
-            </b-col>
-          </b-row>
-          <b-row class="justify-content-end">
-            <b-button
-              variant="outline-primary"
-              size="sm"
-              class="mt-1 btn-custom btn-custom--edit"
-              style="font-weight: 400;font-size:16px;"
-              @click="saveKriteria"
-              >Save
-            </b-button>
-          </b-row>
-        </div>
+        </b-form>
       </b-card-body>
     </b-card>
   </div>

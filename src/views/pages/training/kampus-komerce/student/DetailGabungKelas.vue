@@ -67,8 +67,6 @@
 </template>
 
 <script>
-import BCardActions from '@/@core/components/b-card-actions/BCardActions.vue'
-import { dateFormat } from '@core/mixins/ui/date'
 import {
   BRow,
   BOverlay,
@@ -76,6 +74,8 @@ import {
   BAvatar,
   BTable,
 } from 'bootstrap-vue'
+import { dateFormat } from '@core/mixins/ui/date'
+import BCardActions from '@/@core/components/b-card-actions/BCardActions.vue'
 
 export default {
   components: {

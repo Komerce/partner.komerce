@@ -14,7 +14,9 @@
       >
 
         <template #head(qty)="data">
-          <div class="add-pickup-header-table-qty">{{ data.label }}</div>
+          <div class="add-pickup-header-table-qty">
+            {{ data.label }}
+          </div>
         </template>
 
         <template #cell(product)="productData">
@@ -58,7 +60,9 @@
       v-if="items.length === 0"
       class="add-pickup-input-notice-empty"
     >
-      <div class="add-pickup-input-notice-title">Pilih orderan  yang akan di pickup</div>
+      <div class="add-pickup-input-notice-title">
+        Pilih orderan  yang akan di pickup
+      </div>
       <div class="add-pickup-input-notice-button">
         <b-button
           class="org-button"
@@ -79,7 +83,9 @@
       >
         Lihat detail...
       </div>
-      <div class="add-pickup-input-notice-filled-desc">Total Produk : <span class="ml-2">{{ this.genTotalAmount(items) }}</span></div>
+      <div class="add-pickup-input-notice-filled-desc">
+        Total Produk : <span class="ml-2">{{ genTotalAmount(items) }}</span>
+      </div>
     </div>
   </div>
 </template>

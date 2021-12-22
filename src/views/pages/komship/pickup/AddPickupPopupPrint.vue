@@ -11,7 +11,9 @@
         @click="handleClosePopUp"
       />
 
-      <div class="title-on-popup-pickup mt-2 mb-2">Pilih Bentuk Print Label</div>
+      <div class="title-on-popup-pickup mt-2 mb-2">
+        Pilih Bentuk Print Label
+      </div>
 
       <section class="add-pickup-popup-print-options-wrapper">
         <add-pickup-print-panel

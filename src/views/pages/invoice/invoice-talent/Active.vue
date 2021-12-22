@@ -1,7 +1,10 @@
 <template>
   <div>
     <b-row>
-      <b-col md="3" class="mb-2 ml-2">
+      <b-col
+        md="3"
+        class="mb-2 ml-2"
+      >
         <label for="">Pilih Partner</label>
         <v-select
           v-model="partner"
@@ -16,21 +19,30 @@
             slot="list-footer"
             class="vs__dropdown-option vs__dropdown-option--disabled"
           >
-            <feather-icon icon="MoreHorizontalIcon" size="16" />
+            <feather-icon
+              icon="MoreHorizontalIcon"
+              size="16"
+            />
           </li>
         </v-select>
       </b-col>
-      <b-col md="3" class="mb-2">
+      <b-col
+        md="3"
+        class="mb-2"
+      >
         <label for="">Pilih Status</label>
         <v-select
-          multiple
           v-model="status"
+          multiple
           label="label"
           :options="statusOptions"
           placeholder="Ketik untuk mencari..."
         />
       </b-col>
-      <b-col md="3" class="mb-2">
+      <b-col
+        md="3"
+        class="mb-2"
+      >
         <label for="">Pilih Periode</label>
         <flat-pickr
           v-model="invoicePeriod"
@@ -72,13 +84,19 @@
         </template>
 
         <template #cell(draft)="data">
-          <b-avatar variant="success" v-if="data.item.status >= 0">
+          <b-avatar
+            v-if="data.item.status >= 0"
+            variant="success"
+          >
             <feather-icon icon="CheckIcon" />
           </b-avatar>
         </template>
 
         <template #cell(published)="data">
-          <b-avatar variant="success" v-if="data.item.status >= 1">
+          <b-avatar
+            v-if="data.item.status >= 1"
+            variant="success"
+          >
             <feather-icon icon="CheckIcon" />
           </b-avatar>
         </template>
@@ -98,11 +116,11 @@
               <feather-icon icon="EditIcon" />
             </b-button>
             <b-button
+              v-if="data.item.status == 0"
               class="btn-icon mr-50"
               size="sm"
               variant="flat-danger"
               @click="confirmDelete(data.item.id)"
-              v-if="data.item.status == 0"
             >
               <feather-icon icon="TrashIcon" />
             </b-button>
@@ -115,11 +133,19 @@
         </template>
       </b-table>
       <b-row>
-        <b-col md="12" class="ml-1 my-2">
-          <h4 class="text-success">Total Nominal</h4>
+        <b-col
+          md="12"
+          class="ml-1 my-2"
+        >
+          <h4 class="text-success">
+            Total Nominal
+          </h4>
           <b>{{ totalAmount | rupiah }}</b>
         </b-col>
-        <b-col md="12" class="ml-1 my-2">
+        <b-col
+          md="12"
+          class="ml-1 my-2"
+        >
           <b-pagination
             v-model="currentPage"
             :total-rows="totalRows"
@@ -131,10 +157,16 @@
             class="mb-0"
           >
             <template #prev-text>
-              <feather-icon icon="ChevronLeftIcon" size="18" />
+              <feather-icon
+                icon="ChevronLeftIcon"
+                size="18"
+              />
             </template>
             <template #next-text>
-              <feather-icon icon="ChevronRightIcon" size="18" />
+              <feather-icon
+                icon="ChevronRightIcon"
+                size="18"
+              />
             </template>
           </b-pagination>
         </b-col>
@@ -153,12 +185,12 @@ import {
   BAvatar,
   BPagination,
 } from 'bootstrap-vue'
-import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import vSelect from 'vue-select'
-import filters from '@/libs/filters'
 import flatPickr from 'vue-flatpickr-component'
 import MonthSelectPlugin from 'flatpickr/dist/plugins/monthSelect/index'
 import 'flatpickr/dist/plugins/monthSelect/style.css'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
+import filters from '@/libs/filters'
 
 export default {
   components: {
@@ -251,10 +283,6 @@ export default {
       },
     }
   },
-  mounted() {
-    this.loadPartners()
-    this.getData()
-  },
   watch: {
     currentPage() {
       this.getData()
@@ -268,6 +296,10 @@ export default {
     invoicePeriod() {
       this.getData()
     },
+  },
+  mounted() {
+    this.loadPartners()
+    this.getData()
   },
   methods: {
     onSearchPartner(search, loading) {

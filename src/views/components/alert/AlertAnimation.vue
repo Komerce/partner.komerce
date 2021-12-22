@@ -48,7 +48,7 @@
 
     <!-- dismissible Alert -->
     <b-alert
-        v-height-fade.appear
+      v-height-fade.appear
       variant="danger"
       dismissible
       fade

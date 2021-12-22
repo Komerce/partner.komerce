@@ -8,7 +8,10 @@
     rounded="sm"
     class="p-2"
   >
-    <b-row v-if="!loading || experienceItems.length" class="mb-5">
+    <b-row
+      v-if="!loading || experienceItems.length"
+      class="mb-5"
+    >
       <b-col md="6">
         <!-- form -->
         <validation-observer ref="formRules">
@@ -17,7 +20,9 @@
               <b-col md="12">
                 <b-row>
                   <b-col>
-                    <h3 class="mb-2">Pengalaman</h3>
+                    <h3 class="mb-2">
+                      Pengalaman
+                    </h3>
                   </b-col>
                   <b-col cols="auto">
                     <b-button
@@ -35,7 +40,11 @@
                   v-if="!experienceItems.length"
                   class="d-flex align-items-center text-secondary"
                 >
-                  <feather-icon icon="InfoIcon" class="mr-50" size="16" />
+                  <feather-icon
+                    icon="InfoIcon"
+                    class="mr-50"
+                    size="16"
+                  />
                   Belum ada pengalaman
                 </div>
                 <app-timeline class="mt-1">
@@ -50,19 +59,24 @@
                           {{
                             item.partner_category || item.position
                               ? `${
-                                  item.partner_category
-                                    ? `Menangani produk ${item.partner_category.partner_category_name} sebagai `
-                                    : ''
-                                }${item.position.position_name}`
+                                item.partner_category
+                                  ? `Menangani produk ${item.partner_category.partner_category_name} sebagai `
+                                  : ''
+                              }${item.position.position_name}`
                               : ''
                           }}
                         </h6>
                       </b-col>
                       <b-col cols="auto">
                         <div v-if="isDeleted(item.id)">
-                          <h6 class="text-danger">Deleted</h6>
+                          <h6 class="text-danger">
+                            Deleted
+                          </h6>
                         </div>
-                        <div v-else class="mt-n50">
+                        <div
+                          v-else
+                          class="mt-n50"
+                        >
                           <b-button
                             class="btn-icon mr-25"
                             size="sm"
@@ -91,7 +105,8 @@
         </validation-observer>
       </b-col>
     </b-row>
-    <div v-else><br /><br /><br /><br /><br /></div>
+    <div v-else>
+      <br><br><br><br><br></div>
     <b-modal
       id="form-modal"
       ref="formModal"
@@ -108,7 +123,10 @@
     >
       <validation-observer ref="formRules">
         <b-form @submit.stop.prevent="submit">
-          <b-form-group label="Posisi" label-cols-md="12">
+          <b-form-group
+            label="Posisi"
+            label-cols-md="12"
+          >
             <validation-provider
               #default="{ errors }"
               name="Posisi"
@@ -127,13 +145,19 @@
                   slot="list-footer"
                   class="vs__dropdown-option vs__dropdown-option--disabled"
                 >
-                  <feather-icon icon="MoreHorizontalIcon" size="16" />
+                  <feather-icon
+                    icon="MoreHorizontalIcon"
+                    size="16"
+                  />
                 </li>
               </v-select>
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
           </b-form-group>
-          <b-form-group label="Sektor bisnis" label-cols-md="12">
+          <b-form-group
+            label="Sektor bisnis"
+            label-cols-md="12"
+          >
             <validation-provider
               #default="{ errors }"
               name="Sektor bisnis"
@@ -151,7 +175,10 @@
               <small class="text-danger">{{ errors[0] }}</small>
             </validation-provider>
           </b-form-group>
-          <b-form-group label="Tanggal mulai" label-cols-md="12">
+          <b-form-group
+            label="Tanggal mulai"
+            label-cols-md="12"
+          >
             <flat-pickr
               v-model="startDate"
               class="form-control"
@@ -163,7 +190,10 @@
             />
             <small class="text-danger">{{ submitErrors.start_at }}</small>
           </b-form-group>
-          <b-form-group label="Tanggal selesai" label-cols-md="12">
+          <b-form-group
+            label="Tanggal selesai"
+            label-cols-md="12"
+          >
             <flat-pickr
               v-model="endDate"
               class="form-control"

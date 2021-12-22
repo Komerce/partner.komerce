@@ -241,9 +241,7 @@
 
 <script>
 import { ValidationProvider } from 'vee-validate'
-import { dateFormat } from '@core/mixins/ui/date'
 import flatPickr from 'vue-flatpickr-component'
-import { kFormatter } from '@core/utils/filter'
 import {
   BButton,
   BRow,
@@ -260,9 +258,11 @@ import {
   VBToggle,
   BCard,
 } from 'bootstrap-vue'
-import BCardActions from '@core/components/b-card-actions/BCardActions.vue'
 import Ripple from 'vue-ripple-directive'
+import { dateFormat } from '@core/mixins/ui/date'
+import { kFormatter } from '@core/utils/filter'
 import { min } from '@validations'
+import BCardActions from '@core/components/b-card-actions/BCardActions.vue'
 
 export default {
   directives: {

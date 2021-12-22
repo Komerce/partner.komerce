@@ -131,9 +131,9 @@
             <span>Mobil</span>
           </b-button>
           <b-button
-            v-if="profile && profile.vehicle && profile.vehicle.indexOf('TRUK') > -1"
-            :class="`vehicle-button-content vehicle-button-content-truk ${chosenVehicle === 'TRUK' ? 'vehicle-selected white-button' : 'vehicle-button'}`"
-            @click="() => onChooseVehicle('TRUK')"
+            v-if="profile && profile.vehicle && profile.vehicle.indexOf('TRUCK') > -1"
+            :class="`vehicle-button-content vehicle-button-content-truk ${chosenVehicle === 'TRUCK' ? 'vehicle-selected white-button' : 'vehicle-button'}`"
+            @click="() => onChooseVehicle('TRUCK')"
           >
             <img src="@/assets/images/icons/truk.png">
             <span>Truk</span>
@@ -219,6 +219,8 @@ import {
   BIconPencilSquare,
   BIconChevronExpand,
 } from 'bootstrap-vue'
+
+import useJwt from '@/auth/jwt/useJwt'
 import AddPickupTable from './AddPickupTable.vue'
 import AddPickupPopup from './AddPickupPopup.vue'
 
@@ -259,6 +261,7 @@ export default {
       selectedOrderId: this.genOrderId(this.listSelected),
       dateValue: new Date(),
       dateLabel: '',
+      userData: {},
       isEditAddress: false,
       addressText: 'Gudang XYZ',
       addressDetailText: 'Jalan Raya Melebar penuh dengan sabar Aamiin',
@@ -272,6 +275,14 @@ export default {
       ],
       items: [],
     }
+  },
+  mounted() {
+    this.$http_komship.post('v1/my-profile', {
+      headers: { Authorization: `Bearer ${useJwt.getToken()}` },
+    }).then(response => {
+      this.userData = response.data.data
+    })
+    console.log(this.profile)
   },
   methods: {
     changeDate(dateString, type) {
@@ -379,7 +390,25 @@ export default {
         orders: this.selectedOrderId,
       }
       // console.log('formData', formData)
-      await this.storePickupReq(formData)
+      if (this.$route.name === 'ajukan-pickup') {
+        await this.storePickupReq(formData)
+      } else {
+        await this.storePickupReqOb(formData)
+      }
+    },
+    storePickupReqOb(formData) {
+      this.isSubmitting = true
+      return this.$http_komship.post(`v1/ob/pickup/${this.profile.partner_id}/store`, formData).then(response => {
+        const { data } = response
+        if (data) {
+          // console.log('post pickup order', data)
+          this.isSubmitting = false
+          this.$root.$emit('bv::show::modal', 'modal-7')
+        }
+      }).catch(() => {
+        this.isSubmitting = false
+        this.alertFail('Unable to Request a Pickup. Please and try again later or contact support.', true)
+      })
     },
     storePickupReq(formData) {
       this.isSubmitting = true

@@ -10,7 +10,9 @@
         class="close-button-on-popup-pickup"
         @click="handleClosePopUp"
       />
-      <div class="title-on-popup-pickup mt-2 mb-2">Pilih Orderan</div>
+      <div class="title-on-popup-pickup mt-2 mb-2">
+        Pilih Orderan
+      </div>
       <data-order-table
         ref="tableDataOrderOne2"
         :fields="fields"

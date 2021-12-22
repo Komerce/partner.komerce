@@ -15,7 +15,7 @@
                   </b-input-group-prepend>
                   <b-form-input
                     v-model="searchProduct"
-                    placeholder="Example"
+                    placeholder="Cari Nama Produk atau SKU"
                     @input="getProduct"
                   />
                 </b-input-group>
@@ -730,9 +730,9 @@ import {
   BCollapse,
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
+import { heightTransition } from '@core/mixins/ui/transition'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import useJwt from '@/auth/jwt/useJwt'
-import { heightTransition } from '@core/mixins/ui/transition'
 import httpKomship from '../setting-kompship/http_komship'
 
 export default {
@@ -912,6 +912,12 @@ export default {
 
 [dir] .background-table-variant {
   background: #FFF;
+}
+[dir] .btn.btn-flat-dark.btn-sm.collapsed:before{
+  content: 'Tampilkan Versi Lainnya';
+}
+[dir] .btn.btn-flat-dark.btn-sm.not-collapsed:after{
+  content: 'Tutup';
 }
 
 @media only screen and (max-width: 922px) {

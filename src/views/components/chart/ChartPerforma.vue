@@ -1,11 +1,11 @@
 <template>
   <VueApexcharts
+    ref="myChart"
     width="700"
     type="area"
-    ref="myChart"
     :options="options"
     :series="series"
-  ></VueApexcharts>
+  />
 </template>
 
 <script>

@@ -6,7 +6,11 @@
     size="sm"
     hide-footer
   >
-    <b-row v-for="access in listAccess" :key="access.id" class="mb-1">
+    <b-row
+      v-for="access in listAccess"
+      :key="access.id"
+      class="mb-1"
+    >
       <b-col md="6">
         <b>{{ access.access_name }}</b>
       </b-col>
@@ -34,9 +38,18 @@ export default {
     BCol,
   },
   props: {
-    listAccess: Array,
-    selectedPosition: Object,
-    refreshMethod: Function,
+    listAccess: {
+      type: Array,
+      default: () => [],
+    },
+    selectedPosition: {
+      type: Object,
+      default: () => ({}),
+    },
+    refreshMethod: {
+      type: Function,
+      default: () => {},
+    },
   },
   methods: {
     show() {

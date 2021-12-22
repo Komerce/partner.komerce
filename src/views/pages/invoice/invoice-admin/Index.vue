@@ -6,11 +6,20 @@
       no-actions
       no-body
     >
-      <b-tabs v-model="tabIndex" fill>
-        <b-tab title="Aktif" lazy>
+      <b-tabs
+        v-model="tabIndex"
+        fill
+      >
+        <b-tab
+          title="Aktif"
+          lazy
+        >
           <active />
         </b-tab>
-        <b-tab title="Riwayat" lazy>
+        <b-tab
+          title="Riwayat"
+          lazy
+        >
           <history />
         </b-tab>
       </b-tabs>

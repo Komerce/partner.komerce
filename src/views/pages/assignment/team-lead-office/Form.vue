@@ -20,7 +20,10 @@
             <b-form>
               <b-row>
                 <b-col md="12">
-                  <b-form-group label="No SK" label-cols-md="4">
+                  <b-form-group
+                    label="No SK"
+                    label-cols-md="4"
+                  >
                     <validation-provider
                       #default="{ errors }"
                       name="No SK"
@@ -41,7 +44,10 @@
                   </b-form-group>
                 </b-col>
                 <b-col md="12">
-                  <b-form-group label="Dokumen" label-cols-md="4">
+                  <b-form-group
+                    label="Dokumen"
+                    label-cols-md="4"
+                  >
                     <validation-provider
                       #default="{ errors }"
                       name="Dokumen"
@@ -62,7 +68,10 @@
                   </b-form-group>
                 </b-col>
                 <b-col md="12">
-                  <b-form-group label="Tanggal" label-cols-md="4">
+                  <b-form-group
+                    label="Tanggal"
+                    label-cols-md="4"
+                  >
                     <validation-provider
                       #default="{ errors }"
                       name="Tanggal"
@@ -82,19 +91,22 @@
                         errors[0] || submitErrors.name
                       }}</small>
                     </validation-provider>
-                    <br />
+                    <br>
                     <small class="text-default">
                       * Tanggal Talent mulai di hire oleh Partner
                     </small>
                   </b-form-group>
-                  <hr />
+                  <hr>
                 </b-col>
               </b-row>
             </b-form>
           </b-col>
         </b-row>
         <b-row>
-          <b-col md="12" class="mt-2">
+          <b-col
+            md="12"
+            class="mt-2"
+          >
             <b-row>
               <b-col md="1">
                 <b>List Team Lead</b>
@@ -105,17 +117,23 @@
               <b-col md="4">
                 <b>Kantor</b>
               </b-col>
-              <b-col md="1" v-if="!showMode">
+              <b-col
+                v-if="!showMode"
+                md="1"
+              >
                 <b>Aksi</b>
               </b-col>
             </b-row>
             <template v-if="!showMode">
               <b-row
-                class="mt-1"
                 v-for="(assignment, index) in assignments"
                 :key="index"
+                class="mt-1"
               >
-                <b-col md="4" offset-md="1">
+                <b-col
+                  md="4"
+                  offset-md="1"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Team Lead"
@@ -135,7 +153,10 @@
                           vs__dropdown-option vs__dropdown-option--disabled
                         "
                       >
-                        <feather-icon icon="MoreHorizontalIcon" size="16" />
+                        <feather-icon
+                          icon="MoreHorizontalIcon"
+                          size="16"
+                        />
                       </li>
                     </v-select>
                     <small class="text-danger">{{ errors[0] }}</small>
@@ -161,7 +182,10 @@
                           vs__dropdown-option vs__dropdown-option--disabled
                         "
                       >
-                        <feather-icon icon="MoreHorizontalIcon" size="16" />
+                        <feather-icon
+                          icon="MoreHorizontalIcon"
+                          size="16"
+                        />
                       </li>
                     </v-select>
                     <small class="text-danger">{{ errors[0] }}</small>
@@ -173,38 +197,47 @@
                     type="button"
                     @click="removeAssignment(index)"
                   >
-                    <feather-icon icon="Trash2Icon" size="18" />
+                    <feather-icon
+                      icon="Trash2Icon"
+                      size="18"
+                    />
                   </b-button>
                 </b-col>
                 <b-col md="12">
-                  <hr />
+                  <hr>
                 </b-col>
               </b-row>
             </template>
             <template v-else>
               <b-row
-                class="mt-1"
                 v-for="(assignment, index) in assignments"
                 :key="index"
+                class="mt-1"
               >
-                <b-col md="4" offset-md="1">
+                <b-col
+                  md="4"
+                  offset-md="1"
+                >
                   <p>{{ assignment.staff.user.full_name }}</p>
                 </b-col>
                 <b-col md="4">
                   <p>{{ assignment.office.office_name }}</p>
                 </b-col>
                 <b-col md="12">
-                  <hr />
+                  <hr>
                 </b-col>
               </b-row>
             </template>
             <b-row>
-              <b-col offset-md="9" md="2">
+              <b-col
+                offset-md="9"
+                md="2"
+              >
                 <b-button
+                  v-if="!showMode"
                   variant="outline-danger"
                   type="button"
                   @click="addAssignment"
-                  v-if="!showMode"
                 >
                   Tambah Kolom
                 </b-button>
@@ -213,14 +246,17 @@
           </b-col>
           <b-col md="12">
             <b-button
+              v-if="!showMode"
               variant="primary"
               type="submit"
               class="mr-50"
               :disabled="loadingSubmit"
               @click.prevent="submit"
-              v-if="!showMode"
             >
-              <b-spinner v-if="loadingSubmit" small />
+              <b-spinner
+                v-if="loadingSubmit"
+                small
+              />
               Assign
             </b-button>
           </b-col>
@@ -228,13 +264,13 @@
       </validation-observer>
     </b-card-actions>
     <modal
+      ref="confirmationModalComponent"
       :sk_number="sk_number"
       :document_url="document_url"
       :release_date="release_date"
       :assignments="assignments"
-      :loadingSubmit="loadingSubmit"
+      :loading-submit="loadingSubmit"
       :save="save"
-      ref="confirmationModalComponent"
     />
   </b-overlay>
 </template>

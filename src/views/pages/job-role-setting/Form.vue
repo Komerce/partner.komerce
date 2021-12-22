@@ -19,7 +19,10 @@
             <b-form>
               <b-row class="mb-2">
                 <b-col md="12">
-                  <b-form-group label="Posisi" label-cols-md="4">
+                  <b-form-group
+                    label="Posisi"
+                    label-cols-md="4"
+                  >
                     <validation-provider
                       #default="{ errors }"
                       name="Posisi"
@@ -37,13 +40,19 @@
                     </validation-provider>
                   </b-form-group>
                 </b-col>
-                <b-col md="8" offset-md="4">
+                <b-col
+                  md="8"
+                  offset-md="4"
+                >
                   <b-button
                     variant="primary"
                     :disabled="!position_id"
                     @click.prevent="assignPositionToMenu"
                   >
-                    <b-spinner v-if="loadingSubmit" small /> Assign Position
+                    <b-spinner
+                      v-if="loadingSubmit"
+                      small
+                    /> Assign Position
                   </b-button>
                 </b-col>
               </b-row>
@@ -51,7 +60,7 @@
           </validation-observer>
         </b-col>
         <b-col md="12">
-          <hr />
+          <hr>
           <b-table
             hover
             :fields="fields"
@@ -81,9 +90,9 @@
     </b-card-actions>
     <modal
       ref="accessModalComponent"
-      :listAccess="listAccess"
-      :selectedPosition="selectedPosition"
-      :refreshMethod="loadEligiblePositionMenu"
+      :list-access="listAccess"
+      :selected-position="selectedPosition"
+      :refresh-method="loadEligiblePositionMenu"
     />
   </b-overlay>
 </template>

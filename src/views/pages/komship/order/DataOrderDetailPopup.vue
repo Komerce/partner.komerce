@@ -148,7 +148,9 @@
         <div class="image-wrapper">
           <img src="@/assets/images/icons/success.svg">
         </div>
-        <div class="text-wrapper">No Resi Berhasil di Tambahkan</div>
+        <div class="text-wrapper">
+          No Resi Berhasil di Tambahkan
+        </div>
       </div>
     </b-modal>
   </div>

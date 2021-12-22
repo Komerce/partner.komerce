@@ -10,8 +10,13 @@
         <validation-observer ref="formRules">
           <b-form>
             <b-row>
-              <b-col class="pb-2" md="12">
-                <h3 class="mb-2">Profil</h3>
+              <b-col
+                class="pb-2"
+                md="12"
+              >
+                <h3 class="mb-2">
+                  Profil
+                </h3>
                 <b-form-row>
                   <b-col cols="4">
                     <div class="text-center mr-md-1">
@@ -22,7 +27,10 @@
                     </div>
                   </b-col>
                   <b-col cols="8">
-                    <b-form-group label="Foto profil" label-cols-md="12">
+                    <b-form-group
+                      label="Foto profil"
+                      label-cols-md="12"
+                    >
                       <validation-provider
                         #default="{ errors }"
                         name="Foto profil"
@@ -46,7 +54,10 @@
                 </b-form-row>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Nama lengkap" label-cols-md="4">
+                <b-form-group
+                  label="Nama lengkap"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Nama"
@@ -66,7 +77,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Username" label-cols-md="4">
+                <b-form-group
+                  label="Username"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Username"
@@ -87,7 +101,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Jenis kelamin" label-cols-md="4">
+                <b-form-group
+                  label="Jenis kelamin"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Jenis kelamin"
@@ -103,7 +120,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Tanggal lahir" label-cols-md="4">
+                <b-form-group
+                  label="Tanggal lahir"
+                  label-cols-md="4"
+                >
                   <flat-pickr
                     v-model="birthDate"
                     class="form-control"
@@ -119,7 +139,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Status pernikahan" label-cols-md="4">
+                <b-form-group
+                  label="Status pernikahan"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Status pernikahan"
@@ -135,8 +158,13 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <h3 class="my-2">Alamat</h3>
-                <b-form-group label="Alamat" label-cols-md="4">
+                <h3 class="my-2">
+                  Alamat
+                </h3>
+                <b-form-group
+                  label="Alamat"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Alamat"
@@ -155,7 +183,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Provinsi" label-cols-md="4">
+                <b-form-group
+                  label="Provinsi"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Provinsi"
@@ -180,7 +211,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Kota" label-cols-md="4">
+                <b-form-group
+                  label="Kota"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Kota"
@@ -206,7 +240,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Kecamatan" label-cols-md="4">
+                <b-form-group
+                  label="Kecamatan"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Kecamatan"
@@ -232,8 +269,13 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <h3 class="my-2">Data Komerce</h3>
-                <b-form-group label="Divisi" label-cols-md="4">
+                <h3 class="my-2">
+                  Data Komerce
+                </h3>
+                <b-form-group
+                  label="Divisi"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Divisi"
@@ -254,7 +296,10 @@
                           vs__dropdown-option vs__dropdown-option--disabled
                         "
                       >
-                        <feather-icon icon="MoreHorizontalIcon" size="16" />
+                        <feather-icon
+                          icon="MoreHorizontalIcon"
+                          size="16"
+                        />
                       </li>
                     </v-select>
                     <small class="text-danger">{{ errors[0] }}</small>
@@ -262,7 +307,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Posisi" label-cols-md="4">
+                <b-form-group
+                  label="Posisi"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Posisi"
@@ -286,7 +334,10 @@
                           vs__dropdown-option vs__dropdown-option--disabled
                         "
                       >
-                        <feather-icon icon="MoreHorizontalIcon" size="16" />
+                        <feather-icon
+                          icon="MoreHorizontalIcon"
+                          size="16"
+                        />
                       </li>
                     </v-select>
                     <small class="text-danger">{{ errors[0] }}</small>
@@ -294,7 +345,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Tanggal Bergabung" label-cols-md="4">
+                <b-form-group
+                  label="Tanggal Bergabung"
+                  label-cols-md="4"
+                >
                   <flat-pickr
                     v-model="joinDate"
                     class="form-control"
@@ -310,7 +364,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Working space" label-cols-md="4">
+                <b-form-group
+                  label="Working space"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Working space"
@@ -331,7 +388,10 @@
                           vs__dropdown-option vs__dropdown-option--disabled
                         "
                       >
-                        <feather-icon icon="MoreHorizontalIcon" size="16" />
+                        <feather-icon
+                          icon="MoreHorizontalIcon"
+                          size="16"
+                        />
                       </li>
                     </v-select>
                     <small class="text-danger">{{ errors[0] }}</small>
@@ -339,8 +399,13 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <h3 class="my-2">Kontak</h3>
-                <b-form-group label="No hp" label-cols-md="4">
+                <h3 class="my-2">
+                  Kontak
+                </h3>
+                <b-form-group
+                  label="No hp"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="No hp"
@@ -356,7 +421,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Email" label-cols-md="4">
+                <b-form-group
+                  label="Email"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Email"
@@ -376,8 +444,13 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <h3 class="my-2">Akun Bank</h3>
-                <b-form-group label="Nama bank" label-cols-md="4">
+                <h3 class="my-2">
+                  Akun Bank
+                </h3>
+                <b-form-group
+                  label="Nama bank"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Nama Bank"
@@ -397,7 +470,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="No rekening" label-cols-md="4">
+                <b-form-group
+                  label="No rekening"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="No rekening"
@@ -413,7 +489,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Nama pemilik bank" label-cols-md="4">
+                <b-form-group
+                  label="Nama pemilik bank"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Nama pemilik bank"
@@ -428,9 +507,17 @@
                   </validation-provider>
                 </b-form-group>
               </b-col>
-              <b-col v-if="!editMode" md="12">
-                <h3 class="my-2">Password</h3>
-                <b-form-group label="Password" label-cols-md="4">
+              <b-col
+                v-if="!editMode"
+                md="12"
+              >
+                <h3 class="my-2">
+                  Password
+                </h3>
+                <b-form-group
+                  label="Password"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Password"
@@ -446,8 +533,14 @@
                   </validation-provider>
                 </b-form-group>
               </b-col>
-              <b-col v-if="!editMode" md="12">
-                <b-form-group label="Konfirmasi password" label-cols-md="4">
+              <b-col
+                v-if="!editMode"
+                md="12"
+              >
+                <b-form-group
+                  label="Konfirmasi password"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Konfirmasi password"
@@ -463,7 +556,7 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <hr class="mb-2" />
+                <hr class="mb-2">
                 <b-button
                   :variant="editMode ? 'warning' : 'primary'"
                   type="submit"
@@ -471,7 +564,10 @@
                   :disabled="loadingSubmit"
                   @click.prevent="submit"
                 >
-                  <b-spinner v-if="loadingSubmit" small />
+                  <b-spinner
+                    v-if="loadingSubmit"
+                    small
+                  />
                   Submit
                 </b-button>
               </b-col>

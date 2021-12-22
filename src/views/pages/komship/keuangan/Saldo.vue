@@ -1,13 +1,17 @@
 <template>
   <div class="container p-0">
-    <h1 class="mb-2 h-text-xl">Informasi Saldo</h1>
+    <h1 class="mb-2 h-text-xl">
+      Informasi Saldo
+    </h1>
     <div class="row">
       <div class="col-12 col-md-4">
         <div class="card h-100">
           <div class="card-header mb-8 pb-0">
             <div class="d-flex align-items-center">
-              <div class="first-card-header-text me-8 mb-0">Saldo</div>
-              <popover-info text="Saldo kamu saat ini."/>
+              <div class="first-card-header-text me-8 mb-0">
+                Saldo
+              </div>
+              <popover-info text="Saldo kamu saat ini." />
             </div>
           </div>
           <div class="card-body h-text-xl pb-0 mb-0">
@@ -33,7 +37,10 @@
               "
               @click="showTopUpModal()"
             >
-              <img src="@/assets/images/icons/send-square.svg" alt="Top Up" />
+              <img
+                src="@/assets/images/icons/send-square.svg"
+                alt="Top Up"
+              >
               <p class="h-text-xs mb-0">Top Up</p>
             </a>
             <a
@@ -48,7 +55,7 @@
               <img
                 src="@/assets/images/icons/receive-square.svg"
                 alt="Tarik Saldo"
-              />
+              >
               <p class="h-text-xs mb-0">Tarik Saldo</p>
             </a>
             <a
@@ -61,7 +68,10 @@
                 align-items-center
               "
             >
-              <img src="@/assets/images/icons/document-text.svg" alt="Detail" />
+              <img
+                src="@/assets/images/icons/document-text.svg"
+                alt="Detail"
+              >
               <p class="h-text-xs mb-0">Detail</p>
             </a>
           </div>
@@ -71,13 +81,15 @@
         <div class="card h-100">
           <div class="card-header mb-8 pb-0">
             <div class="d-flex align-items-center">
-              <div class="first-card-header-text me-8 mb-0">Saldo Pending</div>
-              <popover-info text="Saldo Pending merupakan saldo yang akan kamu terima ketika orderan yang statusnya dikirim telah berubah menjadi diterima."/>
+              <div class="first-card-header-text me-8 mb-0">
+                Saldo Pending
+              </div>
+              <popover-info text="Saldo Pending merupakan saldo yang akan kamu terima ketika orderan yang statusnya dikirim telah berubah menjadi diterima." />
             </div>
             <img
               src="@/assets/images/icons/arrow-square-right.svg"
               alt="Arrow Right"
-            />
+            >
           </div>
           <div class="card-body h-text-xl pb-0 mb-0">
             {{ formatRupiah(saldoPending) }}
@@ -88,7 +100,9 @@
         <div class="card h-100">
           <div class="card-header mb-8 pb-0">
             <div class="d-flex align-items-center">
-              <div class="first-card-header-text me-8 mb-0">Rekening Bank</div>
+              <div class="first-card-header-text me-8 mb-0">
+                Rekening Bank
+              </div>
             </div>
           </div>
           <div class="card-body pb-0 mb-0">
@@ -98,7 +112,7 @@
                 src="@/assets/images/icons/arrow-down-light.svg"
                 alt="Arrow Down"
                 class="ml-1"
-              />
+              >
             </p>
             <p class="h-text-xs mb-0">
               {{ `${rekening.bank} - ${rekening.noRek}` }}
@@ -109,24 +123,29 @@
       <div class="col-12 mt-2">
         <div class="card">
           <div class="card-header mb-8 pb-0">
-            <div class="h-text-lg">Riwayat Penarikan Saldo</div>
+            <div class="h-text-lg">
+              Riwayat Penarikan Saldo
+            </div>
             <div class="d-flex justify-content-end">
               <date-range-picker
                 ref="picker"
-                :locale-data="locale"
                 v-model="dateRange"
+                :locale-data="locale"
                 :ranges="ranges"
                 :opens="'left'"
                 class="w-100 mr-1"
               >
-                <template v-slot:input="picker" style="min-width: 350px">
+                <template
+                  v-slot:input="picker"
+                  style="min-width: 350px"
+                >
                   <div
                     class="d-flex justify-content-between align-items-center"
                   >
-                    <span class="mr-2"
-                      >{{ formatDate(picker.startDate) }} -
-                      {{ formatDate(picker.endDate) }}</span
-                    >
+                    <span
+                      class="mr-2"
+                    >{{ formatDate(picker.startDate) }} -
+                      {{ formatDate(picker.endDate) }}</span>
                     <svg
                       width="24"
                       height="24"
@@ -212,7 +231,12 @@
                   </div>
                 </template>
               </date-range-picker>
-              <button @click="$store.dispatch('saldo/exportSaldo')" class="btn btn-outline-primary"> Export </button>
+              <button
+                class="btn btn-outline-primary"
+                @click="$store.dispatch('saldo/exportSaldo')"
+              >
+                Export
+              </button>
             </div>
           </div>
           <div class="card-body">
@@ -242,21 +266,27 @@
                   :key="riwayatPenarikans.indexOf(riwayat)"
                   :class="
                     'py-1' +
-                    (riwayatPenarikans.indexOf(riwayat) !=
-                    riwayatPenarikans.length - 1
-                      ? ' border-bottom'
-                      : '')
+                      (riwayatPenarikans.indexOf(riwayat) !=
+                        riwayatPenarikans.length - 1
+                        ? ' border-bottom'
+                        : '')
                   "
                 >
                   <th>
-                    <p class="mb-0 h-text-dark">{{ riwayat.tanggal }}</p>
-                    <p class="mb-0">{{ riwayat.jam }}</p>
+                    <p class="mb-0 h-text-dark">
+                      {{ riwayat.tanggal }}
+                    </p>
+                    <p class="mb-0">
+                      {{ riwayat.jam }}
+                    </p>
                   </th>
                   <td>
                     <p class="mb-0 h-text-dark">
                       {{ riwayat.tujuan.nama }} - {{ riwayat.tujuan.bank }}
                     </p>
-                    <p class="mb-0">{{ riwayat.tujuan.noRek }}</p>
+                    <p class="mb-0">
+                      {{ riwayat.tujuan.noRek }}
+                    </p>
                   </td>
                   <td class="h-text-dark">
                     {{ riwayat.status }}
@@ -282,32 +312,43 @@
               </tbody>
             </table>
             <b-pagination
-              class="mt-2 float-right"
               v-model="table.currentPage"
+              class="mt-2 float-right"
               :total-rows="table.totalRows"
               :per-page="table.perPage"
-            ></b-pagination>
+            />
           </div>
         </div>
       </div>
     </div>
-    <b-modal id="modalTopUp" centered hide-header>
-      <a href="#" @click="closeModal()">
+    <b-modal
+      id="modalTopUp"
+      centered
+      hide-header
+    >
+      <a
+        href="#"
+        @click="closeModal()"
+      >
         <img
           src="@/assets/images/icons/close-circle.svg"
           height="18"
           width="18"
           alt="close"
           class="float-right"
-        />
+        >
       </a>
       <div class="p-1">
-        <p class="text-center h-text-lg mb-2">Top Up Saldo</p>
+        <p class="text-center h-text-lg mb-2">
+          Top Up Saldo
+        </p>
       </div>
       <form id="formTopUp">
         <div class="row align-items-center my-2">
           <div class="col-4">
-            <p class="font-weight-bold h-text-sm h-text-dark mb-0">Nominal</p>
+            <p class="font-weight-bold h-text-sm h-text-dark mb-0">
+              Nominal
+            </p>
           </div>
           <b-form-group
             class="col-8 mb-0"
@@ -333,7 +374,10 @@
         >
           Batal
         </button>
-        <button class="btn btn-primary rounded-lg" @click="topUpSaldo()">
+        <button
+          class="btn btn-primary rounded-lg"
+          @click="topUpSaldo()"
+        >
           Top Up Sekarang
         </button>
       </template>
@@ -347,17 +391,23 @@
       no-close-on-backdrop
       no-close-on-esc
     >
-      <a href="#" @click="closeModal()">
+      <a
+        href="#"
+        @click="closeModal()"
+      >
         <img
           src="@/assets/images/icons/close-circle.svg"
           height="18"
           width="18"
           alt="close"
           class="float-right"
-        />
+        >
       </a>
       <div class="p-1">
-        <p class="text-center h-text-lg mb-2" id="modal-title">
+        <p
+          id="modal-title"
+          class="text-center h-text-lg mb-2"
+        >
           {{ modalTitle }}
         </p>
         <div v-if="stepNow === 0">
@@ -367,7 +417,9 @@
             @submit.stop.prevent="handleSubmit(1)"
           >
             <div class="col-5 mb-1">
-              <p class="h-text-sm h-text-dark mb-0">Nominal</p>
+              <p class="h-text-sm h-text-dark mb-0">
+                Nominal
+              </p>
             </div>
             <b-form-group
               class="col-7 mb-1"
@@ -387,7 +439,9 @@
               />
             </b-form-group>
             <div class="col-5 mb-1">
-              <p class="h-text-sm h-text-dark mb-0">Rekening Tujuan</p>
+              <p class="h-text-sm h-text-dark mb-0">
+                Rekening Tujuan
+              </p>
             </div>
             <b-form-group
               class="col-7 mb-1"
@@ -399,7 +453,7 @@
                 class="h-text-sm h-text-dark"
                 :options="rekTujuanOptions"
                 required
-              ></b-form-select>
+              />
             </b-form-group>
             <div class="col-12 text-right mt-3">
               <button
@@ -409,14 +463,20 @@
               >
                 Batal
               </button>
-              <button type="submit" class="btn btn-primary ml-2">
+              <button
+                type="submit"
+                class="btn btn-primary ml-2"
+              >
                 Ajukan Penarikan
               </button>
             </div>
           </form>
         </div>
         <div v-if="stepNow === 1">
-          <form ref="form2" @submit.stop.prevent="handleSubmit(2)">
+          <form
+            ref="form2"
+            @submit.stop.prevent="handleSubmit(2)"
+          >
             <p class="text-center h-text-dark font-weight-bold mb-3">
               Mohon verifikasi identitas kamu dengan memasukan PIN
             </p>
@@ -427,7 +487,10 @@
             />
             <div class="col-12 mt-2">
               <div class="text-center">
-                <button type="submit" class="btn btn-primary d-block m-auto">
+                <button
+                  type="submit"
+                  class="btn btn-primary d-block m-auto"
+                >
                   Konfirmasi
                 </button>
                 <button
@@ -441,9 +504,17 @@
             </div>
           </form>
         </div>
-        <div v-if="stepNow === 2" class="text-center">
-          <img src="@/assets/images/icons/success.svg" alt="success" />
-          <p class="mt-2 h-text-md text-center">Penarikan Saldo Berhasil</p>
+        <div
+          v-if="stepNow === 2"
+          class="text-center"
+        >
+          <img
+            src="@/assets/images/icons/success.svg"
+            alt="success"
+          >
+          <p class="mt-2 h-text-md text-center">
+            Penarikan Saldo Berhasil
+          </p>
           <p class="h-text-dark font-weight-bold">
             Saldo sebesar {{ formatRupiah(nominal) }} akan segera dikirim ke
             rekening atas nama {{ rekening.nama }} - {{ rekening.bank }} dalam
@@ -536,18 +607,6 @@ export default {
       obj: null,
     }
   },
-  mounted() {
-    if (!window.snapScriptLoaded) {
-      const snapScriptEl = document.createElement('script')
-      snapScriptEl.setAttribute(
-        'src',
-        'https://app.sandbox.midtrans.com/snap/snap.js',
-      )
-      snapScriptEl.setAttribute('data-client-key', this.clientKey)
-      document.head.appendChild(snapScriptEl)
-      window.snapScriptLoaded = 1
-    }
-  },
   computed: {
     ...mapFields('saldo', [
       'dateRange',
@@ -563,6 +622,35 @@ export default {
       'riwayatPenarikans',
     ]),
     ...mapGetters('saldo', ['rekenings', 'rekening', 'rekTujuanOptions']),
+  },
+  watch: {
+    'table.currentPage': {
+      handler() {
+        this.$store.dispatch('saldo/getWithdrawalRequest')
+      },
+    },
+    dateRange: {
+      handler() {
+        this.$store.commit('saldo/UPDATE_CURRENT_PAGE', 1)
+        this.$store.dispatch('saldo/getWithdrawalRequest')
+      },
+      deep: true,
+    },
+  },
+  beforeMount() {
+    this.$store.dispatch('saldo/init')
+  },
+  mounted() {
+    if (!window.snapScriptLoaded) {
+      const snapScriptEl = document.createElement('script')
+      snapScriptEl.setAttribute(
+        'src',
+        'https://app.sandbox.midtrans.com/snap/snap.js',
+      )
+      snapScriptEl.setAttribute('data-client-key', this.clientKey)
+      document.head.appendChild(snapScriptEl)
+      window.snapScriptLoaded = 1
+    }
   },
   methods: {
     formatRibuan(x) {
@@ -777,23 +865,6 @@ export default {
         },
         buttonsStyling: false,
       })
-    },
-  },
-  beforeMount() {
-    this.$store.dispatch('saldo/init')
-  },
-  watch: {
-    'table.currentPage': {
-      handler() {
-        this.$store.dispatch('saldo/getWithdrawalRequest')
-      },
-    },
-    dateRange: {
-      handler() {
-        this.$store.commit('saldo/UPDATE_CURRENT_PAGE', 1)
-        this.$store.dispatch('saldo/getWithdrawalRequest')
-      },
-      deep: true,
     },
   },
 }

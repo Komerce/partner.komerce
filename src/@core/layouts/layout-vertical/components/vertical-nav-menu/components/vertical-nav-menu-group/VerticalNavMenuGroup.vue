@@ -23,7 +23,11 @@
         {{ item.tag }}
       </b-badge>
     </b-link>
-    <b-collapse v-model="isOpen" class="menu-content" tag="ul">
+    <b-collapse
+      v-model="isOpen"
+      class="menu-content"
+      tag="ul"
+    >
       <component
         :is="resolveNavItemComponent(child)"
         v-for="child in item.children"

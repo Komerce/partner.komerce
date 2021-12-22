@@ -1,14 +1,14 @@
-import axioskomsipdev from '@/libs/axioskomsipdev'
-
+import vSelect from 'vue-select'
 import {
   BRow,
   BCol,
   BForm,
   BFormInput,
-  // BFormGroup,
-  // BFormCheckbox,
+  BFormValidFeedback,
+  BFormInvalidFeedback,
   // BListGroup,
   // BListGroupItem,
+  BFormTimepicker,
   BInputGroup,
   BButton,
   BFormSelect,
@@ -16,7 +16,15 @@ import {
   BSpinner,
   BCardBody,
 } from 'bootstrap-vue'
-import Dropdown from 'vue-simple-search-dropdown'
+import axioskomsipdev from '@/libs/axioskomsipdev'
+
+const initCriteria = {
+  origin: [],
+  destination: [],
+  delivery: 0,
+  retur: 0,
+  type: null,
+}
 
 export default {
   components: {
@@ -25,52 +33,46 @@ export default {
     BForm,
     BFormInput,
     // BFormGroup,
-    Dropdown,
     BInputGroup,
     BFormSelect,
-    // BFormCheckbox,
-    // BListGroup,
+    BFormValidFeedback,
+    BFormInvalidFeedback,
+    BFormTimepicker,
     // BListGroupItem,
     BButton,
     BCard,
     BSpinner,
     BCardBody,
+    vSelect,
   },
   data() {
     return {
       loadDataAwal: true,
-      name: '',
       shipping_name: '',
+      max_pickup_time: '09:00',
+      service_name: null,
       cashback_from: null,
       service_fee_from: null,
       service_fee_to: null,
       cashback_to: null,
-      max_pickup_time: '',
-      vehicles: '',
-      origin: '',
-      destination: '',
-      delivery: null,
-      retur: null,
-      type: '',
-      selectedKota: null,
+      vehicles: [],
+      criteriasData: [{ ...initCriteria }],
       optionsKota: [
         { value: null, text: 'Pilih layanan kota' },
         { value: 'jawa_bali', text: 'Jawa & Bali' },
         { value: 'kalimantan_sumatera', text: 'Kalimantan & Sumatera' },
         { value: 'jakarta_batam', text: 'Jakarta & Batam' },
       ],
-      selected: null,
-      options: [
+      optionsCriteria: [
+        { value: null, text: 'Pilih jenis pengiriman' },
+        { text: 'Exclude', value: 'exclude' },
+        { text: 'Include', value: 'include' },
+      ],
+      optionsServiceName: [
         { value: null, text: 'Pilih jenis service' },
         { text: 'Oke', value: 'oke' },
         { text: 'Reg', value: 'reg' },
         { text: 'Yes', value: 'yes' },
-      ],
-      selectedCriteria: null,
-      optionsCriteria: [
-        { value: null, text: 'Pilih jenis pengiriman' },
-        { text: 'exclude', value: 'Exclude' },
-        { text: 'include', value: 'Include' },
       ],
       listCheckBox: [
         { text: 'Hiring', value: 'hiring' },
@@ -81,86 +83,81 @@ export default {
     }
   },
   computed: {
-    //
+    changeCriteriasData() {
+      const dt = [...this.criteriasData].map(x => {
+        const returnData = { ...x }
+        returnData.origin = [x.type]
+        return returnData
+      })
+      return dt
+    },
   },
   watch: {
-    vehicles: {
-      handler(val, val2) {
-        const el = document.getElementById(`choice${val}`)
-        const el2 = document.getElementById(`choice${val2}`)
-        if (val2) {
-          el.classList.add('activeChoice')
-          el2.classList.remove('activeChoice')
-        } else {
-          el.classList.add('activeChoice')
-        }
-      },
+    value() {
+      this.value = this.value.split(':').slice(0, 2).join(':')
     },
   },
   mounted() {
-    //
-
+    this.getIsland()
   },
   created() {
-    this.getKota()
-    setTimeout(() => {
-      this.loadDataAwal = false
-    }, 1000)
+    //
   },
   methods: {
-    getKota() {
-      const endpoint = '/v1/destination'
-      const fetchData = axioskomsipdev.get(endpoint)
-      fetchData.then(async data => {
-        const array = data.data.data.data
-        const newdata = await array.map(val => ({
-          id: val.value,
-          name: val.label,
-        }))
-        console.log('Kota', newdata)
-        this.optionsKota = newdata
-      })
+    getTimeFormatted(timeText) {
+      if (timeText) {
+        const splitTime = timeText.split(':')
+        return `${splitTime[0]} : ${splitTime[1]}`
+      }
+      return timeText
+    },
+    onChangeTime(ctx) {
+      if (ctx && ctx.formatted) this.timeValueText = this.getTimeFormatted(ctx.formatted)
+    },
+
+    tambahKriteria(criteriasDataParams) {
+      criteriasDataParams.push({ ...initCriteria })
+    },
+    hapusKriteria(index) {
+      if (index === 0) return
+      this.criteriasData.splice(index, 1)
     },
     submitData() {
-      console.log(this.name)
-      const endpoint = '/v1/admin/shippment/create'
+      this.loadDataAwal = true
+      const endpoint = '/v1/admin/shipment/store'
       let getData = null
+      // console.log('datasubmit :', {
+      //   shipping_name: this.shipping_name,
+      //   service_name: this.service_name,
+      //   cashback_from: this.cashback_from,
+      //   service_fee_from: this.service_fee_from,
+      //   service_fee_to: this.service_fee_to,
+      //   cashback_to: this.cashback_to,
+      //   max_pickup_time: this.max_pickup_time,
+      //   vehicles: [this.vehicles],
+      //   criterias: this.changeCriteriasData,
+      // })
       getData = axioskomsipdev.post(endpoint, {
         shipping_name: this.shipping_name,
+        service_name: this.service_name,
         cashback_from: this.cashback_from,
         service_fee_from: this.service_fee_from,
         service_fee_to: this.service_fee_to,
         cashback_to: this.cashback_to,
         max_pickup_time: this.max_pickup_time,
         vehicles: this.vehicles,
-        origin: this.origin,
-        destination: this.destination,
-        delivery: this.delivery,
-        retur: this.retur,
-        type: this.type,
+        criterias: this.changeCriteriasData,
       })
-      getData.then(({ data }) => {
-        /*
-          "data": {
-            "profit": {
-              "total_shipping_profit": 42000,
-              "profit_cod": 3500
-            },
-            "income": [
-              {
-                "partner_name": "Tatausahaku",
-                "district": "Idano Gawo",
-                "shipping_cost": 42000,
-                "grand_total": 82000,
-                "shipping_profit": 42000,
-                "net_profit": 113750
-              }
-            ]
-          }
-        */
-        const parseData = JSON.parse(JSON.stringify(data.data))
-        this.items = parseData
-        this.totalRows = parseData.length
+      getData.then(data => {
+        console.log(data)
+        this.$router.push('/biaya-ekspedisi')
+        // {
+        // status: "success",
+        // code: 200,
+        // message: "Success Create data Shipment"}
+        // const parseData = JSON.parse(JSON.stringify(data.data))
+        // this.items = parseData
+        // this.totalRows = parseData.length
       })
         .catch(e => {
           console.log('error', e)
@@ -184,14 +181,32 @@ export default {
         this.$bvModal.hide('modal-edit-akseslayanan')
       })
     },
-    simpanFormEdit() {
-      // calling api for simpan data
-    },
     handleChoiceTypeVehicle(val) {
-      this.vehicles = val
+      const vhc = [...this.vehicles]
+      const index = vhc.indexOf(val.toUpperCase())
+      const el = document.getElementById(`choice${val}`)
+      if (index > -1) {
+        el.classList.toggle('activeChoice')
+        vhc.splice(index, 1)
+      } else {
+        vhc.push(val.toUpperCase())
+        el.classList.toggle('activeChoice')
+      }
+      this.vehicles = vhc
     },
-    saveKriteria() {
-      //
+    getIsland() {
+      const endpoint = '/v1/island'
+      axioskomsipdev.get(endpoint)
+        .then(({ data }) => {
+          const parseData = JSON.parse(JSON.stringify(data.data))
+          this.optionsKota = parseData
+        })
+        .catch(e => {
+          console.log('error', e)
+        })
+        .finally(() => {
+          this.loadDataAwal = false
+        })
     },
   },
 }

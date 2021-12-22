@@ -11,7 +11,10 @@
           <b-form>
             <b-row>
               <b-col md="12">
-                <b-form-group label="Nama" label-cols-md="4">
+                <b-form-group
+                  label="Nama"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Nama"
@@ -31,7 +34,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Skill" label-cols-md="4">
+                <b-form-group
+                  label="Skill"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Skill"
@@ -52,7 +58,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Phone" label-cols-md="4">
+                <b-form-group
+                  label="Phone"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Phone"
@@ -68,7 +77,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Email" label-cols-md="4">
+                <b-form-group
+                  label="Email"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Email"
@@ -82,10 +94,13 @@
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
                 </b-form-group>
-                <hr />
+                <hr>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Bank Name" label-cols-md="4">
+                <b-form-group
+                  label="Bank Name"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Bank Name"
@@ -105,7 +120,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Account Name" label-cols-md="4">
+                <b-form-group
+                  label="Account Name"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Account Name"
@@ -121,7 +139,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Account Number" label-cols-md="4">
+                <b-form-group
+                  label="Account Number"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Account Number"
@@ -135,10 +156,13 @@
                     <small class="text-danger d-block">{{ errors[0] }}</small>
                   </validation-provider>
                 </b-form-group>
-                <hr />
+                <hr>
               </b-col>
               <b-col md="12">
-                <b-form-group label="City" label-cols-md="4">
+                <b-form-group
+                  label="City"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="City"
@@ -159,8 +183,14 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="NPWP" label-cols-md="4">
-                  <validation-provider #default="{ errors }" name="NPWP">
+                <b-form-group
+                  label="NPWP"
+                  label-cols-md="4"
+                >
+                  <validation-provider
+                    #default="{ errors }"
+                    name="NPWP"
+                  >
                     <cleave
                       v-model="npwp"
                       class="form-control"
@@ -171,10 +201,16 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="CV" label-cols-md="4">
+                <b-form-group
+                  label="CV"
+                  label-cols-md="4"
+                >
                   <b-form-row>
                     <b-col>
-                      <validation-provider #default="{ errors }" name="CV">
+                      <validation-provider
+                        #default="{ errors }"
+                        name="CV"
+                      >
                         <b-form-file
                           v-model="cvFile"
                           :state="errors.length > 0 ? false : null"
@@ -188,7 +224,10 @@
                         <small class="text-danger">{{ errors[0] }}</small>
                       </validation-provider>
                     </b-col>
-                    <b-col v-if="cvInitialFile" cols="auto">
+                    <b-col
+                      v-if="cvInitialFile"
+                      cols="auto"
+                    >
                       <b-button
                         v-ripple.400="'rgba(255, 255, 255, 0.15)'"
                         v-b-tooltip.hover.top="'Lihat File'"
@@ -203,7 +242,10 @@
                   </b-form-row>
                 </b-form-group>
               </b-col>
-              <b-col md="12" class="mt-2">
+              <b-col
+                md="12"
+                class="mt-2"
+              >
                 <b-button
                   :variant="editMode ? 'warning' : 'primary'"
                   type="submit"
@@ -211,7 +253,10 @@
                   :disabled="loadingSubmit"
                   @click.prevent="submit"
                 >
-                  <b-spinner v-if="loadingSubmit" small />
+                  <b-spinner
+                    v-if="loadingSubmit"
+                    small
+                  />
                   Submit
                 </b-button>
               </b-col>

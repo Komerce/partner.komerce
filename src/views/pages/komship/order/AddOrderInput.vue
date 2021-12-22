@@ -4,7 +4,7 @@
       Tambah Order
     </b-card-title>
     <div class="add-order-dsc-title top-right">
-      {{ profile && profile.is_komship === 1 ? 'Pengiriman Kompship' : 'Pengiriman Non Kompship' }}
+      {{ profile && profile.is_komship === 1 ? 'Pengiriman Komship' : 'Pengiriman Non Komship' }}
     </div>
     <section class="add-order-form mb-4">
       <b-form-group
@@ -429,13 +429,8 @@ import {
   BFormDatepicker,
   BFormGroup,
   BButton,
-  BTable,
-  BRow,
-  BCol,
-  BAvatar,
 } from 'bootstrap-vue'
-
-// import AddOrderTable from './AddOrderTable.vue'
+import AddOrderTable from './AddOrderTable.vue'
 
 function changeDate(dateString) {
   if (dateString && dateString !== '') {
@@ -449,7 +444,25 @@ function changeDate(dateString) {
   }
   return dateString
 }
-
+function checkSameById(itemId, listData) {
+  const index = -1
+  for (let i = 0; i < listData.length; i += 1) {
+    if (listData && listData[i] && listData[i].id && listData[i].id === itemId) return i
+  }
+  return index
+}
+function countStock(listData) {
+  if (listData && listData.length && listData.length > 0) {
+    let stockAmount = -1
+    for (let i = 0; i < listData.length; i += 1) {
+      if (listData[i].stock) {
+        stockAmount += listData[i].stock
+      }
+    }
+    return stockAmount
+  }
+  return -1
+}
 export default {
   components: {
     BCardTitle,
@@ -457,11 +470,7 @@ export default {
     BFormGroup,
     BButton,
     vSelect,
-    // AddOrderTable,
-    BTable,
-    BRow,
-    BCol,
-    BAvatar,
+    AddOrderTable,
   },
   props: {
     screens: {
@@ -505,7 +514,6 @@ export default {
       selectedProductVariant: [],
       selectedProdukIndexOnModal: -1,
       disableSubmitBtn: this.disableSubmitButtonStatus,
-
       dataTree: [],
 
       // Refactor
@@ -863,6 +871,10 @@ export default {
       this.nextButtonIsActive()
     },
     updateAllSelectedProduct(newItemToPush, oldListSelected) {
+      console.log('newItemToPush')
+      console.log(newItemToPush)
+      console.log('oldListSelected')
+      console.log(oldListSelected)
       if (newItemToPush && oldListSelected && oldListSelected.length && oldListSelected.length > 0) {
         let newListSelected = oldListSelected
         let sameStock = 0
@@ -890,7 +902,7 @@ export default {
       const newListSelected = listData
       for (let j = 0; j < listData.length; j += 1) {
         /* update all same product with same stock */
-        const fullStock = newItemToPush.is_variant ? this.genStockByVariant(newListSelected[j].selectedVariationData) : newItemToPush.stock
+        const fullStock = newItemToPush.is_variant !== '0' ? this.genStockByVariant(newListSelected[j].selectedVariationData) : newItemToPush.stock
         if (newListSelected[j].product_name === newItemToPush.product_name
           && JSON.stringify(newListSelected[j].selectedVariationData) === JSON.stringify(newItemToPush.selectedVariationData)
         ) {
@@ -924,11 +936,17 @@ export default {
       return false
     },
     onChangeSelectedProduct(param, itemSelectedIndex, itemSelected) {
+      console.log('onChangeSelectedProduct')
+      console.log(itemSelected)
       if (itemSelected) {
         let currentAmount = itemSelected.input
-        currentAmount = param === '-' ? (currentAmount - 1) : (currentAmount + 1)
+        console.log(param)
+        console.log(currentAmount = param === '-' ? (currentAmount - 1) : (currentAmount + 1))
+        console.log('current amount')
+        console.log(currentAmount)
         if (currentAmount === 0) {
           this.selectedItems.splice(itemSelectedIndex, 1)
+          this.productSelect = ''
         } else {
           this.selectedItems[itemSelectedIndex].input = currentAmount
         }
@@ -961,7 +979,7 @@ export default {
       const conditionArr = []
       if (this.selectedItems && this.selectedItems.length && this.selectedItems.length > 0) {
         for (let j = 0; j < this.selectedItems.length; j += 1) {
-          if (this.selectedItems[j].is_variant) {
+          if (this.selectedItems[j].is_variant !== '0') {
             if (this.selectedItems[j].selectedVariationData && this.selectedItems[j].selectedVariationData.length && this.selectedItems[j].selectedVariationData.length > 0) {
               conditionArr.push(true)
             } else {

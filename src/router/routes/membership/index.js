@@ -2,7 +2,7 @@ export default [
   {
     path: '/data-partner',
     name: 'cod-data-partner',
-    component: () => import('@/views/pages/membership/data-partner/Index'),
+    component: () => import('@/views/pages/membership/data-partner/Index.vue'),
     meta: {
       resource: 'Dashboard',
       action: 'read',
@@ -11,7 +11,7 @@ export default [
   {
     path: '/data-partner/:id/detail',
     name: 'cod-data-partner-detail',
-    component: () => import('@/views/pages/membership/data-partner/Detail'),
+    component: () => import('@/views/pages/membership/data-partner/Detail.vue'),
     meta: {
       navActiveLink: 'cod-data-partner',
       resource: 'Dashboard',
@@ -21,7 +21,7 @@ export default [
   {
     path: '/data-partner/:id/detail/riwayat-penarikan',
     name: 'cod-data-partner-detail-riwayat-penarikan',
-    component: () => import('@/views/pages/membership/data-partner/RiwayatPenarikan'),
+    component: () => import('@/views/pages/membership/data-partner/RiwayatPenarikan.vue'),
     meta: {
       navActiveLink: 'cod-data-partner',
       resource: 'Dashboard',
@@ -31,7 +31,7 @@ export default [
   {
     path: '/arsip-partner',
     name: 'cod-arsip-partner',
-    component: () => import('@/views/pages/membership/arsip-partner/Index'),
+    component: () => import('@/views/pages/membership/arsip-partner/Index.vue'),
     meta: {
       resource: 'Dashboard',
       action: 'read',
@@ -40,7 +40,7 @@ export default [
   {
     path: '/data-layanan',
     name: 'cod-data-layanan',
-    component: () => import('@/views/pages/membership/data-layanan/Index'),
+    component: () => import('@/views/pages/membership/data-layanan/Index.vue'),
     meta: {
       resource: 'Dashboard',
       action: 'read',

@@ -1,5 +1,8 @@
 <template>
-  <b-card-actions ref="formCard" no-actions>
+  <b-card-actions
+    ref="formCard"
+    no-actions
+  >
     <b-row class="mb-2">
       <b-col>
         <h4>Profil Talent</h4>
@@ -11,10 +14,20 @@
           :disabled="loadingWishlist"
           @click="wishlistToggle"
         >
-          <feather-icon icon="HeartIcon" :class="{ filled: isWishlist() }" />
+          <feather-icon
+            icon="HeartIcon"
+            :class="{ filled: isWishlist() }"
+          />
         </b-button>
-        <b-button variant="primary" class="btn-icon" @click="confirmSend">
-          <feather-icon class="mr-25" icon="UserCheckIcon" />
+        <b-button
+          variant="primary"
+          class="btn-icon"
+          @click="confirmSend"
+        >
+          <feather-icon
+            class="mr-25"
+            icon="UserCheckIcon"
+          />
           Rekrut
         </b-button>
       </b-col>
@@ -25,7 +38,10 @@
         <validation-observer ref="formRules">
           <b-form>
             <b-row>
-              <b-col class="pb-2" md="12">
+              <b-col
+                class="pb-2"
+                md="12"
+              >
                 <b-form-row>
                   <b-col cols="4">
                     <div class="text-center mr-md-1">
@@ -69,21 +85,33 @@
                   </b-col>
                 </b-form-row>
               </b-col>
-              <b-col md="12" class="pb-2">
-                <h3 class="my-2">Training</h3>
+              <b-col
+                md="12"
+                class="pb-2"
+              >
+                <h3 class="my-2">
+                  Training
+                </h3>
 
                 <div
                   v-if="loadingTrainingProgram || !name"
                   class="d-flex align-items-center"
                 >
-                  <b-spinner class="mr-50" small />
+                  <b-spinner
+                    class="mr-50"
+                    small
+                  />
                   Loading..
                 </div>
                 <div
                   v-else-if="!trainingProgramItems.length"
                   class="d-flex align-items-center text-secondary"
                 >
-                  <feather-icon icon="InfoIcon" class="mr-50" size="16" />
+                  <feather-icon
+                    icon="InfoIcon"
+                    class="mr-50"
+                    size="16"
+                  />
                   Belum mengikuti training
                 </div>
                 <app-timeline>
@@ -100,20 +128,29 @@
                 </app-timeline>
               </b-col>
               <b-col md="12">
-                <h3 class="my-2">Pengalaman</h3>
+                <h3 class="my-2">
+                  Pengalaman
+                </h3>
 
                 <div
                   v-if="loadingExperience || !name"
                   class="d-flex align-items-center"
                 >
-                  <b-spinner class="mr-50" small />
+                  <b-spinner
+                    class="mr-50"
+                    small
+                  />
                   Loading..
                 </div>
                 <div
                   v-else-if="!experienceItems.length"
                   class="d-flex align-items-center text-secondary"
                 >
-                  <feather-icon icon="InfoIcon" class="mr-50" size="16" />
+                  <feather-icon
+                    icon="InfoIcon"
+                    class="mr-50"
+                    size="16"
+                  />
                   Belum ada pengalaman
                 </div>
                 <app-timeline>
@@ -123,10 +160,10 @@
                     :title="
                       item.partner_category || item.position
                         ? `${
-                            item.partner_category
-                              ? `Menangani produk ${item.partner_category.partner_category_name} sebagai `
-                              : ''
-                          }${item.position.position_name}`
+                          item.partner_category
+                            ? `Menangani produk ${item.partner_category.partner_category_name} sebagai `
+                            : ''
+                        }${item.position.position_name}`
                         : ''
                     "
                     :subtitle="dateRangeFormat(item.start_at, item.end_at)"

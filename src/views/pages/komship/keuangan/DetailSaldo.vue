@@ -3,7 +3,9 @@
     <div class="card">
       <div class="card-header">
         <div>
-          <p class="h-text-lg mb-0">Rincian Saldo</p>
+          <p class="h-text-lg mb-0">
+            Rincian Saldo
+          </p>
         </div>
       </div>
       <div class="card-body px-0">
@@ -22,16 +24,16 @@
           </div>
           <div class="col-12 col-md-2">
             <!-- <div class="w-25"> -->
-              <b-form-group class="mb-0">
-                <v-select
-                  v-model="selectedSaldo"
-                  dir="ltr"
-                  id="select_saldo"
-                  :options="optionsSaldo"
-                  :clearable="false"
-                  @input="handleChangeSaldo"
-                />
-              </b-form-group>
+            <b-form-group class="mb-0">
+              <v-select
+                id="select_saldo"
+                v-model="selectedSaldo"
+                dir="ltr"
+                :options="optionsSaldo"
+                :clearable="false"
+                @input="handleChangeSaldo"
+              />
+            </b-form-group>
             <!-- </div> -->
           </div>
           <table class="table table-borderless mt-3">
@@ -54,11 +56,11 @@
                   <img
                     v-if="
                       tableTitles.indexOf(title) == 3 ||
-                      tableTitles.indexOf(title) == 4
+                        tableTitles.indexOf(title) == 4
                     "
                     src="@/assets/images/icons/info-circle-dark.svg"
                     alt="Info"
-                  />
+                  >
                 </th>
               </tr>
             </thead>
@@ -68,13 +70,15 @@
                 :key="rincianSaldos.indexOf(rincian)"
                 :class="
                   'py-1' +
-                  (rincianSaldos.indexOf(rincian) != rincianSaldos.length - 1
-                    ? ' border-bottom'
-                    : '')
+                    (rincianSaldos.indexOf(rincian) != rincianSaldos.length - 1
+                      ? ' border-bottom'
+                      : '')
                 "
               >
                 <th>
-                  <p class="mb-0 h-text-dark">{{ rincian.tanggal }}</p>
+                  <p class="mb-0 h-text-dark">
+                    {{ rincian.tanggal }}
+                  </p>
                 </th>
                 <td>
                   <p class="mb-0 h-text-dark font-weight-bold">
@@ -82,7 +86,12 @@
                       rincian.jenisOrder
                     }}
                   </p>
-                  <p v-if="rincian.retur" class="text-xxs mb-0">Retur</p>
+                  <p
+                    v-if="rincian.retur"
+                    class="text-xxs mb-0"
+                  >
+                    Retur
+                  </p>
                 </td>
                 <td class="h-text-dark font-weight-bold">
                   {{ formatRupiah(rincian.nilaiOrder) }}
@@ -108,7 +117,7 @@
                 <td
                   :class="
                     'font-weight-bold ' +
-                    (rincian.negative ? 'text-danger' : 'text-success')
+                      (rincian.negative ? 'text-danger' : 'text-success')
                   "
                 >
                   {{

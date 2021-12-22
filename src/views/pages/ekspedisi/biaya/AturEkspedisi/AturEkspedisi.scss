@@ -1,3 +1,4 @@
+@import '@core/scss/vue/libs/vue-select.scss';
 .btn-custom {
     border-radius: 8px;
     width: 40px;
@@ -5,6 +6,7 @@
     height: 40px;
     text-align: center !important;
     padding: 2px !important;
+
     &--edit {
         width: 178px;
         height: 40px;
@@ -39,81 +41,4 @@
     -webkit-box-shadow: 0px 1px 10px 9px rgba(252, 212, 190, 1);
     -moz-box-shadow: 0px 1px 10px 9px rgba(252, 212, 190, 1);
     border: 1px solid #F95031;
-}
-
-.dropdown {
-    position: relative;
-    display: block;
-    margin: auto;
-
-    .dropdown-input {
-        background: #fff;
-        cursor: pointer;
-        border-radius: 0.357rem !important;
-        border: 1px solid #d8d6de !important;
-        border-radius: 3px;
-        color: #333;
-        margin: 0;
-        display: block;
-        font-size: .8em;
-        padding: 6px;
-        font-size: 1rem !important;
-        font-weight: 400 !important;
-        color: #6e6b7b !important;
-        height: 2.714rem !important;
-        min-width: 100% !important;
-        max-width: 100% !important;
-
-        &:hover {
-            background: #f8f8fa;
-        }
-       
-    }
-    
-    .dropdown-content {
-        position: absolute;
-        padding: 0.438 rem 2 rem 0.438 rem 1 rem;
-        background-color: #fff;
-        min-width: 100% !important;
-        max-width: 100% !important;
-        max-height: 350px;
-        box-shadow: 0px -8px 34px 0px rgba(0, 0, 0, 0.05);
-        overflow: auto;
-
-        z-index: 1;
-
-        .dropdown-item {
-            color: black;
-            font-size: .8em;
-            padding: 8px;
-            font-size: 1rem !important;
-            font-weight: 400 !important;
-            line-height: 1em;
-            padding: 8px;
-            color: #6e6b7b !important;
-            text-decoration: none;
-            display: block;
-            cursor: pointer;
-
-            &:hover {
-                background-color: #e7ecf5;
-            }
-        }
-    }
-
-    .dropdown:hover .dropdowncontent {
-        display: block;
-    }
-}
-input:focus {
-    outline: #F95031 solid 1px !important;
-    box-shadow: none;
-}
-
-/**
- * Remove focus ring for non-explicit scenarios.
- */
-input:focus:not(.focus-visible) {
-    outline: #F95031 solid 1px !important;
-    box-shadow: none;
 }

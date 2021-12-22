@@ -297,10 +297,10 @@ import {
 import VueApexCharts from 'vue-apexcharts'
 import Ripple from 'vue-ripple-directive'
 
+import { kFormatter } from '@core/utils/filter'
 import store from '@/store/index'
 import axioskomsipdev from '@/libs/axioskomsipdev'
 // import { $themeColors } from '@themeConfig'
-import { kFormatter } from '@core/utils/filter'
 
 export default {
   components: {

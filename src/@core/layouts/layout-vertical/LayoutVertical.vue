@@ -34,7 +34,10 @@
       :toggle-vertical-menu-active="toggleVerticalMenuActive"
     >
       <template #header="slotProps">
-        <slot name="vertical-menu-header" v-bind="slotProps" />
+        <slot
+          name="vertical-menu-header"
+          v-bind="slotProps"
+        />
       </template>
     </vertical-nav-menu>
     <!-- /Vertical Nav Menu -->
@@ -50,7 +53,10 @@
     <!-- Content -->
 
     <!-- CONTENT TYPE: Left -->
-    <transition :name="routerTransition" mode="out-in">
+    <transition
+      :name="routerTransition"
+      mode="out-in"
+    >
       <component
         :is="layoutContentRenderer"
         :key="
@@ -60,15 +66,24 @@
         "
         class="pb-25"
       >
-        <template v-for="(index, name) in $scopedSlots" v-slot:[name]="data">
-          <slot :name="name" v-bind="data" />
+        <template
+          v-for="(index, name) in $scopedSlots"
+          v-slot:[name]="data"
+        >
+          <slot
+            :name="name"
+            v-bind="data"
+          />
         </template>
       </component>
     </transition>
     <!--/ Content -->
 
     <!-- Footer -->
-    <footer class="footer footer-light" :class="[footerTypeClass]">
+    <footer
+      class="footer footer-light"
+      :class="[footerTypeClass]"
+    >
       <slot name="footer">
         <app-footer />
       </slot>

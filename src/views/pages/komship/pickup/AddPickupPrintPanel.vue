@@ -11,29 +11,29 @@
         v-if="panelAmount === 1"
         class="add-pickup-popup-print-options-item add-pickup-popup-print-options-item-1"
       >
-        <div class="add-pickup-popup-print-options-item-content"></div>
+        <div class="add-pickup-popup-print-options-item-content" />
       </div>
       <div
         v-if="panelAmount === 2"
         class="add-pickup-popup-print-options-item add-pickup-popup-print-options-item-2"
       >
-        <div class="add-pickup-popup-print-options-item-content"></div>
-        <div class="add-pickup-popup-print-options-item-content"></div>
+        <div class="add-pickup-popup-print-options-item-content" />
+        <div class="add-pickup-popup-print-options-item-content" />
       </div>
       <div
         v-if="panelAmount === 4"
         class="add-pickup-popup-print-options-item add-pickup-popup-print-options-item-4"
       >
-        <div class="add-pickup-popup-print-options-item-content"></div>
-        <div class="add-pickup-popup-print-options-item-content"></div>
-        <div class="add-pickup-popup-print-options-item-content"></div>
-        <div class="add-pickup-popup-print-options-item-content"></div>
+        <div class="add-pickup-popup-print-options-item-content" />
+        <div class="add-pickup-popup-print-options-item-content" />
+        <div class="add-pickup-popup-print-options-item-content" />
+        <div class="add-pickup-popup-print-options-item-content" />
       </div>
       <div
         v-if="panelAmount === 100"
         class="add-pickup-popup-print-options-item add-pickup-popup-print-options-item-100"
       >
-        <div class="add-pickup-popup-print-options-item-content"></div>
+        <div class="add-pickup-popup-print-options-item-content" />
       </div>
     </div>
     <div
@@ -44,12 +44,16 @@
         v-if="panelAmount === 150"
         class="add-pickup-popup-print-options-item add-pickup-popup-print-options-item-150"
       >
-        <div class="add-pickup-popup-print-options-item-content"></div>
+        <div class="add-pickup-popup-print-options-item-content" />
       </div>
     </div>
     <div class="add-pickup-popup-print-options-dsc">
-      <div class="add-pickup-popup-print-options-title">{{ title }}</div>
-      <div class="add-pickup-popup-print-options-subtitle">{{ subTitle }}</div>
+      <div class="add-pickup-popup-print-options-title">
+        {{ title }}
+      </div>
+      <div class="add-pickup-popup-print-options-subtitle">
+        {{ subTitle }}
+      </div>
     </div>
   </div>
 </template>

@@ -61,6 +61,7 @@
                       id="dropdown-form-nama"
                       size="lg"
                       placeholder="Masukkan Nama"
+                      @input="onChangeParter"
                     />
                   </b-form-group>
 
@@ -116,6 +117,7 @@
                 :sort-direction="sortDirection"
                 :filter="filter"
                 :filter-included-fields="filterOn"
+                @row-clicked="showDetails"
                 @filtered="onFiltered"
               >
                 <!-- A virtual composite column -->
@@ -164,7 +166,7 @@
                       <span
                         :class="colorStatus(data.item.status)"
                       >
-                        {{ data.item.status }}
+                        {{ statusToIndo(data.item.status) }}
                       </span>
                     </b-link>
                   </div>
@@ -247,8 +249,8 @@ import {
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
 
-import axioskomsipdev from '@/libs/axioskomsipdev'
 import { kFormatter } from '@core/utils/filter'
+import axioskomsipdev from '@/libs/axioskomsipdev'
 
 export default {
   components: {
@@ -285,17 +287,19 @@ export default {
       alertshow: false,
       loadDataAwal: true,
       searchTerm: '',
+      queryParterName: '',
+      queryStatuse: '',
       filterDropdown: {
         partner_name: '',
         selectedStatus: null,
       },
       optionsStatus: [
-        { value: null, text: 'Pilih Status' },
-        { value: 'completed', text: 'Completed' },
-        { value: 'requested', text: 'Requested' },
-        { value: 'canceled', text: 'Canceled' },
-        { value: 'on_review', text: 'On Review' },
-        { value: 'rejected', text: 'Rejected' },
+        { value: null, text: 'Pilih Status', disabled: true },
+        { value: 'completed', text: 'Disetujui' },
+        { value: 'requested', text: 'Perlu Disetujui' },
+        // { value: 'canceled', text: 'Canceled' },
+        { value: 'on_review', text: 'Sedang Direview' },
+        { value: 'rejected', text: 'Ditolak' },
       ],
       rowsTable: [],
       isLoadTable: false,
@@ -318,7 +322,6 @@ export default {
         {
           key: 'bank_name',
           label: 'Nama Bank',
-          sortable: true,
         },
         {
           key: 'bankAccount',
@@ -353,6 +356,30 @@ export default {
     //
   },
   methods: {
+    showDetails(item) {
+      console.log(item)
+      this.$router.push({ name: 'cod-rincian-penarikan-saldo', params: { slug: item.withdrawal_id } })
+    },
+    onChangeParter(value) {
+      this.queryParterName = value
+    },
+    statusToIndo(status) {
+      let newStatus
+      if (status === 'completed') {
+        newStatus = 'Disetujui'
+      } else if (status === 'requested') {
+        newStatus = 'Perlu Disetujui'
+      } else if (status === 'on_review') {
+        newStatus = 'Sedang Direview'
+      } else if (status === 'rejected') {
+        newStatus = 'Ditolak'
+      } else if (status === 'canceled') {
+        newStatus = 'DiBatalkan'
+      } else {
+        newStatus = '-'
+      }
+      return newStatus
+    },
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length
@@ -366,7 +393,7 @@ export default {
       }
     },
     onClickTerapkanFilterDropdown() {
-      this.fetchData({ ...this.filterDropdown })
+      this.fetchData(this.filterDropdown.selectedStatus, this.queryParterName)
       // Close the dropdown and (by passing true) return focus to the toggle button
       this.$refs.dropdownFilter.hide(true)
     },
@@ -392,13 +419,13 @@ export default {
       }
       return classStatusColor
     },
-    fetchData(params) {
+    fetchData(status, parterName) {
       // change this endpoint
       const endpoint = '/v1/admin/withdrawal/list'
       let getData = null
 
-      if (params) {
-        getData = axioskomsipdev.get(endpoint, { params: { ...params } })
+      if (status || parterName) {
+        getData = axioskomsipdev.get(endpoint, { params: { status, partner_name: parterName } })
       } else {
         getData = axioskomsipdev.get(endpoint)
       }

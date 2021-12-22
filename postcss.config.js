@@ -1,3 +1,6 @@
 module.exports = {
-  plugins: [require('postcss-rtl'), require('autoprefixer')],
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
 }

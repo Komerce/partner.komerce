@@ -14,7 +14,10 @@
         no-actions
         no-body
       >
-        <b-tabs v-model="tabIndex" fill>
+        <b-tabs
+          v-model="tabIndex"
+          fill
+        >
           <b-tab
             v-for="tab in tabs"
             :key="tab.id"
@@ -29,7 +32,9 @@
             />
             <b-row v-if="items.length < 1">
               <b-col>
-                <p class="text-center">No Menu Available</p>
+                <p class="text-center">
+                  No Menu Available
+                </p>
               </b-col>
             </b-row>
           </b-tab>
@@ -76,6 +81,12 @@ export default {
       items: [],
     }
   },
+  watch: {
+    tabIndex(newValue) {
+      const komereApplicationId = newValue >= 0 ? this.tabs[newValue].id : null
+      this.getAllMenu(komereApplicationId)
+    },
+  },
   async created() {
     this.loading = true
 
@@ -88,12 +99,6 @@ export default {
       .finally(() => {
         this.loading = false
       })
-  },
-  watch: {
-    tabIndex(newValue) {
-      const komereApplicationId = newValue >= 0 ? this.tabs[newValue].id : null
-      this.getAllMenu(komereApplicationId)
-    },
   },
   methods: {
     getAllMenu(komereApplicationId) {

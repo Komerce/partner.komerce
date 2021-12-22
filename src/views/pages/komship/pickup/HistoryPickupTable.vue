@@ -10,15 +10,23 @@
 
       <template #cell(order_date)="dateData">
         <div class="view-all-pickup-date-text">
-          <div class="date-wrapper">{{ dateData.value }}</div>
-          <div class="time-wrapper grey-text">{{ dateData.item.time_submission }}</div>
+          <div class="date-wrapper">
+            {{ dateData.value }}
+          </div>
+          <div class="time-wrapper grey-text">
+            {{ dateData.item.time_submission }}
+          </div>
         </div>
       </template>
 
       <template #cell(pickup_date)="dateData">
         <div class="view-all-pickup-date-text">
-          <div class="date-wrapper">{{ dateData.value }}</div>
-          <div class="time-wrapper grey-text">{{ dateData.item.pickup_time }}</div>
+          <div class="date-wrapper">
+            {{ dateData.value }}
+          </div>
+          <div class="time-wrapper grey-text">
+            {{ dateData.item.pickup_time }}
+          </div>
         </div>
       </template>
 

@@ -11,7 +11,7 @@
               <div class="first-card-header-text me-8 mb-0">
                 Saldo
               </div>
-              <popover-info text="Saldo kamu saat ini."/>
+              <popover-info text="Saldo kamu saat ini." />
             </div>
           </div>
           <div class="card-body h-text-xl pb-0 mb-0">
@@ -57,7 +57,7 @@
               <img
                 src="@/assets/images/icons/receive-square.svg"
                 alt="Tarik Saldo"
-              />
+              >
               <p class="h-text-xs mb-0">Tarik Saldo</p>
             </a>
             <a
@@ -70,7 +70,10 @@
                 align-items-center
               "
             >
-              <img src="@/assets/images/icons/document-text.svg" alt="Detail" />
+              <img
+                src="@/assets/images/icons/document-text.svg"
+                alt="Detail"
+              >
               <p class="h-text-xs mb-0">Detail</p>
             </a>
           </div>
@@ -83,7 +86,7 @@
               <div class="first-card-header-text me-8 mb-0">
                 Saldo Pending
               </div>
-              <popover-info text="Saldo Pending merupakan saldo yang akan kamu terima ketika orderan yang statusnya dikirim telah berubah menjadi diterima."/>
+              <popover-info text="Saldo Pending merupakan saldo yang akan kamu terima ketika orderan yang statusnya dikirim telah berubah menjadi diterima." />
             </div>
             <img
               src="@/assets/images/icons/arrow-square-right.svg"
@@ -123,7 +126,7 @@
               <div class="first-card-header-text me-8 mb-0">
                 Penghasilan
               </div>
-              <popover-info text="Penghasilan merupakan grafik keuangan dari orderan yang telah kamu masukkan ke Komship dari 7 hari terakhir."/>
+              <popover-info text="Penghasilan merupakan grafik keuangan dari orderan yang telah kamu masukkan ke Komship dari 7 hari terakhir." />
             </div>
             <b-form-group class="flex-grow-1 pl-3 pr-1 mb-0">
               <v-select
@@ -142,10 +145,14 @@
               dir="ltr"
               class="select-chart position-absolute"
               :options="optionsChart"
-              @input="handleChangeChart"
               :clearable="false"
+              @input="handleChangeChart"
             />
-            <ChartPenghasilan :datasets="partnerIncomeGraph.datasets" :labels="partnerIncomeGraph.labels" class="mt-1" />
+            <ChartPenghasilan
+              :datasets="partnerIncomeGraph.datasets"
+              :labels="partnerIncomeGraph.labels"
+              class="mt-1"
+            />
           </div>
         </div>
       </div>
@@ -212,7 +219,7 @@
               <div class="first-card-header-text me-8 mb-0">
                 Top Admin Order
               </div>
-              <popover-info text="Top Admin Order merupakan orang yang menginputkan order paling banyak berdasarkan nilai orderan"/>
+              <popover-info text="Top Admin Order merupakan orang yang menginputkan order paling banyak berdasarkan nilai orderan" />
             </div>
           </div>
           <div class="card-body">
@@ -255,7 +262,7 @@
               <div class="first-card-header-text me-8 mb-0">
                 Produk Terlaris
               </div>
-              <popover-info text="Produk Terlaris merupakan produk kamu yang paling banyak di order."/>
+              <popover-info text="Produk Terlaris merupakan produk kamu yang paling banyak di order." />
             </div>
             <img
               src="@/assets/images/icons/arrow-square-right.svg"
@@ -278,58 +285,60 @@
             </div>
             <ul class="list-group list-group-flush">
               <template v-if="produkTerlarises.length > 0">
-              <li
-                v-for="produkTerlaris in produkTerlarises"
-                :key="produkTerlarises.indexOf(produkTerlaris)"
-                class="list-group-item px-0"
-              >
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="d-flex align-items-center">
-                    <img
-                      width="35"
-                      class="img-fluid"
-                      :src="produkTerlaris.photo"
-                      alt="Photo"
-                    >
-                    <div>
-                      <p class="list-text-1 h-text-dark ml-2 mb-0">
-                        {{ produkTerlaris.name }}
+                <li
+                  v-for="produkTerlaris in produkTerlarises"
+                  :key="produkTerlarises.indexOf(produkTerlaris)"
+                  class="list-group-item px-0"
+                >
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-center">
+                      <img
+                        width="35"
+                        class="img-fluid"
+                        :src="produkTerlaris.photo"
+                        alt="Photo"
+                      >
+                      <div>
+                        <p class="list-text-1 h-text-dark ml-2 mb-0">
+                          {{ produkTerlaris.name }}
+                        </p>
+                        <p class="saldo-texts ml-2 mb-0">
+                          SKU: {{ produkTerlaris.kodeBrg }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="right">
+                      <p class="list-text-2 h-text-dark mb-0">
+                        {{ produkTerlaris.penjualan }}
                       </p>
-                      <p class="saldo-texts ml-2 mb-0">
-                        SKU: {{ produkTerlaris.kodeBrg }}
-                      </p>
+                      <div
+                        :class="
+                          `badge h-badge-${
+                            produkTerlaris.persentase >= 0 ? 'success' : 'danger'
+                          } rounded-pill font-weight-normal`
+                        "
+                      >
+                        {{ produkTerlaris.persentase >= 0 ? '+' : ''
+                        }}{{ produkTerlaris.persentase }}%
+                      </div>
+                      <img
+                        v-if="produkTerlaris.persentase >= 0"
+                        src="@/assets/images/icons/arrow-going-up-alt.svg"
+                        alt="arrow-going-up-alt"
+                      >
+                      <img
+                        v-else
+                        src="@/assets/images/icons/arrow-going-down-alt.svg"
+                        alt="arrow-going-down-alt"
+                      >
                     </div>
                   </div>
-                  <div class="right">
-                    <p class="list-text-2 h-text-dark mb-0">
-                      {{ produkTerlaris.penjualan }}
-                    </p>
-                    <div
-                      :class="
-                        `badge h-badge-${
-                          produkTerlaris.persentase >= 0 ? 'success' : 'danger'
-                        } rounded-pill font-weight-normal`
-                      "
-                    >
-                      {{ produkTerlaris.persentase >= 0 ? '+' : ''
-                      }}{{ produkTerlaris.persentase }}%
-                    </div>
-                    <img
-                      v-if="produkTerlaris.persentase >= 0"
-                      src="@/assets/images/icons/arrow-going-up-alt.svg"
-                      alt="arrow-going-up-alt"
-                    >
-                    <img
-                      v-else
-                      src="@/assets/images/icons/arrow-going-down-alt.svg"
-                      alt="arrow-going-down-alt"
-                    >
-                  </div>
-                </div>
-              </li>
+                </li>
               </template>
               <template v-else>
-                <div class="text-center py-4">Tidak Ada Data</div>
+                <div class="text-center py-4">
+                  Tidak Ada Data
+                </div>
               </template>
             </ul>
           </div>
@@ -342,7 +351,7 @@
               <div class="first-card-header-text me-8 mb-0">
                 Customer Loyal
               </div>
-              <popover-info text="Customer Loyal merupakan customer yang sering melakukan order."/>
+              <popover-info text="Customer Loyal merupakan customer yang sering melakukan order." />
             </div>
             <img
               src="@/assets/images/icons/arrow-square-right.svg"
@@ -485,23 +494,34 @@
         <button class="btn btn-outline-primary">Tutup</button>
       </div>
     </div> -->
-        <b-modal id="modalTopUp" centered hide-header>
-      <a href="#" @click="closeModal()">
+    <b-modal
+      id="modalTopUp"
+      centered
+      hide-header
+    >
+      <a
+        href="#"
+        @click="closeModal()"
+      >
         <img
           src="@/assets/images/icons/close-circle.svg"
           height="18"
           width="18"
           alt="close"
           class="float-right"
-        />
+        >
       </a>
       <div class="p-1">
-        <p class="text-center h-text-lg mb-2">Top Up Saldo</p>
+        <p class="text-center h-text-lg mb-2">
+          Top Up Saldo
+        </p>
       </div>
       <form id="formTopUp">
         <div class="row align-items-center my-2">
           <div class="col-4">
-            <p class="font-weight-bold h-text-sm h-text-dark mb-0">Nominal</p>
+            <p class="font-weight-bold h-text-sm h-text-dark mb-0">
+              Nominal
+            </p>
           </div>
           <b-form-group
             class="col-8 mb-0"
@@ -527,7 +547,10 @@
         >
           Batal
         </button>
-        <button class="btn btn-primary rounded-lg" @click="topUpSaldo()">
+        <button
+          class="btn btn-primary rounded-lg"
+          @click="topUpSaldo()"
+        >
           Top Up Sekarang
         </button>
       </template>
@@ -541,17 +564,23 @@
       no-close-on-backdrop
       no-close-on-esc
     >
-      <a href="#" @click="closeModal()">
+      <a
+        href="#"
+        @click="closeModal()"
+      >
         <img
           src="@/assets/images/icons/close-circle.svg"
           height="18"
           width="18"
           alt="close"
           class="float-right"
-        />
+        >
       </a>
       <div class="p-1">
-        <p class="text-center h-text-lg mb-2" id="modal-title">
+        <p
+          id="modal-title"
+          class="text-center h-text-lg mb-2"
+        >
           {{ modalTitle }}
         </p>
         <div v-if="stepNow === 0">
@@ -561,7 +590,9 @@
             @submit.stop.prevent="handleSubmit(1)"
           >
             <div class="col-5 mb-1">
-              <p class="h-text-sm h-text-dark mb-0">Nominal</p>
+              <p class="h-text-sm h-text-dark mb-0">
+                Nominal
+              </p>
             </div>
             <b-form-group
               class="col-7 mb-1"
@@ -581,7 +612,9 @@
               />
             </b-form-group>
             <div class="col-5 mb-1">
-              <p class="h-text-sm h-text-dark mb-0">Rekening Tujuan</p>
+              <p class="h-text-sm h-text-dark mb-0">
+                Rekening Tujuan
+              </p>
             </div>
             <b-form-group
               class="col-7 mb-1"
@@ -593,7 +626,7 @@
                 class="h-text-sm h-text-dark"
                 :options="rekTujuanOptions"
                 required
-              ></b-form-select>
+              />
             </b-form-group>
             <div class="col-12 text-right mt-3">
               <button
@@ -603,14 +636,20 @@
               >
                 Batal
               </button>
-              <button type="submit" class="btn btn-primary ml-2">
+              <button
+                type="submit"
+                class="btn btn-primary ml-2"
+              >
                 Ajukan Penarikan
               </button>
             </div>
           </form>
         </div>
         <div v-if="stepNow === 1">
-          <form ref="form2" @submit.stop.prevent="handleSubmit(2)">
+          <form
+            ref="form2"
+            @submit.stop.prevent="handleSubmit(2)"
+          >
             <p class="text-center h-text-dark font-weight-bold mb-3">
               Mohon verifikasi identitas kamu dengan memasukan PIN
             </p>
@@ -621,7 +660,10 @@
             />
             <div class="col-12 mt-2">
               <div class="text-center">
-                <button type="submit" class="btn btn-primary d-block m-auto">
+                <button
+                  type="submit"
+                  class="btn btn-primary d-block m-auto"
+                >
                   Konfirmasi
                 </button>
                 <button
@@ -635,9 +677,17 @@
             </div>
           </form>
         </div>
-        <div v-if="stepNow === 2" class="text-center">
-          <img src="@/assets/images/icons/success.svg" alt="success" />
-          <p class="mt-2 h-text-md text-center">Penarikan Saldo Berhasil</p>
+        <div
+          v-if="stepNow === 2"
+          class="text-center"
+        >
+          <img
+            src="@/assets/images/icons/success.svg"
+            alt="success"
+          >
+          <p class="mt-2 h-text-md text-center">
+            Penarikan Saldo Berhasil
+          </p>
           <p class="h-text-dark font-weight-bold">
             Saldo sebesar {{ formatRupiah(nominal) }} akan segera dikirim ke
             rekening atas nama {{ rekening.nama }} - {{ rekening.bank }} dalam
@@ -647,10 +697,10 @@
       </div>
     </b-modal>
 
-    <!-- <onboarding
+    <onboarding
       ref="onboardingElement"
       :current-stage="0"
-    /> -->
+    />
   </div>
 </template>
 
@@ -660,15 +710,15 @@ import { mapFields } from 'vuex-map-fields'
 import {
   BFormGroup, BModal, BFormInput, BFormSelect,
 } from 'bootstrap-vue'
-import useJwt from '@/auth/jwt/useJwt'
 import PincodeInput from 'vue-pincode-input'
 import vSelect from 'vue-select'
 import moment from 'moment'
+import useJwt from '@/auth/jwt/useJwt'
 // import DateRangePicker from 'vue2-daterange-picker'
 import ChartPenghasilan from '../../../components/chart/ChartPenghasilan.vue'
 // import ChartPerforma from '../../../components/chart/ChartPerforma.vue'
 import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
-// import Onboarding from '../onboarding/Onboarding.vue'
+import Onboarding from '../onboarding/Onboarding.vue'
 import PopoverInfo from '../../../components/popover/PopoverInfo.vue'
 
 export default {
@@ -682,7 +732,7 @@ export default {
     // DateRangePicker,
     PincodeInput,
     vSelect,
-    // Onboarding,
+    Onboarding,
     PopoverInfo,
   },
   data() {
@@ -733,8 +783,8 @@ export default {
           totalProduk: 500,
         },
       ],
-      selectedPenghasilan: 'Kompship',
-      optionsPenghasilan: ['Kompship'],
+      selectedPenghasilan: 'Komship',
+      optionsPenghasilan: ['Komship'],
       dropDownValues: ['Real Time', '7 Hari Terakhir', '30 Hari Terakhir', 'Custom Tanggal'],
       selectedCstDateBefore: null,
       selectedCstDate: 'Real Time',
@@ -1133,6 +1183,9 @@ export default {
 }
 .bg-orange2 {
   background-color: #f95031 !important;
+}
+.bg-green {
+  background-color: #0faa60 !important;
 }
 .card,
 .rounded-16 {

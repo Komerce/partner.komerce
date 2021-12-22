@@ -2,7 +2,7 @@ export default [
   {
     path: '/pencairan',
     name: 'cod-pencairan',
-    component: () => import('@/views/pages/pencairan/Index'),
+    component: () => import('@/views/pages/pencairan/Index.vue'),
     meta: {
       resource: 'Dashboard',
       action: 'read',
@@ -21,7 +21,7 @@ export default [
   {
     path: '/pencairan/:slug',
     name: 'cod-rincian-penarikan-saldo',
-    component: () => import('@/views/pages/pencairan/RincianPenarikanSaldo'),
+    component: () => import('@/views/pages/pencairan/RincianPenarikanSaldo.vue'),
     meta: {
       navActiveLink: 'cod-pencairan',
       resource: 'Dashboard',

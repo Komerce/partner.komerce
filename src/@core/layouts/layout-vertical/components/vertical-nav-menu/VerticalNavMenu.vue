@@ -23,9 +23,15 @@
         <ul class="nav navbar-nav flex-row">
           <!-- Logo & Text -->
           <li class="nav-item mr-auto">
-            <b-link class="navbar-brand" to="/">
+            <b-link
+              class="navbar-brand"
+              to="/"
+            >
               <span class="brand-logo">
-                <b-img :src="appLogoImage" alt="logo" />
+                <b-img
+                  :src="appLogoImage"
+                  alt="logo"
+                />
               </span>
               <h2 class="brand-text">
                 {{ appName }}
@@ -56,7 +62,10 @@
     <!-- / main menu header-->
 
     <!-- Shadow -->
-    <div :class="{ 'd-block': shallShadowBottom }" class="shadow-bottom" />
+    <div
+      :class="{ 'd-block': shallShadowBottom }"
+      class="shadow-bottom"
+    />
 
     <!-- main menu content-->
     <vue-perfect-scrollbar
@@ -79,12 +88,12 @@
 </template>
 
 <script>
-import navMenuItems from '@/navigation/vertical'
 import VuePerfectScrollbar from 'vue-perfect-scrollbar'
 import { BLink, BImg } from 'bootstrap-vue'
 import { provide, computed, ref } from '@vue/composition-api'
-import useAppConfig from '@core/app-config/useAppConfig'
 import { $themeConfig } from '@themeConfig'
+import useAppConfig from '@core/app-config/useAppConfig'
+import navMenuItems from '@/navigation/vertical'
 import VerticalNavMenuItems from './components/vertical-nav-menu-items/VerticalNavMenuItems.vue'
 import useVerticalNavMenu from './useVerticalNavMenu'
 

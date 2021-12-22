@@ -1,12 +1,19 @@
 <template>
   <div class="container p-0">
-    <h1 class="mb-2 h-text-xl">Informasi Penghasilan</h1>
+    <h1 class="mb-2 h-text-xl">
+      Informasi Penghasilan
+    </h1>
     <div class="d-flex justify-content-between">
-      <div class="d-block" style="width: 29.5%">
+      <div
+        class="d-block"
+        style="width: 29.5%"
+      >
         <div class="card h-100">
           <div class="card-header mb-8 pb-0">
             <div class="d-flex align-items-center">
-              <div class="first-card-header-text me-8 mb-0">Cashback</div>
+              <div class="first-card-header-text me-8 mb-0">
+                Cashback
+              </div>
             </div>
           </div>
           <div class="card-body pb-0 mb-0">
@@ -19,14 +26,19 @@
           </div>
         </div>
       </div>
-      <div class="d-block" style="width: 21.5%">
+      <div
+        class="d-block"
+        style="width: 21.5%"
+      >
         <div class="card h-100">
           <div class="card-header mb-8 pb-0">
             <div class="first-card-header-text me-8 mb-0">
               Penghasilan
               <div class="d-flex align-items-center">
-                <p class="mb-0 mr-1">7 Hari Terakhir</p>
-                <popover-info text="Akumulasi penghasilan 7 hari terakhir."/>
+                <p class="mb-0 mr-1">
+                  7 Hari Terakhir
+                </p>
+                <popover-info text="Akumulasi penghasilan 7 hari terakhir." />
               </div>
             </div>
           </div>
@@ -35,14 +47,19 @@
           </div>
         </div>
       </div>
-      <div class="d-block" style="width: 21.5%">
+      <div
+        class="d-block"
+        style="width: 21.5%"
+      >
         <div class="card h-100">
           <div class="card-header mb-8 pb-0">
             <div class="first-card-header-text me-8 mb-0">
               Penghasilan
               <div class="d-flex align-items-center">
-                <p class="mb-0 mr-1">30 Hari Terakhir</p>
-                <popover-info text="Akumulasi penghasilan dalam 30 hari terakhir."/>
+                <p class="mb-0 mr-1">
+                  30 Hari Terakhir
+                </p>
+                <popover-info text="Akumulasi penghasilan dalam 30 hari terakhir." />
               </div>
             </div>
           </div>
@@ -51,14 +68,19 @@
           </div>
         </div>
       </div>
-      <div class="d-block" style="width: 21.5%">
+      <div
+        class="d-block"
+        style="width: 21.5%"
+      >
         <div class="card h-100">
           <div class="card-header mb-8 pb-0">
             <div class="first-card-header-text me-8 mb-0">
               Penghasilan
               <div class="d-flex align-items-center">
-                <p class="mb-0 mr-1">Total</p>
-                <popover-info text="Akumulasi total penghasilan yang didapatkan."/>
+                <p class="mb-0 mr-1">
+                  Total
+                </p>
+                <popover-info text="Akumulasi total penghasilan yang didapatkan." />
               </div>
             </div>
           </div>
@@ -72,12 +94,14 @@
       <div class="col-12">
         <div class="card">
           <div class="card-header">
-            <div class="h-text-lg">Rincian Penghasilan</div>
+            <div class="h-text-lg">
+              Rincian Penghasilan
+            </div>
             <div class="d-flex justify-content-end w-50">
               <b-form-group class="w-25 mb-0 mr-1">
                 <v-select
                   v-model="selectedPenghasilan"
-                  label="Kompship"
+                  label="Komship"
                   dir="ltr"
                   :options="optionsPenghasilan"
                   :clearable="false"
@@ -86,21 +110,22 @@
               </b-form-group>
               <date-range-picker
                 ref="picker"
-                :locale-data="locale"
                 v-model="dateRange"
+                :locale-data="locale"
                 :ranges="ranges"
                 :opens="'left'"
                 class="w-50"
                 @input="handleChangePenghasilan"
               >
-                <template v-slot:input="picker" style="min-width: 350px">
+                <template
+                  v-slot:input="picker"
+                  style="min-width: 350px"
+                >
                   <div
                     class="d-flex justify-content-between align-items-center"
                   >
-                    <span
-                      >{{ formatDate(picker.startDate) }} -
-                      {{ formatDate(picker.endDate) }}</span
-                    >
+                    <span>{{ formatDate(picker.startDate) }} -
+                      {{ formatDate(picker.endDate) }}</span>
                   </div>
                 </template>
               </date-range-picker>
@@ -109,16 +134,24 @@
           <div class="card-body">
             <div class="row">
               <div class="col-12 col-md-6 pr-0">
-                <p class="h-text-xl">COD</p>
-                <ChartPenghasilan  :datasets="incomeCODGraph.datasets" :labels="incomeCODGraph.labels" :height="300" />
+                <p class="h-text-xl">
+                  COD
+                </p>
+                <ChartPenghasilan
+                  :datasets="incomeCODGraph.datasets"
+                  :labels="incomeCODGraph.labels"
+                  :height="300"
+                />
               </div>
               <div class="col-12 col-md-6 row px-0">
-                <div class="col-12 h-5-5"></div>
+                <div class="col-12 h-5-5" />
                 <div class="col-4 pr-0 h-color-dark mb-1">
                   <div class="border rounded-16 h-100 p-1">
                     <div class="d-flex flex-nowrap">
-                      <div class="info-card-header-text">Orderan COD</div>
-                      <popover-info text="Orderan COD merupakan presentase perbandingan jumlah order antara metode pembayaran COD dengan Transfer Bank."/>
+                      <div class="info-card-header-text">
+                        Orderan COD
+                      </div>
+                      <popover-info text="Orderan COD merupakan presentase perbandingan jumlah order antara metode pembayaran COD dengan Transfer Bank." />
                     </div>
                     <div class="info-card-body-text">
                       {{ dataCod.orderan }}%
@@ -128,26 +161,36 @@
                 <div class="col-4 pr-0 h-color-dark mb-1">
                   <div class="border rounded-16 h-100 p-1">
                     <div class="d-flex flex-nowrap">
-                      <div class="info-card-header-text">Orderan Sukses</div>
-                     <popover-info text="Presentase orderan dengan status diterima, dari seluruh orderan."/>
+                      <div class="info-card-header-text">
+                        Orderan Sukses
+                      </div>
+                      <popover-info text="Presentase orderan dengan status diterima, dari seluruh orderan." />
                     </div>
-                    <div class="info-card-body-text">{{ dataCod.sukses }}%</div>
+                    <div class="info-card-body-text">
+                      {{ dataCod.sukses }}%
+                    </div>
                   </div>
                 </div>
                 <div class="col-4 pr-0 h-color-dark mb-1">
                   <div class="border rounded-16 h-100 p-1">
                     <div class="d-flex flex-nowrap">
-                      <div class="info-card-header-text">Orderan Retur</div>
-                      <popover-info text="Presentase orderan dengan status retur dari seluruh orderan."/>
+                      <div class="info-card-header-text">
+                        Orderan Retur
+                      </div>
+                      <popover-info text="Presentase orderan dengan status retur dari seluruh orderan." />
                     </div>
-                    <div class="info-card-body-text">{{ dataCod.retur }}%</div>
+                    <div class="info-card-body-text">
+                      {{ dataCod.retur }}%
+                    </div>
                   </div>
                 </div>
                 <div class="col-4 pr-0 h-color-dark mb-1">
                   <div class="border rounded-16 h-100 p-1">
                     <div class="d-flex flex-nowrap">
-                      <div class="info-card-header-text">Penghasilan Kotor</div>
-                      <popover-info text="Akumulasi penghasilan kotor."/>
+                      <div class="info-card-header-text">
+                        Penghasilan Kotor
+                      </div>
+                      <popover-info text="Akumulasi penghasilan kotor." />
                     </div>
                     <div class="info-card-body-text text-orange">
                       {{ formatRupiah(dataCod.pKotor) }}
@@ -160,7 +203,7 @@
                       <div class="info-card-header-text">
                         Penghasilan Bersih
                       </div>
-                      <popover-info text="Akumulasi penghasilan bersih."/>
+                      <popover-info text="Akumulasi penghasilan bersih." />
                     </div>
                     <div class="info-card-body-text text-blue">
                       {{ formatRupiah(dataCod.pBersih) }}
@@ -173,7 +216,7 @@
                       <div class="info-card-header-text">
                         Cashback Ongkos Kirim
                       </div>
-                      <popover-info text="Akumulasi perolehan cashback ongkos kirim yang diperoleh."/>
+                      <popover-info text="Akumulasi perolehan cashback ongkos kirim yang diperoleh." />
                     </div>
                     <div class="info-card-body-text">
                       {{ formatRupiah(dataCod.cashbackOngkir) }}
@@ -183,8 +226,10 @@
                 <div class="col-4 pr-0 h-color-dark mb-1">
                   <div class="border rounded-16 h-100 p-1">
                     <div class="d-flex flex-nowrap">
-                      <div class="info-card-header-text">Ongkos Kirim</div>
-                      <popover-info text="Akumulasi nilai ongkos kirim kotor (tanpa cashback)."/>
+                      <div class="info-card-header-text">
+                        Ongkos Kirim
+                      </div>
+                      <popover-info text="Akumulasi nilai ongkos kirim kotor (tanpa cashback)." />
                     </div>
                     <div class="info-card-body-text">
                       {{ formatRupiah(dataCod.ongkir) }}
@@ -197,7 +242,7 @@
                       <div class="info-card-header-text">
                         Ongkos Kirim Bersih
                       </div>
-                      <popover-info text="Akumulasi nilai ongkos kirim bersih (setelah cashback)."/>
+                      <popover-info text="Akumulasi nilai ongkos kirim bersih (setelah cashback)." />
                     </div>
                     <div class="info-card-body-text">
                       {{ formatRupiah(dataCod.ongkirBersih) }}
@@ -207,8 +252,10 @@
                 <div class="col-4 pr-0 h-color-dark mb-1">
                   <div class="border rounded-16 h-100 p-1">
                     <div class="d-flex flex-nowrap">
-                      <div class="info-card-header-text">Biaya COD</div>
-                      <popover-info text="Akumulasi seluruh Biaya COD dari setiap transaksi COD."/>
+                      <div class="info-card-header-text">
+                        Biaya COD
+                      </div>
+                      <popover-info text="Akumulasi seluruh Biaya COD dari setiap transaksi COD." />
                     </div>
                     <div class="info-card-body-text">
                       {{ formatRupiah(dataCod.biayaCod) }}
@@ -219,18 +266,24 @@
             </div>
             <div class="row mt-3">
               <div class="col-12 col-md-6 pr-0">
-                <p class="h-text-xl">Transfer</p>
-                <ChartPenghasilan  :datasets="incomeTransferGraph.datasets" :labels="incomeTransferGraph.labels" :height="300" />
+                <p class="h-text-xl">
+                  Transfer
+                </p>
+                <ChartPenghasilan
+                  :datasets="incomeTransferGraph.datasets"
+                  :labels="incomeTransferGraph.labels"
+                  :height="300"
+                />
               </div>
               <div class="col-12 col-md-6 row px-0">
-                <div class="col-12 h-5-5"></div>
+                <div class="col-12 h-5-5" />
                 <div class="col-4 pr-0 h-color-dark mb-1">
                   <div class="border rounded-16 h-100 p-1">
                     <div class="d-flex flex-nowrap">
                       <div class="info-card-header-text">
                         Orderan Transfer Bank
                       </div>
-                      <popover-info text="Orderan Transfer Bank merupakan presentase perbandingan jumlah order antara metode pembayaran Transfer Bank dengan COD."/>
+                      <popover-info text="Orderan Transfer Bank merupakan presentase perbandingan jumlah order antara metode pembayaran Transfer Bank dengan COD." />
                     </div>
                     <div class="info-card-body-text">
                       {{ dataTransfer.orderan }}%
@@ -240,8 +293,10 @@
                 <div class="col-4 pr-0 h-color-dark mb-1">
                   <div class="border rounded-16 h-100 p-1">
                     <div class="d-flex flex-nowrap">
-                      <div class="info-card-header-text">Orderan Sukses</div>
-                      <popover-info text="Presentase orderan dengan status diterima, dari seluruh orderan."/>
+                      <div class="info-card-header-text">
+                        Orderan Sukses
+                      </div>
+                      <popover-info text="Presentase orderan dengan status diterima, dari seluruh orderan." />
                     </div>
                     <div class="info-card-body-text">
                       {{ dataTransfer.sukses }}%
@@ -251,8 +306,10 @@
                 <div class="col-4 pr-0 h-color-dark mb-1">
                   <div class="border rounded-16 h-100 p-1">
                     <div class="d-flex flex-nowrap">
-                      <div class="info-card-header-text">Orderan Retur</div>
-                      <popover-info text="Presentase orderan dengan status retur dari seluruh orderan.Akumulasi penghasilan kotor."/>
+                      <div class="info-card-header-text">
+                        Orderan Retur
+                      </div>
+                      <popover-info text="Presentase orderan dengan status retur dari seluruh orderan.Akumulasi penghasilan kotor." />
                     </div>
                     <div class="info-card-body-text">
                       {{ dataTransfer.retur }}%
@@ -262,8 +319,10 @@
                 <div class="col-4 pr-0 h-color-dark mb-1">
                   <div class="border rounded-16 h-100 p-1">
                     <div class="d-flex flex-nowrap">
-                      <div class="info-card-header-text">Penghasilan Kotor</div>
-                      <popover-info text="Akumulasi penghasilan kotor."/>
+                      <div class="info-card-header-text">
+                        Penghasilan Kotor
+                      </div>
+                      <popover-info text="Akumulasi penghasilan kotor." />
                     </div>
                     <div class="info-card-body-text text-orange">
                       {{ formatRupiah(dataTransfer.pKotor) }}
@@ -276,7 +335,7 @@
                       <div class="info-card-header-text">
                         Penghasilan Bersih
                       </div>
-                      <popover-info text="Akumulasi penghasilan bersih."/>
+                      <popover-info text="Akumulasi penghasilan bersih." />
                     </div>
                     <div class="info-card-body-text text-blue">
                       {{ formatRupiah(dataTransfer.pBersih) }}
@@ -289,7 +348,7 @@
                       <div class="info-card-header-text">
                         Cashback Ongkos Kirim
                       </div>
-                      <popover-info text="Akumulasi perolehan cashback ongkos kirim yang diperoleh."/>
+                      <popover-info text="Akumulasi perolehan cashback ongkos kirim yang diperoleh." />
                     </div>
                     <div class="info-card-body-text">
                       {{ formatRupiah(dataTransfer.cashbackOngkir) }}
@@ -299,8 +358,10 @@
                 <div class="col-4 pr-0 h-color-dark mb-1">
                   <div class="border rounded-16 h-100 p-1">
                     <div class="d-flex flex-nowrap">
-                      <div class="info-card-header-text">Ongkos Kirim</div>
-                      <popover-info text="Akumulasi nilai ongkos kirim kotor (tanpa cashback)."/>
+                      <div class="info-card-header-text">
+                        Ongkos Kirim
+                      </div>
+                      <popover-info text="Akumulasi nilai ongkos kirim kotor (tanpa cashback)." />
                     </div>
                     <div class="info-card-body-text">
                       {{ formatRupiah(dataTransfer.ongkir) }}
@@ -313,7 +374,7 @@
                       <div class="info-card-header-text">
                         Ongkos Kirim Bersih
                       </div>
-                      <popover-info text="Akumulasi nilai ongkos kirim bersih (setelah cashback)."/>
+                      <popover-info text="Akumulasi nilai ongkos kirim bersih (setelah cashback)." />
                     </div>
                     <div class="info-card-body-text">
                       {{ formatRupiah(dataTransfer.ongkirBersih) }}
@@ -323,8 +384,10 @@
                 <div class="col-4 pr-0 h-color-dark mb-1">
                   <div class="border rounded-16 h-100 p-1">
                     <div class="d-flex flex-nowrap">
-                      <div class="info-card-header-text">Biaya COD</div>
-                      <popover-info text="Akumulasi seluruh Biaya COD dari setiap transaksi COD."/>
+                      <div class="info-card-header-text">
+                        Biaya COD
+                      </div>
+                      <popover-info text="Akumulasi seluruh Biaya COD dari setiap transaksi COD." />
                     </div>
                     <div class="info-card-body-text">
                       {{ formatRupiah(dataTransfer.biayaCod) }}
@@ -417,6 +480,17 @@ export default {
       'dataTransfer',
     ]),
   },
+  watch: {
+    dateRange() {
+      this.handleChangePenghasilan()
+    },
+    selectedPenghasilan() {
+      this.handleChangePenghasilan()
+    },
+  },
+  beforeMount() {
+    this.$store.dispatch('penghasilan/init')
+  },
   methods: {
     formatRibuan(x) {
       return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
@@ -432,17 +506,6 @@ export default {
       this.$store.dispatch('penghasilan/getDataTransfer')
       this.$store.dispatch('penghasilan/getIncomeTransferGraph')
       this.$store.dispatch('penghasilan/getIncomeCODGraph')
-    },
-  },
-  beforeMount() {
-    this.$store.dispatch('penghasilan/init')
-  },
-  watch: {
-    dateRange() {
-      this.handleChangePenghasilan()
-    },
-    selectedPenghasilan() {
-      this.handleChangePenghasilan()
     },
   },
 }

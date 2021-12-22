@@ -1,5 +1,6 @@
 <template>
   <section :class="'view-data-order-table-wrapper'">
+
     <b-table
       :ref="tableRefName"
       :filter="searchText"
@@ -48,24 +49,30 @@
           />
         </div>
         <div class="all-check-data-order-date-text">
-          <div class="date-wrapper">{{ getDate(dateData.value) }}</div>
-          <div class="time-wrapper grey-text">{{ getTime(dateData.value) }}</div>
+          <div class="date-wrapper">
+            {{ getDate(dateData.value) }}
+          </div>
+          <div class="time-wrapper grey-text">
+            {{ getTime(dateData.value) }}
+          </div>
         </div>
       </template>
 
       <template #cell(customer_name)="nameCustomer">
-        <div class="name-wrapper">{{ nameCustomer.value }}</div>
+        <div class="name-wrapper">
+          {{ nameCustomer.value }}
+        </div>
         <div
           v-if="nameCustomer.item.is_komship === 1"
           class="tag-wrapper grey-text"
         >
-          Kompship
+          Komship
         </div>
         <div
           v-else
           class="tag-wrapper grey-text"
         >
-          Non-Kompship
+          Non-Komship
         </div>
       </template>
 
@@ -150,7 +157,7 @@
           class="minmax-button-wrapper"
           @click="() => handleSetCollapseContent(productData.value.isClose, productData.index)"
         >
-          <div v-if="!productData.value.isClose">
+          <div v-if="productData.value.isClose">
             Tutup
             <b-icon-chevron-up
               aria-hidden="true"
@@ -166,7 +173,9 @@
       </template>
 
       <template #cell(grand_total)="totalData">
-        <div class="price-wrapper">{{ `Rp ${numberWithCommas(totalData.value)}` }}</div>
+        <div class="price-wrapper">
+          {{ `Rp ${numberWithCommas(totalData.value)}` }}
+        </div>
         <div
           v-if="totalData.item.payment_method === 'COD'"
           class="label-wrapper"
@@ -233,7 +242,9 @@
       </template>
 
       <template #cell(district)="addressData">
-        <div class="address-wrapper">{{ addressData.value }}</div>
+        <div class="address-wrapper">
+          {{ addressData.value }}
+        </div>
         <div
           v-if="isUseDetailAddress"
           class="address-details-wrapper"
@@ -244,7 +255,9 @@
 
       <template #cell(airway_bill)="resiData">
         <div class="resi-wrapper">
-          <div class="resi-content">{{ resiData.value }}</div>
+          <div class="resi-content">
+            {{ resiData.value }}
+          </div>
           <div
             v-if="resiData.value"
             class="resi-content-icon"
@@ -256,7 +269,9 @@
       </template>
 
       <template #cell(acc_date)="accDateData">
-        <div class="date-wrapper">{{ getDate(accDateData.item.order_date) }}</div>
+        <div class="date-wrapper">
+          {{ getDate(accDateData.item.order_date) }}
+        </div>
       </template>
 
       <template #cell(details)="detailsData">
@@ -272,6 +287,55 @@
       </template>
 
     </b-table>
+    <div class="flex justify-between">
+      <b-form-group
+        label="Per Page"
+        label-cols="6"
+        label-align="left"
+        label-size="sm"
+        label-for="sortBySelect"
+        class="text-nowrap mb-md-0 mr-1"
+      >
+        <b-form-select
+          id="perPageSelect"
+          v-model="perPage"
+          size="sm"
+          inline
+          :options="pageOptions"
+        />
+      </b-form-group>
+
+      <!-- pagination -->
+      <div>
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="totalRows"
+          :per-page="perPage"
+          first-number
+          last-number
+          prev-class="prev-item"
+          next-class="next-item"
+          class="mb-0"
+        >
+          <template #prev-text>
+            <feather-icon
+              icon="ChevronLeftIcon"
+              size="18"
+            />
+          </template>
+          <template #next-text>
+            <feather-icon
+              icon="ChevronRightIcon"
+              size="18"
+            />
+          </template>
+        </b-pagination>
+      </div>
+    </div>
+
+    <p class="mt-3">
+      Current Page: {{ currentPage }}
+    </p>
   </section>
 </template>
 
@@ -287,17 +351,21 @@ import {
   BIconCircle,
   BPopover,
   BFormGroup,
+  BFormSelect,
   BCollapse,
+  BPagination,
 } from 'bootstrap-vue'
 
 export default {
   components: {
     BTable,
     BButton,
+    BPagination,
     BIconFront,
     BIconChevronUp,
     BIconChevronDown,
     BIconInfoCircle,
+    BFormSelect,
     BIconCheckCircleFill,
     BIconCircle,
     BPopover,
@@ -335,6 +403,7 @@ export default {
       openId: '',
       selectedOrder: [],
       isCheckedAll: false,
+      pageOptions: [5, 10, 20],
     }
   },
   mounted() {

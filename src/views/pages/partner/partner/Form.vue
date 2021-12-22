@@ -14,8 +14,13 @@
         <validation-observer ref="formRules">
           <b-form>
             <b-row>
-              <b-col class="pb-2" md="12">
-                <h3 class="mb-2">Profil</h3>
+              <b-col
+                class="pb-2"
+                md="12"
+              >
+                <h3 class="mb-2">
+                  Profil
+                </h3>
                 <b-form-row>
                   <b-col cols="4">
                     <div class="text-center mr-md-1">
@@ -25,8 +30,14 @@
                       />
                     </div>
                   </b-col>
-                  <b-col v-if="!showDetailMode" cols="8">
-                    <b-form-group label="Foto profil" label-cols-md="12">
+                  <b-col
+                    v-if="!showDetailMode"
+                    cols="8"
+                  >
+                    <b-form-group
+                      label="Foto profil"
+                      label-cols-md="12"
+                    >
                       <validation-provider
                         #default="{ errors }"
                         name="Foto profil"
@@ -48,8 +59,14 @@
                   </b-col>
                 </b-form-row>
               </b-col>
-              <b-col v-if="noPartner" md="12">
-                <b-form-group label="Nomor Partner" label-cols-md="4">
+              <b-col
+                v-if="noPartner"
+                md="12"
+              >
+                <b-form-group
+                  label="Nomor Partner"
+                  label-cols-md="4"
+                >
                   <b-form-input
                     :value="noPartner ? `${noPartner} (Auto)` : ''"
                     :plaintext="showDetailMode"
@@ -58,7 +75,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Nama lengkap" label-cols-md="4">
+                <b-form-group
+                  label="Nama lengkap"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Nama"
@@ -79,7 +99,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Username" label-cols-md="4">
+                <b-form-group
+                  label="Username"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Username"
@@ -95,7 +118,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Jenis kelamin" label-cols-md="4">
+                <b-form-group
+                  label="Jenis kelamin"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Jenis kelamin"
@@ -106,7 +132,7 @@
                       :value="
                         gender
                           ? genderOptions.find(item => item.value === gender)
-                              .text
+                            .text
                           : ''
                       "
                       plaintext
@@ -122,7 +148,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="NIK" label-cols-md="4">
+                <b-form-group
+                  label="NIK"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="NIK"
@@ -144,8 +173,13 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <h3 class="my-2">Alamat</h3>
-                <b-form-group label="Alamat" label-cols-md="4">
+                <h3 class="my-2">
+                  Alamat
+                </h3>
+                <b-form-group
+                  label="Alamat"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Alamat"
@@ -165,7 +199,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Provinsi" label-cols-md="4">
+                <b-form-group
+                  label="Provinsi"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Provinsi"
@@ -176,7 +213,7 @@
                       :value="
                         provinceId
                           ? provinceItems.find(item => item.id === provinceId)
-                              .name
+                            .name
                           : ''
                       "
                       plaintext
@@ -201,7 +238,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Kota" label-cols-md="4">
+                <b-form-group
+                  label="Kota"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Kota"
@@ -212,7 +252,7 @@
                       :value="
                         regencyId
                           ? regencyItems.find(item => item.id === regencyId)
-                              .name
+                            .name
                           : ''
                       "
                       plaintext
@@ -238,7 +278,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Kecamatan" label-cols-md="4">
+                <b-form-group
+                  label="Kecamatan"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Kecamatan"
@@ -249,7 +292,7 @@
                       :value="
                         districtId
                           ? districtItems.find(item => item.id === districtId)
-                              .name
+                            .name
                           : ''
                       "
                       plaintext
@@ -275,7 +318,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Kode pos" label-cols-md="4">
+                <b-form-group
+                  label="Kode pos"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Kode pos"
@@ -291,8 +337,13 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <h3 class="my-2">Kontak</h3>
-                <b-form-group label="No hp" label-cols-md="4">
+                <h3 class="my-2">
+                  Kontak
+                </h3>
+                <b-form-group
+                  label="No hp"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="No hp"
@@ -314,7 +365,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Email" label-cols-md="4">
+                <b-form-group
+                  label="Email"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Email"
@@ -331,7 +385,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Nama PIC" label-cols-md="4">
+                <b-form-group
+                  label="Nama PIC"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Nama PIC"
@@ -354,8 +411,14 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="No hp PIC" label-cols-md="4">
-                  <validation-provider #default="{ errors }" name="No hp PIC">
+                <b-form-group
+                  label="No hp PIC"
+                  label-cols-md="4"
+                >
+                  <validation-provider
+                    #default="{ errors }"
+                    name="No hp PIC"
+                  >
                     <b-form-input
                       v-if="showDetailMode"
                       :value="picPhone"
@@ -372,9 +435,17 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <h3 class="my-2">Akun Bank</h3>
-                <b-form-group label="Nama bank" label-cols-md="4">
-                  <validation-provider #default="{ errors }" name="Nama Bank">
+                <h3 class="my-2">
+                  Akun Bank
+                </h3>
+                <b-form-group
+                  label="Nama bank"
+                  label-cols-md="4"
+                >
+                  <validation-provider
+                    #default="{ errors }"
+                    name="Nama Bank"
+                  >
                     <v-select
                       v-model="bankName"
                       label="name"
@@ -389,7 +460,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="No rekening" label-cols-md="4">
+                <b-form-group
+                  label="No rekening"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="No rekening"
@@ -406,7 +480,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Nama pemilik bank" label-cols-md="4">
+                <b-form-group
+                  label="Nama pemilik bank"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Nama pemilik bank"
@@ -421,9 +498,17 @@
                   </validation-provider>
                 </b-form-group>
               </b-col>
-              <b-col v-if="!editProfileMode" md="12">
-                <h3 class="my-2">Data Komerce</h3>
-                <b-form-group label="Tanggal Bergabung" label-cols-md="4">
+              <b-col
+                v-if="!editProfileMode"
+                md="12"
+              >
+                <h3 class="my-2">
+                  Data Komerce
+                </h3>
+                <b-form-group
+                  label="Tanggal Bergabung"
+                  label-cols-md="4"
+                >
                   <b-form-input
                     v-if="showDetailMode"
                     :value="dateFormat(joinDate, 'dd/mm/yyyy')"
@@ -445,8 +530,16 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <h3 v-if="editProfileMode" class="my-2">Data Komerce</h3>
-                <b-form-group label="Sektor Bisnis" label-cols-md="4">
+                <h3
+                  v-if="editProfileMode"
+                  class="my-2"
+                >
+                  Data Komerce
+                </h3>
+                <b-form-group
+                  label="Sektor Bisnis"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Sektor Bisnis"
@@ -457,8 +550,8 @@
                       :value="
                         partnerCategoryId
                           ? partnerCategoryItems.find(
-                              item => item.id === partnerCategoryId
-                            ).partner_category_name
+                            item => item.id === partnerCategoryId
+                          ).partner_category_name
                           : ''
                       "
                       plaintext
@@ -479,7 +572,10 @@
                           vs__dropdown-option vs__dropdown-option--disabled
                         "
                       >
-                        <feather-icon icon="MoreHorizontalIcon" size="16" />
+                        <feather-icon
+                          icon="MoreHorizontalIcon"
+                          size="16"
+                        />
                       </li>
                     </v-select>
                     <small class="text-danger">{{ errors[0] }}</small>
@@ -487,7 +583,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Tipe Bisnis" label-cols-md="4">
+                <b-form-group
+                  label="Tipe Bisnis"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Tipe Bisnis"
@@ -498,8 +597,8 @@
                       :value="
                         businessTypeId
                           ? businessTypeItems.find(
-                              item => item.id === businessTypeId
-                            ).name
+                            item => item.id === businessTypeId
+                          ).name
                           : ''
                       "
                       plaintext
@@ -520,7 +619,10 @@
                           vs__dropdown-option vs__dropdown-option--disabled
                         "
                       >
-                        <feather-icon icon="MoreHorizontalIcon" size="16" />
+                        <feather-icon
+                          icon="MoreHorizontalIcon"
+                          size="16"
+                        />
                       </li>
                     </v-select>
                     <small class="text-danger">{{ errors[0] }}</small>
@@ -528,8 +630,14 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Nama brand" label-cols-md="4">
-                  <validation-provider #default="{ errors }" name="Nama brand">
+                <b-form-group
+                  label="Nama brand"
+                  label-cols-md="4"
+                >
+                  <validation-provider
+                    #default="{ errors }"
+                    name="Nama brand"
+                  >
                     <b-form-input
                       v-model="brand"
                       :state="errors.length > 0 ? false : null"
@@ -540,7 +648,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Anggota tim" label-cols-md="4">
+                <b-form-group
+                  label="Anggota tim"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Anggota tim"
@@ -551,8 +662,8 @@
                       :value="
                         totalMember
                           ? totalMemberOptions.find(
-                              item => item.value === totalMember
-                            ).text
+                            item => item.value === totalMember
+                          ).text
                           : ''
                       "
                       plaintext
@@ -568,7 +679,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Referensi" label-cols-md="4">
+                <b-form-group
+                  label="Referensi"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Referensi"
@@ -579,8 +693,8 @@
                       :value="
                         reference
                           ? referenceOptions.find(
-                              item => item.value === reference
-                            ).text
+                            item => item.value === reference
+                          ).text
                           : ''
                       "
                       plaintext
@@ -596,8 +710,14 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Bonus" label-cols-md="4">
-                  <validation-provider #default="{ errors }" name="Bonus">
+                <b-form-group
+                  label="Bonus"
+                  label-cols-md="4"
+                >
+                  <validation-provider
+                    #default="{ errors }"
+                    name="Bonus"
+                  >
                     <b-form-textarea
                       v-model="bonus"
                       :state="
@@ -612,7 +732,10 @@
                 </b-form-group>
               </b-col>
               <b-col md="12">
-                <b-form-group label="Status" label-cols-md="4">
+                <b-form-group
+                  label="Status"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Status"
@@ -623,7 +746,7 @@
                       :value="
                         status
                           ? statusOptions.find(item => item.value === status)
-                              .text
+                            .text
                           : ''
                       "
                       :plaintext="showDetailMode"
@@ -639,9 +762,17 @@
                   </validation-provider>
                 </b-form-group>
               </b-col>
-              <b-col v-if="!editMode" md="12">
-                <h3 class="my-2">Password</h3>
-                <b-form-group label="Password" label-cols-md="4">
+              <b-col
+                v-if="!editMode"
+                md="12"
+              >
+                <h3 class="my-2">
+                  Password
+                </h3>
+                <b-form-group
+                  label="Password"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Password"
@@ -657,8 +788,14 @@
                   </validation-provider>
                 </b-form-group>
               </b-col>
-              <b-col v-if="!editMode" md="12">
-                <b-form-group label="Konfirmasi password" label-cols-md="4">
+              <b-col
+                v-if="!editMode"
+                md="12"
+              >
+                <b-form-group
+                  label="Konfirmasi password"
+                  label-cols-md="4"
+                >
                   <validation-provider
                     #default="{ errors }"
                     name="Konfirmasi password"
@@ -673,8 +810,11 @@
                   </validation-provider>
                 </b-form-group>
               </b-col>
-              <b-col v-if="!showDetailMode" md="12">
-                <hr class="mb-2" />
+              <b-col
+                v-if="!showDetailMode"
+                md="12"
+              >
+                <hr class="mb-2">
                 <b-button
                   :variant="editMode ? 'warning' : 'primary'"
                   type="submit"
@@ -682,7 +822,10 @@
                   :disabled="loadingSubmit"
                   @click.prevent="submit"
                 >
-                  <b-spinner v-if="loadingSubmit" small />
+                  <b-spinner
+                    v-if="loadingSubmit"
+                    small
+                  />
                   Submit
                 </b-button>
               </b-col>

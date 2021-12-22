@@ -21,7 +21,7 @@
 
       <b-col class="d-flex justify-content-center mt-1">
         <small>
-          <strong>Amankan uang kamu di Kompship menggunakan PIN</strong>
+          <strong>Amankan uang kamu di Komship menggunakan PIN</strong>
         </small>
       </b-col>
 
