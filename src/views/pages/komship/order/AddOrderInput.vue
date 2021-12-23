@@ -430,7 +430,7 @@ import {
   BFormGroup,
   BButton,
 } from 'bootstrap-vue'
-import AddOrderTable from './AddOrderTable.vue'
+// import AddOrderTable from './AddOrderTable.vue'
 
 function changeDate(dateString) {
   if (dateString && dateString !== '') {
@@ -470,7 +470,7 @@ export default {
     BFormGroup,
     BButton,
     vSelect,
-    AddOrderTable,
+    // AddOrderTable,
   },
   props: {
     screens: {

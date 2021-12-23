@@ -89,5 +89,5 @@ export default [
   ...manajemenAdmin,
 
   ...talentPool,
-  ...wishlist,
+  // ...wishlist,
 ]
