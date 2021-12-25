@@ -250,7 +250,7 @@ export default {
       username: '',
       userEmail: '',
       password: '',
-      sideImg: require('@/assets/images/illustration/auth-illustration.png'),
+      sideImg: require('@/assets/images/illustration/auth-illustration-v2.png'),
       loading: false,
 
       // validation rules
@@ -277,7 +277,7 @@ export default {
     imgUrl() {
       if (store.state.appConfig.layout.skin === 'dark') {
         // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-        this.sideImg = require('@/assets/images/illustration/auth-illustration.png')
+        this.sideImg = require('@/assets/images/illustration/auth-illustration-v2.png')
         return this.sideImg
       }
       return this.sideImg

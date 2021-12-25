@@ -81,7 +81,7 @@ export default [
   ...customer,
   ...keuangan,
   ...settingKompship,
-  ...hiring,
+  // ...hiring,
 
   ...dashboardKomplace,
   ...monitoring,
@@ -89,5 +89,5 @@ export default [
   ...manajemenAdmin,
 
   ...talentPool,
-  ...wishlist,
+  // ...wishlist,
 ]
