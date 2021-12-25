@@ -35,7 +35,7 @@ export default {
       filesUploaded: [],
       filesSettled: [],
       fileUploadCount: 0,
-      valueProgressUpload: 0,
+      valueProgressUpload: 100,
       maxProgressUpload: 100,
       dragAndDropCapable: false,
     }
@@ -83,7 +83,6 @@ export default {
               this.filesSettled.push(files[index])
             }
           }
-          this.handleFiles(this.filesSettled)
         })
       }
     })
@@ -138,7 +137,6 @@ export default {
     previewFiles(event) {
       const data = event.target.files
       this.filesSettled = data
-      this.handleFiles(data)
     },
     preventDefaults(e) {
       e.preventDefault()
@@ -148,16 +146,18 @@ export default {
       const { files } = e.dataTransfer
       console.log('dt :', e, e.dataTransfer)
       console.log('files :', files)
-      this.handleFiles(files)
+      this.filesSettled = files
     },
-    handleFiles(files) {
-      const endpoint = `/v1/admin/withdrawal/update/${this.$route.params.slug}?status=${this.$store.state.pencairan.status}`
-      const dataCopy = [...files]
+    handleFiles() {
+      const endpoint = `/v1/admin/withdrawal/update/${this.$route.params.slug}`
+      const dataCopy = [...this.filesSettled]
       dataCopy.forEach(file => {
-        console.log(file)
         const formData = new FormData()
-        formData.append('file', file)
-        axioskomsipdev.put(endpoint, formData, {
+        formData.append('_method', 'PUT')
+        formData.append('withdrawal_id', this.$route.params.slug)
+        formData.append('status', this.$store.state.pencairan.status)
+        formData.append('transfer_proof', file)
+        axioskomsipdev.post(endpoint, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
@@ -172,6 +172,7 @@ export default {
           .then(({ data }) => {
             console.log(this.file)
             this.filesUploaded.push(data)
+            this.$router.go(-1)
           })
           .catch(e => {
             console.log('error', e)
@@ -197,12 +198,6 @@ export default {
         //   })
         //   .catch(err => console.log(err))
       })
-    },
-    handleKonfirmasi() {
-      // caling api
-      // this.$http.post(url,params,{})
-      // back to rincian routes
-      // this.$router.go(-1)
     },
     calculateSizeFile(size) {
       const sizesUnit = ['Bytes', 'KB', 'MB', 'GB', 'TB']

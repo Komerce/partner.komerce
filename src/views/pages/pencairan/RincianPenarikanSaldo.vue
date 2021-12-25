@@ -673,13 +673,13 @@ export default {
         return
       }
       // calling api for submit review
-      const endpoint = `/v1/admin/withdrawal/update/${this.$route.params.slug}?status=${this.detailData.status}`
+      const endpoint = `/v1/admin/withdrawal/update/${this.$route.params.slug}`
       const formData = new FormData()
+      formData.append('_method', 'PUT')
+      formData.append('withdrawal_id', this.$route.params.slug)
       formData.append('notes', this.catatanReview)
-      // formData.append('yinyang.png', fs.createReadStream('./yinyang.png'));
-      // res.data.files; // 'yinyang.png': an extremely long binary string
-      // res.data.form; // form: { id: '1', string: 'Text we want to add to the submit' }
-      axioskomsipdev.put(endpoint, formData, {
+      formData.append('status', this.detailData.status)
+      axioskomsipdev.post(endpoint, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

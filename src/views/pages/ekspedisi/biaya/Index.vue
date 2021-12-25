@@ -112,6 +112,16 @@
                   />
                 </b-col>
               </b-row>
+              <b-row class="justify-content-end">
+                <b-button
+                  variant="outline-danger"
+                  size="lg"
+                  class="rounded mt-1 btn-tambah-custom"
+                  @click="$router.push('/biaya-ekspedisi/tambah')"
+                >
+                  Tambahkan Ekspedisi
+                </b-button>
+              </b-row>
             </div>
 
             <b-modal
@@ -157,14 +167,6 @@
             </b-modal>
 
           </div>
-          <b-button
-            variant="outline-primary"
-            size="sm"
-            class="btn-icon rounded btn-float-custom"
-            @click="$router.push('/biaya-ekspedisi/tambah')"
-          >
-            <feather-icon icon="PlusIcon" /> TAMBAHKAN EKSPEDISI
-          </b-button>
         </b-card-body>
       </b-card>
     </div>
@@ -372,9 +374,9 @@ export default {
   height: 56px;
   border-radius: 12px;
 }
-.btn-float-custom{
-  position: fixed;
-  right: 30px;
-  bottom: 20px;
+.btn-tambah-custom{
+  border-radius: 12px !important;
+  border-color: #f95031 !important;
+  color: #f95031;
 }
 </style>
