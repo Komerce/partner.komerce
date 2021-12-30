@@ -482,7 +482,7 @@ export default {
       selectedOrderFromDetail: this.$route.params.selected_order_from_detail,
     }
   },
-  async mounted() {
+  mounted() {
     this.$http_komship.post('v1/my-profile', {
       headers: { Authorization: `Bearer ${useJwt.getToken()}` },
     }).then(response => {
@@ -504,7 +504,7 @@ export default {
       this.selectedOrderToStore = this.selectedOrderFromDetail
       this.itemsPreviewProductOrder = this.selectedOrderFromDetail
     }
-    await this.getAddress()
+    this.getAddress()
   },
   methods: {
     getDataOrderToStore(data, dataItems) {
