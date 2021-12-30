@@ -412,6 +412,7 @@ import {
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
 import useJwt from '@/auth/jwt/useJwt'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import httpKomship from '../../setting-kompship/http_komship'
 import dataOrder from './DataOrder.vue'
 
@@ -488,6 +489,16 @@ export default {
       this.userData = response.data.data
       this.profile = response.data.data
       console.log('profile', this.profile)
+    }).catch(() => {
+      this.$toast({
+        component: ToastificationContent,
+        props: {
+          title: 'Gagal',
+          icon: 'AlertCircleIcon',
+          text: 'Gagal meload kendaraan, silahkan refresh halaman!',
+          variant: 'danger',
+        },
+      })
     })
     if (this.selectedOrderFromDetail) {
       this.selectedOrderToStore = this.selectedOrderFromDetail
@@ -611,6 +622,16 @@ export default {
         .then(response => {
           console.log(response)
           this.$refs['modal-success-request-pickup'].show()
+        }).catch(() => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Gagal',
+              icon: 'AlertCircleIcon',
+              text: 'Gagal mengajukan pickup, silahkan coba lagi!',
+              variant: 'danger',
+            },
+          })
         })
     },
     handleSubmitPopUpSuccess() {

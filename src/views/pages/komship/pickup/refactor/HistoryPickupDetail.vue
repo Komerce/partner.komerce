@@ -210,6 +210,7 @@ import {
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
 import useJwt from '@/auth/jwt/useJwt'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 // import httpKomship from '../../setting-kompship/http_komship'
 
 export default {
@@ -294,6 +295,16 @@ export default {
         this.userData = response.data.data
         this.profile = response.data.data
         console.log('profile', this.profile)
+      }).catch(() => {
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: 'Gagal',
+            icon: 'AlertCircleIcon',
+            text: 'Gagal meload data, silahkan refresh halaman!',
+            variant: 'danger',
+          },
+        })
       })
     },
   },

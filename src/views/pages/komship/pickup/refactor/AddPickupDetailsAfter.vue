@@ -268,6 +268,7 @@ import {
 } from 'bootstrap-vue'
 import VueHtml2pdf from 'vue-html2pdf'
 import VueBarcode from 'vue-barcode'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import useJwt from '@/auth/jwt/useJwt'
 import AddPickupPopupPrint from '../AddPickupPopupPrint.vue'
 import PickupLabelPrint from '../PickupLabelPrint.vue'
@@ -334,6 +335,16 @@ export default {
       this.profile = response.data.data
       console.log('profile', this.profile.partner_id)
       this.getOrder()
+    }).catch(() => {
+      this.$toast({
+        component: ToastificationContent,
+        props: {
+          title: 'Gagal',
+          icon: 'AlertCircleIcon',
+          text: 'Gagal meload kendaraan, silahkan refresh halaman!',
+          variant: 'danger',
+        },
+      })
     })
     this.items = this.selectedOrder
     console.log('idOrder', this.idOrderFromHistory)
@@ -355,6 +366,16 @@ export default {
         }
         console.log('itemsResult', this.items)
         return this.items
+      }).catch(() => {
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: 'Gagal',
+            icon: 'AlertCircleIcon',
+            text: 'Gagal meload kendaraan, silahkan refresh halaman!',
+            variant: 'danger',
+          },
+        })
       })
     },
     onShowModalPrint() {
