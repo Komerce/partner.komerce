@@ -260,7 +260,7 @@ export default {
       return this.$http_komship.get(`v1/order/${this.profile.partner_id}`, {
         params: {
           page: this.currentPage,
-          // order_status: 0,
+          order_status: 0,
         },
       }).then(response => {
         const { data } = response.data.data
