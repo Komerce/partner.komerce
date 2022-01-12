@@ -136,7 +136,7 @@ export default {
           colors: ['#fff'],
         },
         tooltip: {
-          shared: true,
+          shared: false,
           intersect: false,
         },
         xaxis: {
