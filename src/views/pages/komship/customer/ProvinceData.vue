@@ -11,7 +11,7 @@
       <b-row>
         <b-col>
           <h3 class="mb-50 mb-md-0">
-            Rangking Provinsi Customer
+            Ranking Provinsi Customer
           </h3>
         </b-col>
         <b-col cols="auto">
@@ -49,8 +49,10 @@
           md="8"
           class="mt-50"
         >
-          <div id="chart">
+          <div id="chart"
+          >
             <vue-apex-charts
+              ref="realtimeChart"
               type="bar"
               :height="heightBar"
               :options="chartOptions"
