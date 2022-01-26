@@ -260,27 +260,65 @@
         </b-row>
 
         <div class="d-flex justify-content-end mt-2">
-          <b-button
+          <div>
+            <b-button
+            v-if="detailData.notes==null ||detailData.notes=='' && detailData.status != 'completed'"
             v-b-modal.modal-review
-            variant="outline-danger"
+            variant="outline-primary"
             class="mr-1 btn-custom-bottom"
+            
           >
             Review
           </b-button>
           <b-button
+            v-else
+            v-b-modal.modal-review
+            variant="outline-secondary"
+            class="mr-1 btn-custom-bottom"
+            disabled
+          >
+            Review
+          </b-button>
+          </div>
+          <div>
+            <b-button
+            v-if="detailData.transfer_proof==null ||detailData.transfer_proof=='' && detailData.status != 'completed'"
             :to="{ name: 'cod-penarikan-upload-bukti-transfer', params: { slug: $route.params.slug } }"
             variant="outline-primary"
             class="mr-1 btn-custom-bottom"
+            >
+              Transfer Manual
+            </b-button>
+           
+          <b-button
+            v-else
+            :to="{ name: 'cod-penarikan-upload-bukti-transfer', params: { slug: $route.params.slug } }"
+            variant="outline-secondary"
+            class="mr-1 btn-custom-bottom"
+            disabled
           >
             Transfer Manual
           </b-button>
+          </div>
+          <div>
+            <b-button
+            v-if="detailData.status=='completed'"
+            v-b-modal.modal-transfer-sekarang
+            variant="secondary"
+            class="btn-custom-bottom"
+            disabled
+          >
+            Transfer Sekarang
+          </b-button>
           <b-button
+            v-else
             v-b-modal.modal-transfer-sekarang
             variant="primary"
             class="btn-custom-bottom"
           >
             Transfer Sekarang
           </b-button>
+          </div>
         </div>
       </b-card-body>
     </b-card>

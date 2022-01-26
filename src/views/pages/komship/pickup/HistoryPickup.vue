@@ -130,7 +130,7 @@ export default {
     getPickup() {
       return this.$http_komship.get('v1/pickup/history').then(response => {
         const { data } = response.data
-        // console.log('listAllPickup', data)
+        console.log('listAllPickup', data)
         this.items = data
         this.loading = false
       }).catch(() => {

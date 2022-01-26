@@ -142,7 +142,7 @@
             cols="6"
             class="font-bold"
           >
-            {{ orderData.detail_address }}
+            {{ orderData.customer_address }}
           </b-col>
         </b-row>
       </div>
@@ -370,8 +370,8 @@ export default {
       }).then(isConfirm => {
         if (isConfirm.value === true) {
           this.$http_komship.delete(`v1/order/${this.profile.partner_id}/delete/${this.$route.params.order_id}`)
-            .then(response => {
-              this.$router.go('/data-order')
+            .then(() => {
+              this.$router.push('/data-order')
             })
         }
       })

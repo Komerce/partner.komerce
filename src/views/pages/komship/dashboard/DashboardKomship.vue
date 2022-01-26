@@ -178,10 +178,18 @@
                   <p class="mb-0 order-body-text">
                     {{ formatRibuan(orderanPerluDikirim) }}
                   </p>
-                  <img
-                    src="@/assets/images/icons/arrow-right-2.svg"
-                    alt="Arrow Right"
+                  <b-button
+                    class="btn-icon"
+                    variant="flat-dark"
+                    size="sm"
+                    tag="router-link"
+                    :to="{ name: $route.meta.routeToOrder, query: { tab: 'perlu-dikirim' } }"
                   >
+                    <img
+                      src="@/assets/images/icons/arrow-right-2.svg"
+                      alt="Arrow Right"
+                    >
+                  </b-button>
                 </div>
               </div>
             </div>
@@ -204,10 +212,18 @@
                   <p class="mb-0 order-body-text">
                     {{ formatRibuan(orderanRetur) }}
                   </p>
-                  <img
-                    src="@/assets/images/icons/arrow-right-2.svg"
-                    alt="Arrow Right"
+                  <b-button
+                    variant="flat-dark"
+                    class="btn-icon"
+                    size="sm"
+                    tag="router-link"
+                    :to="{ name: $route.meta.routeToOrder, query: { tab: 'retur' } }"
                   >
+                    <img
+                      src="@/assets/images/icons/arrow-right-2.svg"
+                      alt="Arrow Right"
+                    >
+                  </b-button>
                 </div>
               </div>
             </div>

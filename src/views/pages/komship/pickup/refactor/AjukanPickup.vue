@@ -224,7 +224,9 @@
                         />
                       </div>
                       <div class="ml-1">
-                        <h5 class="text-black"><strong>{{ items.product_name }}</strong></h5>
+                        <h5 class="text-black">
+                          <strong>{{ items.product_name }}</strong>
+                        </h5>
                         <div v-if="items.variant_name !== '0' && items.variant_name !== ''">
                           <span class="text-black"><strong>{{ items.variant_name }}</strong></span>
                         </div>
@@ -246,7 +248,9 @@
                   v-for="(items, index) in data.item.product"
                   :key="index+1"
                 >
-                  <h5 class="mb-3 text-black"><strong>{{ items.qty }}</strong></h5>
+                  <h5 class="mb-3 text-black">
+                    <strong>{{ items.qty }}</strong>
+                  </h5>
                 </div>
               </template>
 
@@ -387,6 +391,7 @@
 
     <!-- Popup order -->
     <b-modal
+      id="popupOrder"
       ref="popup-order"
       hide-footer
       modal-class="modal-primary"
@@ -395,7 +400,7 @@
     >
       <data-order
         :pass-address-id="addressId"
-        @passDataOrderToParent="getDataOrderToStore"
+        @passDataToParent="getDataOrderToStore"
       />
     </b-modal>
 
@@ -652,7 +657,7 @@ export default {
       if (vehicle) this.chosenVehicle = vehicle
     },
     chooseOrder() {
-      this.$refs['popup-order'].show()
+      this.$bvModal.show('popupOrder')
     },
     getListOrderByPartner() {
       const partnerId = this.profile.partner_id

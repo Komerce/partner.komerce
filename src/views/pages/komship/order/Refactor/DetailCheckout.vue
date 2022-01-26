@@ -16,7 +16,10 @@
     </div>
     <b-row class="mb-1">
       <b-col md="3">
-        <label class="text-lg">Tanggal</label>
+        <label
+          class="text-lg"
+          style="color:#828282;"
+        >Tanggal</label>
       </b-col>
       <b-col
         md="4"
@@ -27,7 +30,10 @@
     </b-row>
     <b-row class="mb-1">
       <b-col md="3">
-        <label class="text-lg">Nama Pelanggan</label>
+        <label
+          class="text-lg"
+          style="color:#828282;"
+        >Nama Pelanggan</label>
       </b-col>
       <b-col
         md="4"
@@ -53,7 +59,10 @@
     </b-row>
     <b-row class="mb-1">
       <b-col md="3">
-        <label class="text-lg">No Telepon</label>
+        <label
+          class="text-lg"
+          style="color:#828282;"
+        >No Telepon</label>
       </b-col>
       <b-col
         md="4"
@@ -72,21 +81,35 @@
     </b-row>
     <b-row class="mb-1">
       <b-col md="3">
-        <label class="text-lg">Kota/Kabupaten</label>
+        <label
+          class="text-lg"
+          style="color:#828282;"
+        >Masukan Kota/Kabupaten</label>
       </b-col>
       <b-col md="5">
         <v-select
+          ref="selectDestination"
           v-model="destination"
           :options="listDestination"
           placeholder="Masukan Kota/Kabupaten"
           @search="getDestination"
           @input="getShippingType"
-        />
+        >
+          <span
+            slot="no-options"
+            @click="$refs.selectDestination.open = false"
+          >
+            Tidak ada data untuk ditampilkan.
+          </span>
+        </v-select>
       </b-col>
     </b-row>
     <b-row class="mb-1">
       <b-col md="3">
-        <label class="text-lg">Alamat Detail</label>
+        <label
+          class="text-lg"
+          style="color:#828282;"
+        >Alamat Detail</label>
       </b-col>
       <b-col
         md="4"
@@ -100,7 +123,10 @@
     </b-row>
     <b-row class="mb-1">
       <b-col md="3">
-        <label class="text-lg">Metode Pembayaran</label>
+        <label
+          class="text-lg"
+          style="color:#828282;"
+        >Metode Pembayaran</label>
       </b-col>
       <b-col
         md="4"
@@ -115,7 +141,10 @@
     </b-row>
     <b-row class="mb-1">
       <b-col md="3">
-        <label class="text-lg">Ekspedisi</label>
+        <label
+          class="text-lg"
+          style="color:#828282;"
+        >Ekspedisi</label>
       </b-col>
       <b-col
         md="4"
@@ -132,17 +161,32 @@
         class="font-bold"
       >
         <v-select
+          ref="selectTypeShipping"
           v-model="typeShipping"
           :options="listTypeShipping"
           label="shipping_type"
-          placeholder="Jenis Pengiriman"
+          placeholder="Opsi Pengiriman"
+          :disabled="!isTypeShipping"
           @input="calculate"
-        />
+        >
+          <span
+            slot="no-options"
+            @click="$refs.selectTypeShipping.open = false"
+          >
+            Tidak ada data untuk ditampilkan.
+          </span>
+          <template #option="{ shipping_type }">
+            {{ nameTypeShipping(shipping_type) }}
+          </template>
+        </v-select>
       </b-col>
     </b-row>
     <b-row class="mb-1">
       <b-col md="3">
-        <label class="text-lg">Gunakan Potongan Saldo</label>
+        <label
+          class="text-lg"
+          style="color:#828282;"
+        >Gunakan Potongan Saldo</label>
       </b-col>
       <b-col
         md="4"
@@ -162,7 +206,10 @@
     >
       <b-row class="mb-1">
         <b-col md="3">
-          <label class="text-lg">Nominal Potongan</label>
+          <label
+            class="text-lg"
+            style="color:#828282;"
+          >Nominal Potongan</label>
         </b-col>
         <b-col
           md="4"
@@ -278,7 +325,7 @@
           lg="2"
           class="d-flex justify-end"
         >
-          Rp. {{ discount }}
+          Rp. {{ formatNumber(discount) }}
         </b-col>
       </b-row>
       <b-row>
@@ -347,7 +394,7 @@
             lg="2"
             class="d-flex justify-end"
           >
-            - Rp. {{ formatNumber(cashback) }}
+            - Rp. {{ formatNumber(shippingCost - cashback) }}
           </b-col>
         </b-row>
         <b-row class="mb-1 text-lg text-primary">
@@ -403,13 +450,15 @@ export default {
   data() {
     return {
       profile: null,
+      addressId: null,
       arrayCart: [],
       cartId: null,
       isCalculate: false,
+      isTypeShipping: false,
       orderDate: moment().format('YYYY/MM/DD'),
       customerName: null,
       listCustomer: [],
-      customerId: null,
+      customerId: 0,
       customerPhone: null,
       detailAddress: null,
       destination: null,
@@ -426,7 +475,7 @@ export default {
       cashback: null,
       cashbackPercentage: null,
       potonganSaldo: false,
-      discount: null,
+      discount: 0,
       subTotal: null,
       netProfit: null,
       grandTotal: null,
@@ -451,6 +500,7 @@ export default {
     }
   },
   created() {
+    this.addressId = this.$route.params.address_id
     this.getProfile()
   },
   methods: {
@@ -467,6 +517,7 @@ export default {
     },
     async getCart() {
       this.itemsOrder = this.$route.params.itemsOrder
+      console.log(this.itemsOrder)
       this.arrayCart = this.itemsOrder.map(val => ({
         product_id: val.product_id,
         product_name: val.product_name,
@@ -483,6 +534,7 @@ export default {
               .then(async result => {
                 if (result.data.code === 200) {
                   this.cartId = result.data.data.cart_id
+                  console.log(this.cartId)
                 }
               })
           }
@@ -524,6 +576,9 @@ export default {
         })
     },
     async getShippingType() {
+      if (this.potonganSaldo === false && this.discount === null) {
+        this.discount = 0
+      }
       if (this.destination && this.shipping && this.profile && this.paymentMethod !== null) {
         await this.$http_komship.get('v1/calculate', {
           params: {
@@ -531,18 +586,28 @@ export default {
             tariff_code: this.destination.value,
             payment_method: this.paymentMethod,
             shipping: this.shipping,
-            partner_address_id: this.profile.user_address_default.address_id,
+            discount: this.discount,
+            partner_address_id: this.addressId,
+            cart: this.cartId.toString(),
           },
         })
           .then(res => {
             const { data } = res.data
+            this.isTypeShipping = true
             this.listTypeShipping = data
           })
-          .catch(err => {
-            console.log(err)
+          .catch(() => {
+            this.$swal({
+              title: '<span class="font-weight-bold h4">Mohon maaf, perhitungan biaya terjadi kesalahan Silahkan pilih ulang ekspedisi anda atau refresh halaman.</span>',
+              imageUrl: require('@/assets/images/icons/fail.svg'), // eslint-disable-line
+              confirmButtonText: 'Oke',
+              confirmButtonClass: 'btn btn-primary',
+            })
           })
       } else {
         this.typeShipping = null
+        this.isTypeShipping = false
+        this.isCalculate = false
         this.listTypeShipping = []
       }
       return this.listTypeShipping
@@ -559,7 +624,7 @@ export default {
             payment_method: this.paymentMethod,
             shipping: this.shipping,
             discount: this.discount,
-            partner_address_id: this.profile.user_address_default.address_id,
+            partner_address_id: this.addressId,
             cart: this.cartId.toString(),
           },
         })
@@ -584,12 +649,29 @@ export default {
       }
       return this.isCalculate
     },
+    nameTypeShipping(data) {
+      if (data === 'OKE19') {
+        return 'OKE'
+      } if (data === 'REG19') {
+        return 'REG'
+      } if (data === 'YES19') {
+        return 'YES'
+      } if (data === 'CTCOKE19') {
+        return 'OKE'
+      } if (data === 'CTCYES19') {
+        return 'YES'
+      } if (data === 'CTC19') {
+        return 'REG'
+      }
+      return ''
+    },
     async submit() {
       if (this.customerName && this.customerPhone && this.detailAddress !== null) {
         await this.$http_komship.post(`v1/order/${this.profile.partner_id}/store`, {
           date: this.orderDate,
           tariff_code: this.destination.value,
           subdistrict_name: this.destination.subdistrict_name,
+          zip_code: this.destination.zip_code,
           district_name: this.destination.district_name,
           city_name: this.destination.city_name,
           is_komship: this.profile.is_komship,
@@ -600,10 +682,10 @@ export default {
           shipping: this.shipping,
           shipping_type: this.typeShipping.shipping_type,
           payment_method: this.paymentMethod,
-          bank: null,
-          partner_address_id: this.profile.user_address_default.address_id,
-          bank_account_name: null,
-          bank_account_no: null,
+          bank: 0,
+          partner_address_id: this.addressId,
+          bank_account_name: 0,
+          bank_account_no: 0,
           subtotal: this.subTotal,
           grandtotal: this.grandTotal,
           shipping_cost: this.shippingCost,
@@ -611,18 +693,38 @@ export default {
           discount: this.discount,
           shipping_cashback: this.cashback,
           net_profit: this.netProfit,
+          cart: this.cartId,
+        }).then(() => {
+          this.$swal({
+            title: '<span class="font-weight-bold h4">Berhasil Tambah Order</span>',
+            imageUrl: require('@/assets/images/icons/success.svg'), // eslint-disable-line
+            confirmButtonText: 'Oke',
+            confirmButtonClass: 'btn btn-primary',
+          }).then(() => {
+            this.$router.push('/data-order')
+          })
         })
+        // .catch(() => {
+        //   this.$swal({
+        //     title: '<span class="font-weight-bold h4">Mohon maaf, saldo anda tidak mencukupi untuk membuat order. Silahkah cek kembali saldo anda.</span>',
+        //     imageUrl: require('@/assets/images/icons/fail.svg'), // eslint-disable-line
+        //     showCancelButton: true,
+        //     confirmButtonText: 'Cek Saldo',
+        //     confirmButtonClass: 'btn btn-primary',
+        //     cancelButtonClass: 'btn btn-outline-primary text-primary',
+        //     cancelButtonColor: '#FFFFFF',
+        //   }).then(result => {
+        //     if (result.isConfirmed) {
+        //       this.$router.push({ name: 'saldo' })
+        //     }
+        //   })
+        // })
       } else {
         this.$swal({
           title: '<span class="font-weight-bold h4">Tidak Boleh Ada Field Yang Kosong!</span>',
           imageUrl: require('@/assets/images/icons/fail.svg'), // eslint-disable-line
-          showCloseButton: false,
-          focusConfirm: true,
           confirmButtonText: 'Oke',
-          customClass: {
-            confirmButton: 'btn bg-orange2 btn-primary rounded-lg',
-          },
-          buttonsStyling: false,
+          confirmButtonClass: 'btn btn-primary',
         })
       }
     },

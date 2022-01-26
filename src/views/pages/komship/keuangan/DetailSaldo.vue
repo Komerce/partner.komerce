@@ -37,72 +37,45 @@
         :items="items"
         :fields="fields"
       >
-        <template #head(shipping_cost)="data">
-          <span class="d-flex">{{ data.label }}
-            <img
-              id="ongkosKirim"
-              src="@/assets/images/icons/info-circle-dark.svg"
-              class="w-5 h-5"
-              style="margin-left:5px;cursor:pointer;"
-            >
-          </span>
-          <b-tooltip
-            target="ongkosKirim"
-            triggers="hover"
-          >
-            Ongkos kirim dari orderan.
-          </b-tooltip>
+        <template #cell(date_transaction)="data">
+          {{ moment(data.item.date_transaction) }}
         </template>
-        <template #head(service_fee)="data">
-          <span class="d-flex">{{ data.label }}
-            <img
-              id="biayaCOD"
-              src="@/assets/images/icons/info-circle-dark.svg"
-              class="w-5 h-5"
-              style="margin-left:5px;cursor:pointer;"
-            >
-          </span>
-          <b-tooltip
-            target="biayaCOD"
-            triggers="hover"
-          >
-            Biaya COD dari orderan yang menggunakan layanan COD.
-          </b-tooltip>
-        </template>
-        <template #cell(order_date)="data">
-          {{ moment(data.item.order_date) }}
-        </template>
-        <template #cell(payment_method)="data">
-          {{ data.item.payment_method }}
-          <span
-            v-if="data.item.status === 'Retur'"
-            class="text-muted"
-          ><br>Retur</span>
-        </template>
-        <template #cell(grand_total)="data">
-          Rp. {{ formatNumber(data.item.grand_total) }}
-        </template>
-        <template #cell(shipping_cost)="data">
-          Rp. {{ formatNumber(data.item.shipping_cost) }}
-        </template>
-        <template #cell(service_fee)="data">
-          <span v-if="data.item.service_fee !== '-'">Rp. {{ formatNumber(data.item.service_fee) }}</span>
-          <span v-else>-</span>
+        <template #cell(transaction_type)="data">
+          <div v-if="data.item.order_id !== 0">
+            {{ data.item.payment_method }}
+          </div>
+          <div v-else>
+            {{ statusTransaction(data.item.transaction_type) }}
+          </div>
         </template>
         <template #cell(amount)="data">
           <span
-            v-if="data.item.payment_method === 'BANK TRANSFER'"
-            class="text-primary"
-          >
-            -Rp.{{ formatNumber(data.item.amount) }}
-          </span>
-          <span
-            v-else
+            v-if="data.item.amount.charAt(0) === '+'"
             class="text-success"
           >
-            +Rp.{{ formatNumber(data.item.amount) }}
+            +Rp. {{ formatNumber(data.item.amount) }}
+          </span>
+          <span
+            v-if="data.item.amount.charAt(0) === '-'"
+            class="text-primary"
+          >
+            -Rp. {{ formatNumber(data.item.amount) }}
           </span>
         </template>
+        <template #cell(saldo)="data">
+          Rp. {{ formatNumber(data.item.saldo) }}
+        </template>
+        <template #cell(action)="data">
+          <b-button
+            v-if="data.item.order_id !== 0"
+            variant="none"
+            class="button-detail d-flex text-info"
+            :to="{ name: 'detail-order', params: { order_id: data.item.order_id } }"
+          >
+            Lihat Detail
+          </b-button>
+          <span v-else>-</span>
+        </template>>
       </b-table>
       <div class="d-flex justify-between align-middle">
         <div>
@@ -133,14 +106,14 @@
 </template>
 <script>
 import {
-  BCard, BRow, BCol, BFormSelect, BTable, BButton, BPagination, BOverlay, BTooltip,
+  BCard, BRow, BCol, BFormSelect, BTable, BButton, BPagination, BOverlay,
 } from 'bootstrap-vue'
 import moment from 'moment'
 import { mapState } from 'vuex'
 
 export default {
   components: {
-    BCard, BRow, BCol, BFormSelect, BTable, BButton, BPagination, BOverlay, BTooltip,
+    BCard, BRow, BCol, BFormSelect, BTable, BButton, BPagination, BOverlay,
   },
   data() {
     return {
@@ -149,22 +122,19 @@ export default {
       items: [],
       fields: [
         {
-          key: 'order_date', label: 'Tanggal', thClass: 'align-middle', tdClass: 'align-top',
+          key: 'date_transaction', label: 'Tanggal', thClass: 'align-middle', tdClass: 'align-top',
         },
         {
-          key: 'payment_method', label: 'Jenis Order', thClass: 'align-middle', tdClass: 'align-top',
-        },
-        {
-          key: 'grand_total', label: 'Nilai Order', thClass: 'align-middle', tdClass: 'align-top',
-        },
-        {
-          key: 'shipping_cost', label: 'Ongkos Kirim', thClass: 'align-middle', tdClass: 'align-top',
-        },
-        {
-          key: 'service_fee', label: 'Biaya COD', thClass: 'align-middle', tdClass: 'align-top',
+          key: 'transaction_type', label: 'Jenis Transaksi', thClass: 'align-middle', tdClass: 'align-top',
         },
         {
           key: 'amount', label: 'Jumlah', thClass: 'align-middle', tdClass: 'align-top',
+        },
+        {
+          key: 'saldo', label: 'Saldo', thClass: 'align-middle', tdClass: 'align-top',
+        },
+        {
+          key: 'action', label: '',
         },
       ],
       loadTable: false,
@@ -175,6 +145,9 @@ export default {
       perPage: 20,
       totalItems: 0,
     }
+  },
+  computed: {
+    ...mapState('saldoDetail', ['totalSaldo']),
   },
   watch: {
     currentPage: {
@@ -189,9 +162,6 @@ export default {
     this.fetchData().catch(error => {
       console.error(error)
     })
-  },
-  computed: {
-    ...mapState('saldoDetail', ['totalSaldo']),
   },
   beforeMount() {
     this.$store.dispatch('saldoDetail/init')
@@ -219,15 +189,30 @@ export default {
         this.startDate = `${last.getFullYear()}-${last.getMonth() + 1}-${last.getDate()}`
       }
     },
+    statusTransaction(data) {
+      if (data === 'shopping') {
+        return 'Belanja Talent'
+      } if (data === 'topup') {
+        return 'Top Up Saldo'
+      } if (data === 'withdrawal') {
+        return 'Penarikan Saldo'
+      } if (data === 'orderku_done') {
+        return 'Orderan COD'
+      } if (data === 'orderku_ongkir') {
+        return 'Orderan Non COD'
+      } if (data === 'orderku_retur') {
+        return 'Orderan Non COD'
+      }
+      return ''
+    },
     async fetchData() {
       this.loadTable = true
-      this.getDate()
       this.items = await this.$http_komship.get('v1/partner/order-transaction-balance', {
         params: {
           start_date: this.startDate,
           end_date: this.endDate,
           page: this.currentPage,
-          total_per_page: this.perPage,
+          limits: this.perPage,
         },
       })
         .then(res => {
@@ -245,3 +230,9 @@ export default {
   },
 }
 </script>
+<style>
+.btnPage {
+  padding: 4px 7px;
+  margin-right: 5px;
+}
+</style>

@@ -126,7 +126,7 @@ export default {
         formData.append('withdrawal_id', this.$route.params.slug)
         // formData.append('status', 'completed')
         // formData.append('notes', '')
-        // formData.append('_method', 'PUT')
+        formData.append('_method', 'PUT')
         this.$http.post(endpoint, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
