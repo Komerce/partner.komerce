@@ -1,7 +1,7 @@
 <template>
- <b-card>
+  <b-card>
     <h4><strong>Customer</strong></h4>
-        <b-row class="d-flex justify-content-end align-items-center">
+    <b-row class="d-flex justify-content-end align-items-center">
       <b-col
         cols="3"
       >
@@ -184,13 +184,10 @@
       blur="0"
       opacity=".5"
       rounded="sm"
-
     >
       <b-table
         id="pagination"
-        :per-page="0"
         :current-page="currentPage"
-
         striped
         hover
         responsive
@@ -221,14 +218,16 @@
           <span class="capitalizeText">{{ data.label }}</span>
         </template>
       </b-table>
-       <b-pagination
-      v-model="currentPage"
-      :total-rows="totalinforCustomer"
-      :per-page="perPage"
-      class="mt-4"
-    >
-      <template #first-text><span class="text-dark">Lihat per halaman</span></template>
-       </b-pagination>
+      <b-pagination
+        v-model="currentPage"
+        :total-rows="totalinforCustomer"
+        :per-page="perPage"
+        class="mt-4"
+      >
+        <template #first-text>
+          <span class="text-dark">Lihat per halaman</span>
+        </template>
+      </b-pagination>
       <b-pagination
         v-model="currentPage"
         size="md"
@@ -275,13 +274,11 @@ import {
   BForm,
   BFormGroup,
   BCard,
-  BPagination,
   BOverlay,
   VBPopover,
   BDropdown,
   BDropdownForm,
 } from 'bootstrap-vue'
-
 import Ripple from 'vue-ripple-directive'
 import useJwt from '@/auth/jwt/useJwt'
 import { dateFormat } from '@core/mixins/ui/date'
@@ -297,7 +294,6 @@ export default {
     BInputGroupPrepend,
     BButton,
     BRow,
-    BPagination,
     BTable,
     BForm,
     BFormGroup,
@@ -311,7 +307,6 @@ export default {
     Ripple,
   },
   mixins: [dateFormat],
-
   data() {
     return {
       loading: false,
@@ -323,7 +318,6 @@ export default {
       options: [
         { value: 1, text: 'Kabupaten' },
       ],
-
       valuePerpage: [
         {
           value: 50,
@@ -386,7 +380,6 @@ export default {
           },
         },
       ],
-
       itemsCustomer: [],
       productName: '',
       spentFrom: null,
@@ -398,14 +391,17 @@ export default {
       area: '',
       destination: '',
       itemsDestinations: [],
-
       customerName: '',
-
       endpoint: null,
       url: '/v1/customers',
       loadTable: false,
       totalinforCustomer: 0,
     }
+  },
+  computed: {
+    rowss() {
+      return this.itemsCustomer.length
+    },
   },
   watch: {
     currentPage: {
@@ -414,11 +410,6 @@ export default {
           console.error(error)
         })
       },
-    },
-  },
-  computed: {
-    rowss() {
-      return this.itemsCustomer.length
     },
   },
   mounted() {
@@ -447,7 +438,6 @@ export default {
     filterCustomer() {
       this.loading = true
       const params = {}
-
       if (this.customerName) Object.assign(params, { customer_name: this.customerName })
       if (this.orderFrom) Object.assign(params, { orderFrom: this.orderFrom })
       if (this.orderTo) Object.assign(params, { orderTo: this.orderTo })
@@ -458,7 +448,6 @@ export default {
       if (this.pcsTo) Object.assign(params, { pcsTo: this.pcsTo })
       // if (this.pagination) Object.assign(params, { pagination: this.pagination })
       if (this.currentPage) Object.assign(params, { currentPage: this.currentPage })
-
       httpKomship.get('/v1/customers', {
         params,
       }, {
