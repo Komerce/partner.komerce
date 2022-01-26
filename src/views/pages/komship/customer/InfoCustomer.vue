@@ -254,7 +254,7 @@
       </div>
       <b-pagination
         v-model="currentPage"
-        :total-rows="rows"
+        :total-rows="rowss"
         :per-page="perPage"
         first-number
         last-number
@@ -408,7 +408,7 @@ export default {
 
   computed: {
     // eslint-disable-next-line vue/no-dupe-keys
-    rows() {
+    rowss() {
       return this.itemsCustomer.length
     },
   },
