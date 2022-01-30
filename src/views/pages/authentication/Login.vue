@@ -94,13 +94,13 @@
                     :hidden="!!error"
                   >
                     <div class="alert-body">
-                      <b-link
+                      <!-- <b-link
                         v-if="showResendEmailVerification"
                         class="ml-50"
                         @click="resendEmailVerification"
                       >
                         <u>Kirim ulang </u>
-                      </b-link>
+                      </b-link> -->
                     </div>
                   </b-alert>
                   <b-form-input
