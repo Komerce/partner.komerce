@@ -34,6 +34,78 @@
                 rules="required"
                 :custom-messages="custommessages4"
               >
+                <div>
+                  <b-alert
+                    variant="danger"
+                    :hidden="!!error"
+                  >
+                    <div class="alert-body">
+                      <b-link
+                        v-if="showResendEmailVerification"
+                        class="ml-50"
+                        @click="resendEmailVerification"
+                      />
+                    </div>
+                  </b-alert>
+                </div>
+                <b-input-group
+                  class="input-group-merge"
+                  :class="errors.length > 0 ? 'is-invalid' : null"
+                >
+                  <b-form-input
+                    id="login-password"
+                    v-model="passwordold"
+                    :state="errors.length > 0 ? false : null"
+                    class="form-control-merge"
+                    :type="passwordFieldType"
+                    name="login-password"
+                    placeholder="Password"
+                    @input="konfirmasipassword"
+                  />
+                  <b-input-group-append is-text>
+                    <feather-icon
+                      class="cursor-pointer"
+                      :icon="password1ToggleIcon"
+                      @click="togglePasswordVisibility"
+                    />
+                  </b-input-group-append>
+                </b-input-group>
+                <small class="text-danger">{{ errors[0] }}</small>
+                <small class="text-danger"> {{ error }}</small>
+                <small
+                  v-if="passwordkonfirmasi"
+                  class="text-danger"
+                >
+                  {{ konfirmasipassword }}
+                </small>
+              </validation-provider>
+            </b-form-group>
+
+            <!-- confirm password -->
+
+            <b-form-group>
+              <label for="login-password">konfirmasi password</label>
+              <validation-provider
+                #default="{ errors }"
+                name="Password"
+                vid="password"
+                rules="required"
+                :custom-messages="custommessages4"
+              >
+                <div>
+                  <b-alert
+                    variant="danger"
+                    :hidden="!!error"
+                  >
+                    <div class="alert-body">
+                      <!-- <b-link
+                        v-if="showResendEmailVerification"
+                        class="ml-50"
+                        @click="resendEmailVerification"
+                      /> -->
+                    </div>
+                  </b-alert>
+                </div>
                 <b-input-group
                   class="input-group-merge"
                   :class="errors.length > 0 ? 'is-invalid' : null"
@@ -47,7 +119,7 @@
                         v-if="showResendEmailVerification"
                         class="ml-50"
                         @click="resendEmailVerification"
-                      />
+                      /> -->
                     </div>
                   </b-alert>
                   <b-form-input
@@ -62,51 +134,21 @@
                   <b-input-group-append is-text>
                     <feather-icon
                       class="cursor-pointer"
-                      :icon="passwordToggleIcon"
+                      :icon="password1ToggleIcon"
                       @click="togglePasswordVisibility"
                     />
                   </b-input-group-append>
                 </b-input-group>
                 <small class="text-danger">{{ errors[0] }}</small>
-              </validation-provider>
-            </b-form-group>
-
-            <!-- confirm password -->
-            <b-form-group
-              label-for="reset-password-confirm"
-              label="Konfirmasi Password baru"
-            >
-              <validation-provider
-                #default="{ errors }"
-                name="Confirm Password"
-                rules="required|password"
-                :custom-messages="custommessages4"
-              >
-                <b-input-group
-                  class="input-group-merge"
-                  :class="errors.length > 0"
+                <small
+                  v-if="passwordkonfirmasi"
+                  class="text-danger"
                 >
-                  <b-form-input
-                    id="reset-password-confirm"
-                    v-model="cPassword"
-                    :type="password2FieldType"
-                    class="form-control-merge"
-                    :state="errors.length > 0 ? false:null"
-                    name="reset-password-confirm"
-                  />
-                  <b-input-group-append is-text>
-                    <feather-icon
-                      class="cursor-pointer"
-                      :icon="password2ToggleIcon"
-                      @click="togglePassword2Visibility"
-                    />
-                  </b-input-group-append>
-                </b-input-group>
-                <small class="text-danger">{{ errors[0] }}</small>
+                  {{ passwordkonfirmasi }}
+                </small>
               </validation-provider>
             </b-form-group>
 
-            <!-- submit button -->
             <b-button
               block
               type="submit"
@@ -134,7 +176,7 @@
             />
           </b-col>
 
-          <b-col class="text-center mt-1">
+          <b-col class="text-center mt-2">
             <h4 class="text-black">
               <strong>
                 Password telah berhasil diubah.
@@ -187,20 +229,22 @@ export default {
   mixins: [togglePasswordVisibility],
   data() {
     return {
-      // error: '',
-      cPassword: '',
+      passwordold: '',
+      error: '',
+      password: '',
+      showResendEmailVerification: true,
       status: '',
+      passwordkonfirmasi: '',
       loading: false,
       custommessages4: {
         required: 'Mohon masukkan password',
-        password: '',
       },
       custommessages5: {
         required: 'Mohon masukkan password',
-        password: 'pasword tidak sama',
       },
       // validation rules
       passwordFieldType: 'password',
+      password2FieldType: 'password',
     }
   },
   setup() {
@@ -222,6 +266,33 @@ export default {
     },
   },
   methods: {
+    konfirmasipassword() {
+      if (this.error === 'Terdiri dari 8-16 karakter, mengandung dari huruf dan angka.') {
+        this.error = 'Terdiri dari 8-16 karakter, mengandung dari huruf dan angka.'
+      } else {
+        this.error = 'Terdiri dari 8-16 karakter, mengandung dari huruf dan angka.'
+      }
+    },
+    resendEmailVerification() {
+      this.showResendEmailVerification = true
+      this.errors = true
+      this.errors = 'Terdiri dari 8-16 karakter, mengandung dari huruf dan angka.'
+      this.$http
+        .get(`/resend_verification_email/${this.userId}`)
+        .then(() => {
+          this.userId = ''
+          this.$swal({
+            title: 'Terkirim',
+            text: 'Harap periksa email anda untuk verifikasi akun Anda.',
+            icon: 'success',
+            confirmButtonText: 'Mengerti',
+            customClass: {
+              confirmButton: 'btn btn-primary',
+            },
+          })
+        })
+        .catch(() => {})
+    },
     showmodal() {
       this.$refs['ubah-password'].toggle('#togggle-btn')
     },
@@ -235,17 +306,19 @@ export default {
       this.$refs.changepassword.validate().then(success => {
         if (success) {
           this.loading = true
-          this.error = ''
+          this.error = true
+          this.passwordkonfirmasi = ''
 
           useJwt.changepassword({
+            passwordold: this.passwordold,
             password: this.password,
-            cPassword: this.cPassword,
           })
             .then(response => {
               if (response.data.status === false) {
                 this.error = response.data.message
+
                 this.loading = false
-                this.password = 'testing'
+                this.passwordkonfirmasi = 'Terdiri dari 8-16 karakter, mengandung dari huruf dan angka.'
               } else {
                 this.$swal({
                   title: 'Tautan Dikirm',

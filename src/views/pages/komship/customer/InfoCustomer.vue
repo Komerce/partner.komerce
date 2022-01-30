@@ -220,16 +220,6 @@
       </b-table>
       <b-pagination
         v-model="currentPage"
-        :total-rows="totalinforCustomer"
-        :per-page="perPage"
-        class="mt-4"
-      >
-        <template #first-text>
-          <span class="text-dark">Lihat per halaman</span>
-        </template>
-      </b-pagination>
-      <b-pagination
-        v-model="currentPage"
         size="md"
         class="float-right mr-2"
         :total-rows="totalinforCustomer"
@@ -252,13 +242,6 @@
           {{ paginationitems.value }}
         </b-button>
       </div>
-      <b-pagination
-        v-model="currentPage"
-        :total-rows="rowss"
-        :per-page="perPage"
-        first-number
-        last-number
-      />
     </b-row>
   </b-card>
 </template>

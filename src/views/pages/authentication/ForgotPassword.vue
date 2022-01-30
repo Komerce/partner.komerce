@@ -136,7 +136,7 @@
                       <span
                         :to="{name:'auth-login'}"
                         @click="showAlert"
-                      >Kirim ulang {{ dismissCountDown }} seconds</span>
+                      >Kirim ulang {{ dismissCountDown }}</span>
                     </b-link>
                   </b-alert>
                 </div>
@@ -151,15 +151,8 @@
               </b-button>
 
             </b-modal>
-            <div class="mt-1">
-            <!-- <p
-            v-else
-            >
-            </p> -->
-            </div>
           </b-form>
         </validation-observer>
-        <!-- </b-col> -->
       </b-card>
     </b-row>
   </div>
@@ -176,7 +169,6 @@ import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
 import store from '@/store/index'
 import { $themeConfig } from '@themeConfig'
-import moment from 'moment'
 
 export default {
   directives: {
@@ -185,7 +177,7 @@ export default {
   components: {
     BRow,
     BCol,
-    // BAlert,
+    BAlert,
     BLink,
     BFormGroup,
     BFormInput,
