@@ -284,6 +284,7 @@ export default {
     BFormGroup,
     BOverlay,
     vSelect,
+    BPagination,
     BDropdown,
     BDropdownForm,
   },

@@ -50,7 +50,9 @@
                         v-if="showResendEmailVerification"
                         class="ml-50"
                         @click="resendEmailVerification"
-                      />
+                      >
+                        <u>Kirim ulang</u>
+                      </b-link>
                     </div>
                   </b-alert>
                 </div>
@@ -96,7 +98,9 @@
                         v-if="showResendEmailVerification"
                         class="ml-50"
                         @click="resendEmailVerification"
-                      />
+                      >
+                        <u>Kirim ulang </u>
+                      </b-link>
                     </div>
                   </b-alert>
                   <b-form-input
@@ -201,7 +205,7 @@ export default {
       error: '',
       errorcharemail: '',
       status: '',
-      showResendEmailVerification: false,
+      showResendEmailVerification: true,
       usernameEmail: '',
       custommessages1: {
         message: 'tes',
@@ -226,7 +230,6 @@ export default {
     const { appName, appLogoImage } = $themeConfig.app
 
     return {
-      // App Name
       appName,
       appLogoImage,
     }
