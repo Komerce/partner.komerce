@@ -229,7 +229,7 @@
     <b-row class="justify-content-between mt-5 mx-50 mb-2">
       <div>
         <span class="text-black mr-1">
-          List Per halaman
+          List per halaman
         </span>
         <b-button
           v-for="(paginationitems, index) in valuePerpage"
