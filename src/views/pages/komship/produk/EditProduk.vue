@@ -275,7 +275,7 @@
                       </b-col>
 
                       <b-col
-                        v-if="formChoices1.length < 5"
+                        v-if="formChoices1.length < 20"
                         cols="8"
                       >
                         <b-form-group
@@ -401,7 +401,7 @@
                       </b-col>
 
                       <b-col
-                        v-if="formChoices2.length < 5"
+                        v-if="formChoices2.length < 20"
                         cols="8"
                       >
                         <b-form-group
@@ -521,7 +521,7 @@
                       </b-col>
 
                       <b-col
-                        v-if="formChoices3.length < 5"
+                        v-if="formChoices3.length < 20"
                         cols="8"
                       >
                         <b-form-group

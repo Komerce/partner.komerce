@@ -134,8 +134,10 @@ export default {
     },
     async getWithdrawalRequest({ commit, state }) {
       try {
+        const user = JSON.parse(localStorage.getItem('userData'))
         const response = await axiosIns.get('kmpoin/kmPoinWithdrawalRequest', {
           params: {
+            user_id: user.id,
             page: state.table.currentPage,
             limit: state.table.perPage,
             start_date: formatYmd(state.dateRange.startDate),

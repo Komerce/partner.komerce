@@ -1,10 +1,22 @@
 <template>
   <div class="add-order-main-wrapper">
-    <b-card-title class="mb-4">
-      Tambah Order
-    </b-card-title>
-    <div class="add-order-dsc-title top-right">
-      {{ profile && profile.is_komship === 1 ? 'Pengiriman Komship' : 'Pengiriman Non Komship' }}
+    <div class="d-flex justify-between mb-3">
+      <h3 class="font-bold">
+        Tambah Order
+      </h3>
+      <span
+        v-if="profile && profile.is_komship === 1"
+        class="d-flex my-auto"
+      >
+        Pengiriman via <img
+          src="@/assets/images/logo/Komship.png"
+          style="margin-left:5px;"
+          alt="Komship"
+        >
+      </span>
+      <span v-else>
+        Pengiriman Non Komship
+      </span>
     </div>
     <section class="add-order-form mb-4">
       <b-form-group
@@ -22,6 +34,8 @@
           v-model="dateValue"
           :min="new Date()"
           class="add-order-date-button"
+          locale="id"
+          label-help=""
           button-only
           @context="onChangeDate"
         >
@@ -496,7 +510,6 @@ function changeDate(dateString) {
 
 export default {
   components: {
-    BCardTitle,
     BFormGroup,
     BButton,
     vSelect,

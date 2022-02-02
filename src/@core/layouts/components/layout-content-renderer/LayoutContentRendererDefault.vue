@@ -58,11 +58,14 @@
           size="16"
         />
       </b-button>
+      <crips-chat v-if="!isAdmin" />
     </div>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
+import CrispChat from '@dansmaculotte/vue-crisp-chat'
 import {
   BButton, VBTooltip, BAlert, BLink,
 } from 'bootstrap-vue'
@@ -71,6 +74,12 @@ import useAppConfig from '@core/app-config/useAppConfig'
 import Ripple from 'vue-ripple-directive'
 import { heightFade } from '@core/directives/animations'
 
+Vue.use(CrispChat, {
+  websiteId: '91f9372c-da18-40da-89bf-1a114a832ac0',
+  disabled: false,
+  hideOnLoad: true,
+})
+
 export default {
   directives: {
     'b-tooltip': VBTooltip,
@@ -78,7 +87,12 @@ export default {
     Ripple,
   },
   components: {
-    AppBreadcrumb, BButton, BAlert, BLink,
+    AppBreadcrumb,
+    BButton,
+    BAlert,
+    BLink,
+    // eslint-disable-next-line vue/no-unused-components
+    'crips-chat': CrispChat,
   },
   setup() {
     const { routerTransition, contentWidth } = useAppConfig()

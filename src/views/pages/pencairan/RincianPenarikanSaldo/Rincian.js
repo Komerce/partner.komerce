@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import {
   BRow,
   BCol,
@@ -16,6 +17,7 @@ import {
   BFormSelect,
 } from 'bootstrap-vue'
 
+// eslint-disable-next-line import/extensions
 import axioskomsipdev from '@/libs/axioskomsipdev'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
@@ -94,17 +96,13 @@ export default {
       },
       fields: [
         {
-          key: 'order_id',
-          label: 'Id',
-        },
-        {
           key: 'order_date',
           label: 'Tanggal',
           sortable: true,
         },
         // A virtual column made up from two fields
         {
-          key: 'transreturn',
+          key: 'payment_method',
           label: 'Transaksi',
         },
         {
@@ -149,6 +147,7 @@ export default {
     this.fetchData()
   },
   methods: {
+    formatNumber: value => (`${value}`).replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.'),
     selectText(element) {
       let range
       if (document.selection) {
@@ -254,6 +253,7 @@ export default {
       // hide modal
       this.$nextTick(() => {
         this.$bvModal.hide('modal-transfer-berhasil')
+        this.$router.go(this.$router.currentRoute)
       })
     },
     handleOkTransGagal() {
@@ -281,12 +281,11 @@ export default {
       const endpoint = `/v1/admin/withdrawal/detail/${this.$route.params.slug}`
       axioskomsipdev.get(endpoint)
         .then(({ data }) => {
-          // console.log(data.data)
           const parseData = JSON.parse(JSON.stringify(data.data))
           this.$store.commit('pencairan/UPDATE_PENCAIRAN_STATUS', parseData.status)
           this.detailData = parseData
-          this.items = parseData.orders
-          this.totalRows = parseData.length
+          this.items = data.data.order
+          this.totalRows = data.data.order.length
         })
         .catch(e => {
           console.log('error', e)

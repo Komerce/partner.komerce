@@ -75,6 +75,7 @@ export default [
     meta: {
       name: 'detail-orderan-pickup-after',
       resource: 'Pickup',
+      routeToProfile: 'kompship-profile',
       routeBack: 'ajukan-pickup',
       action: 'manage',
       breadcrumb: [

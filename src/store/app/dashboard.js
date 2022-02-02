@@ -176,6 +176,7 @@ export default {
             },
           },
         )
+        console.log('customer loyals', response)
         commit('UPDATE_CUSTOMER_LOYALS', response.data.data)
       } catch (e) {
         console.error(e)

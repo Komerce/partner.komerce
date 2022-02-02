@@ -178,35 +178,34 @@
                   </div>
                 </template>
               </b-table>
-            </b-col>
-            <b-col
-              cols="3"
-            >
-              <b-form-group
-                class="mb-0"
-              >
-                <label class="d-inline-block text-sm-left mr-50">Per page</label>
-                <b-form-select
-                  id="perPageSelect"
-                  v-model="perPage"
-                  size="sm"
-                  :options="pageOptions"
-                  class="w-50"
-                />
-              </b-form-group>
-            </b-col>
-            <b-col
-              cols="9"
-            >
-              <b-pagination
-                v-model="currentPage"
-                :total-rows="totalRows"
-                :per-page="perPage"
-                align="right"
-                size="sm"
-                class="my-0"
-                aria-controls="my-table"
-              />
+              <div class="d-flex justify-between ">
+                <div>
+                  <span class="mr-1">List per halaman</span>
+                  <b-button
+                    v-for="page in pageOptions"
+                    :key="page"
+                    :variant="page === perPage ? 'primary' : 'light'"
+                    size="sm"
+                    class="btnPage"
+                    @click="setPage(page)"
+                  >
+                    {{ page }}
+                  </b-button>
+                </div>
+                <b-col
+                  cols=""
+                >
+                  <b-pagination
+                    v-model="currentPage"
+                    :total-rows="totalRows"
+                    :per-page="perPage"
+                    align="right"
+                    size="sm"
+                    class="my-0"
+                    aria-controls="my-table"
+                  />
+                </b-col>
+              </div>
             </b-col>
           </b-row>
         </b-card-body>
@@ -286,6 +285,7 @@ export default {
       searchTerm: '',
       nameFilter: null,
       statusFilter: null,
+      pageOptions: [50, 100, 200],
       optionsStatus: [
         { value: null, text: 'Pilih Status', disabled: true },
         { value: 'completed', text: 'Disetujui' },
@@ -295,8 +295,7 @@ export default {
       ],
       rowsTable: [],
       isLoadTable: false,
-      perPage: 5,
-      pageOptions: [3, 5, 10],
+      perPage: 50,
       totalRows: 1,
       currentPage: 1,
       sortBy: '',
@@ -306,6 +305,10 @@ export default {
       filterOn: [],
       items: [],
       fields: [
+        {
+          key: 'created_at',
+          label: 'Tanggal',
+        },
         {
           key: 'detailName',
           label: 'Nama',

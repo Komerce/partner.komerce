@@ -1177,6 +1177,11 @@
     "@ckeditor/ckeditor5-utils" "^29.2.0"
     lodash-es "^4.17.15"
 
+"@dansmaculotte/vue-crisp-chat@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@dansmaculotte/vue-crisp-chat/-/vue-crisp-chat-0.1.0.tgz#b2462303de8a5f2b1eed7a78ffa916b8ff1c46f1"
+  integrity sha512-C0RhD8gvqNJUye1h0zd5Hbl+5XBMo8jLvF3NqJP4LpLfUNvfhzzrptmAh4mbHRP39eRO3ZBoFh3o4JHYtuZoag==
+
 "@fullcalendar/common@~5.5.0":
   version "5.5.1"
   resolved "https://registry.npmjs.org/@fullcalendar/common/-/common-5.5.1.tgz"

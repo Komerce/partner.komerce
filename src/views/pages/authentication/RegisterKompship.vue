@@ -6,7 +6,8 @@
     >
       <b-navbar-brand class="ml-4 mt-1">
         <b-img
-          src="@core/assets/image/brand.png"
+          src="@core/assets/image/logo-komerce-no-tag.png"
+          width="150"
         />
       </b-navbar-brand>
       <b-col

@@ -257,8 +257,12 @@
                 label-cols-md="3"
                 class="ml-2"
               >
-                <b-form-input
-                  v-model="location"
+                <v-select
+                  v-model="cityCode"
+                  :options="provinceItems"
+                  :reduce="option => option.city_code"
+                  label="values"
+                  @search="onSearchProvince"
                 />
               </b-form-group>
             </b-col>
@@ -413,7 +417,11 @@ export default {
       partnerCategoryItems: [],
       businessTypeItems: [],
 
+      provinceItems: [],
+
       fieldLogoBusiness: [],
+
+      cityCode: '',
 
       // Validation
       required,
@@ -424,6 +432,7 @@ export default {
     this.loadProfile()
     this.loadPartnerCategory()
     this.loadBusinessType()
+    this.loadAllProvince()
   },
   methods: {
     removeLogoBusiness() {
@@ -434,14 +443,19 @@ export default {
       this.fieldLogoBusiness.splice(0, 1)
       this.fieldLogoBusiness.push({ logo: '' })
     },
-    updateProfile() {
+    async updateProfile() {
+      await this.loadAllProvince()
       console.log('imageFile', this.imageFile)
       console.log('imageInitialFile', this.imageInitialFile)
       this.loadingSubmit = true
       this.$refs.formRules.validate().then(success => {
         if (success) {
-          if (this.imageInitialFile.includes('http')) {
-            this.imageInitialFile = ''
+          if (this.imageInitialFile !== '' && this.imageInitialFile !== null) {
+            console.log('tes2')
+            if (this.imageInitialFile.includes('http')) {
+              this.imageInitialFile = ''
+              console.log('tes1')
+            }
           }
           const formData = new FormData()
           formData.append('id', this.id)
@@ -460,7 +474,7 @@ export default {
           formData.append('business_type_id', this.typeBusiness)
           formData.append('business_location', String(this.location))
           formData.append('email', this.emailUser)
-
+          formData.append('city_code', this.cityCode)
           this.$http.post('/user/partner/update-profile-komship', formData).then(() => {
             this.$toast({
               component: ToastificationContent,
@@ -473,7 +487,8 @@ export default {
             })
             this.loadingSubmit = false
             this.loadProfile()
-          }).catch(() => {
+          }).catch(err => {
+            console.log(err)
             this.loadingSubmit = false
             this.$toast({
               component: ToastificationContent,
@@ -513,11 +528,18 @@ export default {
         console.log('image', data.partner_business_logo)
         if (data.partner_business_logo) this.imageInitialFile = data.partner_business_logo
         this.nameBusiness = data.partner_business_name
-        this.location = data.user_address_default.detail_address
+        if (data.user_address_default !== null) {
+          this.location = data.user_address_default.detail_address
+        }
+        if (data.address_partner_business) {
+          this.cityCode = data.address_partner_business
+          this.loadAllProvince()
+        }
         this.sektorBusiness = data.partner_category_name
         this.typeBusiness = data.partner_business_type_id
         this.loading = false
-      }).catch(() => {
+      }).catch(err => {
+        console.log('error get profile', err)
         this.loading = false
         this.$toast({
           component: ToastificationContent,
@@ -543,6 +565,41 @@ export default {
         this.businessTypeItems = data
         return this.businessTypeItems
       })
+    },
+    onSearchProvince(search, loading) {
+      if (search.length) {
+        this.searchProvince(loading, search, this)
+      }
+    },
+    searchProvince: _.debounce((loading, search, that) => {
+      loading(true)
+      that.loadProvince(search).finally(() => loading(false))
+    }, 500),
+    loadProvince(search) {
+      return this.$http.get(`/v1/partner/province-city?search=${search}`)
+        .then(response => {
+          const { data } = response.data
+          console.log('response province', data)
+          this.provinceItems = data
+          if (data.length === 1) {
+            this.cityCode = data[0].city_code
+          }
+        })
+    },
+    loadAllProvince() {
+      this.$http.get('/v1/partner/province-city')
+        .then(response => {
+          const { data } = response.data
+          console.log('response province', data)
+          data.forEach(this.filterProvince)
+          console.log(this.cityCode)
+          this.provinceItems = data
+        })
+    },
+    filterProvince(data) {
+      if (data.values === this.cityCode) {
+        this.cityCode = data.city_code
+      }
     },
     reset() {
       this.fullname = ''

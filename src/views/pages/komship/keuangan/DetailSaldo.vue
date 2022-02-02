@@ -90,6 +90,7 @@
             variant="none"
             class="button-detail d-flex text-info"
             :to="{ name: 'detail-order', params: { order_id: data.item.order_id } }"
+            target="_blank"
           >
             Lihat Detail
           </b-button>
@@ -197,7 +198,7 @@ export default {
     momentTime(date) {
       const validDate = moment(date)
       if (validDate.isValid()) {
-        return moment(date).format('hh:mm')
+        return moment(date).format('HH:MM')
       }
       return ''
     },

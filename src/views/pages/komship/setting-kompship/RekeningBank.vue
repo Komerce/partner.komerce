@@ -680,7 +680,7 @@ export default {
                 props: {
                   title: 'gagal',
                   icon: 'AlertCircleIcon',
-                  text: 'Gagal kirim otp, silahkan coba lagi',
+                  text: 'Gagal kirim otp, silahkan coba lagi!',
                   variant: 'danger',
                 },
               })
@@ -729,7 +729,7 @@ export default {
       const formData = new FormData()
       formData.append('otp', this.dataPin)
       httpKomship.post('/v1/partner/sms/otp/verification', formData).then(response => {
-        console.log(response)
+        console.log('response otp verification', response)
         if (response.data.code === 200) {
           console.log('success')
           httpKomship.post('/v1/bank-account/store',
@@ -739,11 +739,34 @@ export default {
               account_no: this.fieldAddAccountNo,
             }, {
               headers: { Authorization: `Bearer ${useJwt.getToken()}` },
-            }).then(() => {
-            this.loadingSubmit = false
-            this.getBank()
-            this.fieldActionAddRekening = false
-            this.$refs['modal-verification-submit'].hide()
+            }).then(responseStore => {
+            console.log(responseStore)
+            if (responseStore.data.code === 400) {
+              this.$toast({
+                component: ToastificationContent,
+                props: {
+                  title: 'Failed',
+                  icon: 'AlertCircleIcon',
+                  text: responseStore.data.message,
+                  variant: 'danger',
+                },
+              })
+            } else {
+              this.loadingSubmit = false
+              this.getBank()
+              this.fieldActionAddRekening = false
+              this.$refs['modal-verification-submit'].hide()
+            }
+          }).catch(err => {
+            this.$toast({
+              component: ToastificationContent,
+              props: {
+                title: 'Failed',
+                icon: 'AlertCircleIcon',
+                text: err,
+                variant: 'danger',
+              },
+            })
           })
         } else {
           this.$toast({

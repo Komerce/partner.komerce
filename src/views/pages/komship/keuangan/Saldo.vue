@@ -105,7 +105,7 @@
               </div>
             </div>
           </div>
-          <div class="card-body pb-0 mb-0">
+          <div v-if="JSON.stringify(this.rekening) !== JSON.stringify({})" class="card-body pb-0 mb-0">
             <p class="h-text-md mt-1 mb-0">
               {{ rekening.nama }}
               <img
@@ -116,6 +116,11 @@
             </p>
             <p class="h-text-xs mb-0">
               {{ `${rekening.bank} - ${rekening.noRek}` }}
+            </p>
+          </div>
+          <div v-else class="card-body pb-0 mb-0">
+            <p class="h-text-md mt-1 mb-0">
+              Rekening belum ada
             </p>
           </div>
         </div>
@@ -289,7 +294,36 @@
                     </p>
                   </td>
                   <td class="h-text-dark">
-                    {{ riwayat.status }}
+                    <div
+                      v-if="riwayat.status==='completed'"
+                      class="text-success"
+                    >
+                      Disetujui
+                    </div>
+                    <div
+                      v-if="riwayat.status==='requested'"
+                      class="text-warning"
+                    >
+                      Perlu Disetujui
+                    </div>
+                    <div
+                      v-if="riwayat.status==='on_review'"
+                      class="text-warning"
+                    >
+                      Sedang Direview
+                    </div>
+                    <div
+                      v-if="riwayat.status==='rejected'"
+                      class="text-danger"
+                    >
+                      Ditolak
+                    </div>
+                    <div
+                      v-if="riwayat.status==='rejected'"
+                      class="text-danger"
+                    >
+                      Dibatalkan
+                    </div>
                   </td>
                   <!-- <td class="h-text-dark">
                     {{ formatRupiah(riwayat.saldo) }}
@@ -591,6 +625,7 @@ export default {
       last30,
       firstDateOfMonth,
       lastDateOfMonth,
+      user: {},
       tableTitles: [
         'Tanggal',
         'Tujuan Penarikan',

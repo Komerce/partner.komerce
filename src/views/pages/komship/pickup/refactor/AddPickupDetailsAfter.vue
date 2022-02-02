@@ -277,7 +277,7 @@
                             size="17"
                           />
                         </span>
-                        <span class="text-black">J{{ itemsPrint.customer_phone }}</span>
+                        <span class="text-black">{{ getCustomerPhone(itemsPrint.customer_phone) }}</span>
                       </b-list-group-item>
 
                       <b-list-group-item class="d-flex border-0 align-items-center px-0 pt-0 pb-50">
@@ -507,7 +507,7 @@
                           size="17"
                         />
                       </span>
-                      <span class="text-black">J{{ itemsPrint.customer_phone }}</span>
+                      <span class="text-black">{{ itemsPrint.customer_phone }}</span>
                     </b-list-group-item>
 
                     <b-list-group-item class="d-flex border-0 align-items-center px-0 pt-0 pb-50">
@@ -1069,7 +1069,7 @@
                             size="17"
                           />
                         </span>
-                        <span class="text-black">J{{ itemsPrint.customer_phone }}</span>
+                        <span class="text-black">{{ itemsPrint.customer_phone }}</span>
                       </b-list-group-item>
 
                       <b-list-group-item class="d-flex border-0 align-items-center px-0 pt-0 pb-50">
@@ -1193,6 +1193,31 @@
       @onSubmitOption="onSubmitOptionPrint"
       @onChangeOption="handleChangeOption"
     />
+
+    <!-- Modal validate print label -->
+    <b-modal
+      ref="modal-validate-print-label"
+      hide-footer
+      hide-header
+      centered
+    >
+      <div class="modal-add-pickup-popup-success">
+        <div class="image-wrapper">
+          <img src="@/@core/assets/image/icon-popup-warning.png">
+        </div>
+        <div class="text-wrapper mb-3 px-1">
+          Silahkan lengkapi detail profil Kamu terlebih dahulu sebelum melakukan print label
+        </div>
+        <b-button
+          class="org-button"
+          tag="router-link"
+          :to="{ name: $route.meta.routeToProfile }"
+        >
+          Lengkapi Profil
+        </b-button>
+      </div>
+    </b-modal>
+
   </b-card>
 </template>
 
@@ -1348,8 +1373,12 @@ export default {
       })
     },
     onShowModalPrint() {
-      console.log('fieldItemsPrint', this.fieldItemsPrint)
-      this.$bvModal.show('modal-8')
+      if (this.profile.user_phone === '' || this.profile.user_fullname === '') {
+        this.$refs['modal-validate-print-label'].show()
+      } else {
+        console.log('fieldItemsPrint', this.fieldItemsPrint)
+        this.$bvModal.show('modal-8')
+      }
       // this.$refs.addPickupPopUpPrint.showModal()
       // this.$refs.html2Pdf.generatePdf()
     },
@@ -1460,6 +1489,15 @@ export default {
     getValueDistrict(values) {
       const value = values
       return value.replace(',', ', ')
+    },
+    getCustomerPhone(value) {
+      let result = ''
+      if (result.charAt(0) !== '0') {
+        result = `0${value}`
+      } else if (result.charAt(0) === '6') {
+        result = `+${value}`
+      }
+      return result
     },
   },
 }

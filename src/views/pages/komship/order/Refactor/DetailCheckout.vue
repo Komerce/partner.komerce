@@ -437,7 +437,7 @@ import {
   BCard, BButton, BIconChevronLeft, BRow, BCol, BFormInput, BInputGroup, BFormSelect, BFormTextarea, BCollapse, BTable, VBToggle,
 } from 'bootstrap-vue'
 import vSelect from 'vue-select'
-import 'vue-select/dist/vue-select.css'
+import '@core/scss/vue/libs/vue-select.scss'
 import moment from 'moment'
 
 export default {
@@ -517,7 +517,6 @@ export default {
     },
     async getCart() {
       this.itemsOrder = this.$route.params.itemsOrder
-      console.log(this.itemsOrder)
       this.arrayCart = this.itemsOrder.map(val => ({
         product_id: val.product_id,
         product_name: val.product_name,
@@ -534,7 +533,6 @@ export default {
               .then(async result => {
                 if (result.data.code === 200) {
                   this.cartId = result.data.data.cart_id
-                  console.log(this.cartId)
                 }
               })
           }

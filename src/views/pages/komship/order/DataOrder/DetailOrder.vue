@@ -167,9 +167,7 @@
         </b-table>
         <hr>
         <b-row class="mt-3">
-          <b-col
-            lg="3"
-          />
+          <b-col lg="3" />
           <b-col
             lg="5"
           >
@@ -183,9 +181,7 @@
           </b-col>
         </b-row>
         <b-row class="mt-1">
-          <b-col
-            lg="3"
-          />
+          <b-col lg="3" />
           <b-col
             lg="5"
           >
@@ -199,9 +195,7 @@
           </b-col>
         </b-row>
         <b-row class="mt-1">
-          <b-col
-            lg="3"
-          />
+          <b-col lg="3" />
           <b-col
             lg="5"
           >
@@ -211,14 +205,20 @@
             lg="3"
             class="text-right"
           >
-            Rp. {{ formatNumber(orderData.discount) }}
+            - Rp. {{ formatNumber(orderData.discount) }}
           </b-col>
         </b-row>
-        <hr>
-        <b-row class="mt-2">
-          <b-col
-            lg="3"
-          />
+        <b-row class="mt-1">
+          <b-col lg="3" />
+          <b-col lg="8">
+            <hr><span />
+          </b-col>
+        </b-row>
+        <b-row
+          class="mt-1"
+          :class="orderData.order_status === 'Retur' ? 'line-through' : ''"
+        >
+          <b-col lg="3" />
           <b-col
             lg="5"
             class="font-bold text-xl"
@@ -233,67 +233,140 @@
           </b-col>
         </b-row>
         <b-row class="mt-1">
-          <b-col
-            lg="3"
-          />
-          <b-col
-            lg="5"
-          >
-            Biaya {{ orderData.payment_method }} ({{ orderData.service_fee_to }}% sudah termasuk PPN)
+          <b-col lg="3" />
+          <b-col lg="7">
+            <hr><span />
           </b-col>
           <b-col
-            lg="3"
-            class="text-right"
+            lg="2"
+            class="d-flex justify-start"
           >
-            Rp. {{ formatNumber(orderData.service_fee) }}
-          </b-col>
-        </b-row>
-        <b-row class="mt-1">
-          <b-col
-            lg="3"
-          />
-          <b-col
-            lg="5"
-          >
-            Cashback Ongkir ({{ orderData.cashback_to }}%)
-          </b-col>
-          <b-col
-            lg="3"
-            class="text-right"
-          >
-            Rp. {{ formatNumber(orderData.shipping_cashback) }}
+            <b-button
+              v-b-toggle="'collapse-1'"
+              class="buttonCollapse px-0"
+              variant="none"
+              size="sm"
+            >
+              <span class="when-open">Tutup <b-icon-chevron-up /></span>
+              <span class="when-closed">Buka <b-icon-chevron-down /></span>
+            </b-button>
           </b-col>
         </b-row>
-        <b-row class="mt-1">
-          <b-col
-            lg="3"
-          />
-          <b-col
-            lg="5"
-            class="text-primary font-bold"
+        <b-collapse
+          id="collapse-1"
+          visible
+        >
+          <b-row class="mt-1">
+            <b-col lg="3" />
+            <b-col
+              lg="5"
+            >
+              Biaya {{ orderData.payment_method }} ({{ orderData.service_fee_to }}% sudah termasuk PPN)
+            </b-col>
+            <b-col
+              lg="3"
+              class="text-right"
+            >
+              <span v-if="orderData.order_status !== 'Retur'">Rp. {{ formatNumber(orderData.service_fee) }}</span>
+              <span v-else>Rp. {{ formatNumber(0) }}</span>
+            </b-col>
+          </b-row>
+          <b-row class="mt-1">
+            <b-col lg="3" />
+            <b-col
+              lg="5"
+            >
+              Ongkos Kirim (dipotong Cashback {{ orderData.cashback_to }}%)
+            </b-col>
+            <b-col
+              lg="3"
+              class="text-right"
+            >
+              Rp. {{ formatNumber(orderData.shipping_cost - orderData.shipping_cashback) }}
+            </b-col>
+          </b-row>
+          <b-row
+            v-if="orderData.order_status === 'Retur'"
+            class="mt-1"
           >
-            Penghasilan bersih yang kamu dapatkan
-          </b-col>
-          <b-col
-            lg="3"
-            class="text-right text-primary font-bold"
+            <b-col lg="3" />
+            <b-col
+              lg="5"
+            >
+              Ongkos Kirim Pengembalian
+            </b-col>
+            <b-col
+              lg="3"
+              class="text-right"
+            >
+              Rp. {{ formatNumber(orderData.shipping_cost) }}
+            </b-col>
+          </b-row>
+          <b-row
+            v-if="orderData.order_status !== 'Retur'"
+            class="mt-1"
           >
-            Rp. {{ formatNumber(orderData.net_profit) }}
-          </b-col>
-        </b-row>
+            <b-col lg="3" />
+            <b-col
+              lg="5"
+              class="text-primary font-bold"
+            >
+              Penghasilan bersih yang kamu dapatkan
+            </b-col>
+            <b-col
+              lg="3"
+              class="text-right text-primary font-bold"
+            >
+              Rp. {{ formatNumber(orderData.net_profit) }}
+            </b-col>
+          </b-row>
+          <b-row
+            v-if="orderData.order_status === 'Retur'"
+            class="mt-1"
+          >
+            <b-col lg="3" />
+            <b-col lg="5">
+              Penghasilan bersih yang kamu dapatkan
+            </b-col>
+            <b-col
+              lg="3"
+              class="text-right text-success"
+            >
+              Rp. {{ formatNumber(0) }}
+            </b-col>
+          </b-row>
+          <b-row
+            v-if="orderData.order_status === 'Retur'"
+            class="mt-1 text-xl"
+          >
+            <b-col lg="3" />
+            <b-col
+              lg="5"
+              class="font-bold"
+            >
+              Beban Total Biaya Retur
+            </b-col>
+            <b-col
+              lg="3"
+              class="text-right font-bold"
+            >
+              Rp. {{ formatNumber(orderData.shipping_cost + orderData.shipping_cost - orderData.shipping_cashback) }}
+            </b-col>
+          </b-row>
+        </b-collapse>
       </div>
     </b-container>
   </b-card>
 </template>
 <script>
 import {
-  BCard, BRow, BButton, BIconChevronLeft, BContainer, BCol, BAlert, VBModal, BTable,
+  BCard, BRow, BButton, BIconChevronLeft, BContainer, BCol, BAlert, VBModal, BTable, BCollapse,
 } from 'bootstrap-vue'
 import moment from 'moment'
 
 export default {
   components: {
-    BCard, BRow, BButton, BIconChevronLeft, BContainer, BCol, BAlert, BTable,
+    BCard, BRow, BButton, BIconChevronLeft, BContainer, BCol, BAlert, BTable, BCollapse,
   },
   directives: { VBModal },
   data() {
@@ -408,5 +481,9 @@ export default {
   height: 20px;
   width: 20px;
   cursor: pointer;
+}
+.collapsed > .when-open,
+.not-collapsed > .when-closed {
+  display: none;
 }
 </style>

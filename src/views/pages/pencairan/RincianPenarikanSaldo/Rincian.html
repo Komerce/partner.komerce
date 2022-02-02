@@ -191,20 +191,32 @@
               :filter-included-fields="filterOn"
               @filtered="onFiltered"
             >
-              <template #cell(status)="data">
-                <b-badge :variant="status[1][data.value]">
-                  {{ status[0][data.value] }}
-                </b-badge>
-              </template>
+             
               <!-- A virtual composite column -->
-              <template #cell(transreturn)="data">
+              <template #cell(order_date)="data">
                 <b>
-                  {{ data.item.payment_method }}
+                  {{ data.item.order_date }} 
                 </b>
-                <br>
-                <span class="text-secondary">
-                  Return
-                </span>
+              </template>
+              <template #cell(order_grandtotal)="data">
+                <b>
+                  Rp. {{ formatNumber(data.item.order_grandtotal) }}
+                </b>
+              </template>
+              <template #cell(shipping_cost)="data">
+                <b>
+                  Rp. {{ formatNumber(data.item.shipping_cost) }}
+                </b>
+              </template>
+              <template #cell(service_fee)="data">
+                <b>
+                  Rp. {{ formatNumber(data.item.service_fee) }}
+                </b>
+              </template>
+              <template #cell(net_profit)="data">
+                <b>
+                  Rp. {{ formatNumber(data.item.net_profit) }}
+                </b>
               </template>
               <template #table-busy>
                 <div class="text-center text-danger my-2">
@@ -262,7 +274,7 @@
         <div class="d-flex justify-content-end mt-2">
           <div>
             <b-button
-            v-if="detailData.notes==null ||detailData.notes=='' && detailData.status != 'completed'"
+            v-if="detailData.notes==null ||detailData.notes=='' || detailData.notes=='-' && detailData.status != 'completed'"
             v-b-modal.modal-review
             variant="outline-primary"
             class="mr-1 btn-custom-bottom"

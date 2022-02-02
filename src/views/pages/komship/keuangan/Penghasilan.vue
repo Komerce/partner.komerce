@@ -443,8 +443,8 @@ export default {
 
     return {
       picker: {
-        startDate: today,
-        endDate: today,
+        startDate: firstDateOfMonth,
+        endDate: lastDateOfMonth,
       },
       locale: {
         format: 'dd/mm/yyyy',
