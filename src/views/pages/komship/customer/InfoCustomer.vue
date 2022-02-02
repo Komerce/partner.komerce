@@ -229,7 +229,7 @@
     <b-row class="justify-content-between mt-5 mx-50 mb-2">
       <div>
         <span class="text-black mr-1">
-          List per halaman
+          List Per halaman
         </span>
         <b-button
           v-for="(paginationitems, index) in valuePerpage"
@@ -284,6 +284,7 @@ export default {
     BFormGroup,
     BOverlay,
     vSelect,
+    BPagination,
     BDropdown,
     BDropdownForm,
   },
@@ -438,8 +439,7 @@ export default {
       if (this.spentTo) Object.assign(params, { spentTo: this.spentTo })
       if (this.pcsFrom) Object.assign(params, { pcsFrom: this.pcsFrom })
       if (this.pcsTo) Object.assign(params, { pcsTo: this.pcsTo })
-      // if (this.pagination) Object.assign(params, { pagination: this.pagination })
-      if (this.currentPage) Object.assign(params, { currentPage: this.currentPage })
+      // if (this.currentPage) Object.assign(params, { currentPage: this.currentPage })
 
       httpKomship.get('/v1/customers', {
         params,
