@@ -15,22 +15,28 @@
             <strong>Informasi Customer</strong>
           </h5>
         </b-col>
-        <b-col class="d-flex justify-content-end">
+        <b-col
+          class="d-flex justify-content-end"
+        >
           <b-button
             class="mr-2"
             variant="success"
             size="sm"
           >
             <b-img
+              left
+              class="mr-1"
               src="@core/assets/image/icon-wa.png"
-              class="mr-50"
+              width="14"
+              height="14"
             />
             <a
               class="text-white"
-              :href="`https://api.whatsapp.com/send?phone=+62 ${customerContact}` "
+              :href="`https://api.whatsapp.com/send?phone=(+62) ${customerContact}` "
               target="blank"
             >
-              <span class="align-middle">Hubungi Customer</span>
+              <span class="align-middle">
+                Hubungi Customer</span>
             </a>
           </b-button>
         </b-col>
@@ -41,9 +47,6 @@
           md="7"
           class="d-flex align-items-center"
         >
-          <b-avatar
-            class="ml-2 mr-50"
-          />
           <div>
             <h5><strong>{{ customerName }}</strong></h5>
             <span>{{ formatphone (customerContact) }}</span>
@@ -502,7 +505,7 @@ export default {
         // eslint-disable-next-line no-param-reassign
         nomor = nomor.substring(1)
       }
-      return `+62${nomor}`
+      return `(+62)${nomor}`
     },
     formatPrice(value) {
       const val = value
@@ -525,9 +528,6 @@ export default {
         formatStatus = 'Batal'
       }
       return formatStatus
-    },
-    currentTime() {
-      return moment().format(' h:mm:ss a')
     },
   },
 }
