@@ -107,9 +107,8 @@
               <div class="mt-1">
                 <strong>Rata - rata Belanja</strong>
                 <b-icon-info-circle
-                  v-b-popover.hover.top
-                  title="Rata-rata Belanja Sejumlah"
-                  class="ml-1"
+                  v-b-popover.hover.top="'Rata-rata Belanja Sejumlah'"
+                  class="ml-1 "
                 />
 
               </div>
