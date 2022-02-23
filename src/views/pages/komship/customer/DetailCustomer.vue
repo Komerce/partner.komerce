@@ -105,12 +105,15 @@
                 <strong>Uang Dihabiskan</strong>
               </div>
               <div class="mt-1">
-                <strong>Rata - rata Belanja</strong>
+                <strong>
+                  Rata - rata Belanja</strong>
                 <b-icon-info-circle
-                  v-b-popover.hover.top="'Rata-rata Belanja Sejumlah'"
+                  v-b-popover.hover.top="'Jumlah rata-rata ketika berbelanja'"
                   class="ml-1 "
                 />
-
+                v-b-popover.hover.top="'Rata-rata Belanja Sejumlah'"
+                class="ml-1 "
+                />
               </div>
 
             </b-col>
@@ -397,7 +400,7 @@ import {
   VBPopover,
 } from 'bootstrap-vue'
 import useJwt from '@/auth/jwt/useJwt'
-import moment from 'moment'
+import Ripple from 'vue-ripple-directive'
 import httpKomship from '../setting-kompship/http_komship'
 
 export default {
@@ -408,7 +411,7 @@ export default {
     BCol,
     BImg,
     BAvatar,
-    BIconInfoCircle,
+    // BIconInfoCircle,
     BOverlay,
     BContainer,
     BCollapse,
@@ -416,6 +419,7 @@ export default {
   directives: {
     'b-toggle': VBToggle,
     'b-popover': VBPopover,
+    Ripple,
   },
   data() {
     return {
