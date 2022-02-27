@@ -234,7 +234,7 @@
               class="p-0"
             >
               <div
-                v-for="(detailOrder, indexDetail) in items.all_order_detail.slice(0, 3)"
+                v-for="(detailOrder, indexDetail) in items.all_order_detail.slice(0, 1)"
                 :key="indexDetail+1"
               >
                 <b-container
@@ -312,7 +312,7 @@
             </b-col>
           </b-row>
 
-          <!-- <b-row
+          <b-row
             v-if="items.all_order_detail.length > 1"
             class="d-flex justify-content-end mb-2"
           >
@@ -354,6 +354,7 @@
                             variant="light-primary"
                             square
                             size="50px"
+                            :src="detailOrder.product.product_image[0].images_path"
                           />
                         </div>
                         <div class="ml-1">
@@ -373,7 +374,7 @@
                 </b-row>
               </b-collapse>
             </b-col>
-          </b-row> -->
+          </b-row>
 
         </div>
       </b-container>
@@ -411,7 +412,7 @@ export default {
     BIconInfoCircle,
     BOverlay,
     BContainer,
-    // BCollapse,
+    BCollapse,
   },
   directives: {
     'b-toggle': VBToggle,
