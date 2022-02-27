@@ -312,7 +312,7 @@
             </b-col>
           </b-row>
 
-          <b-row
+          <!-- <b-row
             v-if="items.all_order_detail.length > 1"
             class="d-flex justify-content-end mb-2"
           >
@@ -324,7 +324,7 @@
                 variant="flat-dark"
                 size="sm"
               >
-                Tampilkan Versi Lainnya
+                Tampilkan Variasi Lainnya
                 <feather-icon
                   icon="ChevronDownIcon"
                 />
@@ -373,7 +373,7 @@
                 </b-row>
               </b-collapse>
             </b-col>
-          </b-row>
+          </b-row> -->
 
         </div>
       </b-container>
@@ -411,7 +411,7 @@ export default {
     BIconInfoCircle,
     BOverlay,
     BContainer,
-    BCollapse,
+    // BCollapse,
   },
   directives: {
     'b-toggle': VBToggle,
