@@ -15,22 +15,28 @@
             <strong>Informasi Customer</strong>
           </h5>
         </b-col>
-        <b-col class="d-flex justify-content-end">
+        <b-col
+          class="d-flex justify-content-end"
+        >
           <b-button
             class="mr-2"
             variant="success"
             size="sm"
           >
             <b-img
+              left
+              class="mr-1"
               src="@core/assets/image/icon-wa.png"
-              class="mr-50"
+              width="14"
+              height="14"
             />
             <a
               class="text-white"
-              :href="`https://api.whatsapp.com/send?phone=+62 ${customerContact}` "
+              :href="`https://api.whatsapp.com/send?phone=(+62) ${customerContact}` "
               target="blank"
             >
-              <span class="align-middle">Hubungi Customer</span>
+              <span class="align-middle">
+                Hubungi Customer</span>
             </a>
           </b-button>
         </b-col>
@@ -41,9 +47,6 @@
           md="7"
           class="d-flex align-items-center"
         >
-          <b-avatar
-            class="ml-2 mr-50"
-          />
           <div>
             <h5><strong>{{ customerName }}</strong></h5>
             <span>{{ formatphone (customerContact) }}</span>
@@ -102,13 +105,12 @@
                 <strong>Uang Dihabiskan</strong>
               </div>
               <div class="mt-1">
-                <strong>Rata - rata Belanja</strong>
+                <strong>
+                  Rata - rata Belanja</strong>
                 <b-icon-info-circle
-                  v-b-popover.hover.top
-                  title="Rata-rata Belanja Sejumlah"
-                  class="ml-1"
+                  v-b-popover.hover.top="'Jumlah rata-rata ketika berbelanja'"
+                  class="ml-1 "
                 />
-
               </div>
 
             </b-col>
@@ -232,7 +234,7 @@
               class="p-0"
             >
               <div
-                v-for="(detailOrder, indexDetail) in items.all_order_detail.slice(0, 1)"
+                v-for="(detailOrder, indexDetail) in items.all_order_detail.slice(0, 3)"
                 :key="indexDetail+1"
               >
                 <b-container
@@ -293,7 +295,7 @@
               cols="1"
               class="p-0 text-center"
             >
-              {{ formatStatus(items.order_status) }}
+              {{ items.order_status }}
             </b-col>
             <b-col
               cols="2"
@@ -395,7 +397,7 @@ import {
   VBPopover,
 } from 'bootstrap-vue'
 import useJwt from '@/auth/jwt/useJwt'
-import moment from 'moment'
+import Ripple from 'vue-ripple-directive'
 import httpKomship from '../setting-kompship/http_komship'
 
 export default {
@@ -414,6 +416,7 @@ export default {
   directives: {
     'b-toggle': VBToggle,
     'b-popover': VBPopover,
+    Ripple,
   },
   data() {
     return {
@@ -502,35 +505,17 @@ export default {
         // eslint-disable-next-line no-param-reassign
         nomor = nomor.substring(1)
       }
-      return `+62${nomor}`
+      return `(+62)${nomor}`
     },
     formatPrice(value) {
       const val = value
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
     },
-    formatStatus(value) {
-      let formatStatus = ''
-      if (value === 1) {
-        formatStatus = 'Diterima'
-      }
-      if (value === 0) {
-        formatStatus = 'Diajukan'
-      } else if (value === 1) {
-        formatStatus = 'Dikirim'
-      } else if (value === 2) {
-        formatStatus = 'Diterima'
-      } else if (value === 3) {
-        formatStatus = 'Retur'
-      } else if (value === 4) {
-        formatStatus = 'Batal'
-      }
-      return formatStatus
-    },
-    currentTime() {
-      return moment().format(' h:mm:ss a')
-    },
+
   },
+
 }
+
 </script>
 
 <style>

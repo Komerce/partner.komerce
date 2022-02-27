@@ -190,6 +190,7 @@
         :current-page="currentPage"
         striped
         hover
+        :per-page="0"
         responsive
         class="position-relative mt-2"
         empty-text="Tidak ada data untuk ditampilkan."
@@ -225,25 +226,25 @@
           List Per halaman
         </span>
         <b-button
-          v-for="page in halamancustomer"
-          :key="page"
-          :variant="page === perPage ? 'primary' : 'light'"
+          v-for="itemcustomer in halamancustomer"
+          :key="itemcustomer"
+          class="btn-icon mr-50"
           size="sm"
-          class="btnPage"
-          @click="halamancustomerfilter(page)"
+          :variant="itemcustomer === per_page ? 'primary' : 'flat-dark'"
+          @click="halamanpagination(itemcustomer)"
         >
-          {{ page }}
+          {{ itemcustomer }}
         </b-button>
       </div>
       <b-pagination
         v-model="currentPage"
-        :total-rows="rowss"
-        :per-page="perPage"
+        :total-rows="totalRows"
+        :per-page="per_page"
         first-number
         hide-goto-end-buttons
         last-number
-      />
-    </b-row>
+        class="pagination-primary"
+      /></b-row>
   </b-card>
 </template>
 <script>
@@ -299,9 +300,9 @@ export default {
     return {
       loading: false,
       currentPage: 1,
-      perPage: 50,
+      per_page: 10,
       halamancustomer: [50, 100, 200],
-      rowss: 100,
+      totalRows: 0,
       selected: 1,
       filterCustomer: null,
       options: [
@@ -383,33 +384,28 @@ export default {
   watch: {
     currentPage: {
       handler(value) {
-        this.datapagination().catch(error => {
+        this.tableProvider().catch(error => {
           console.error(error)
         })
       },
     },
   },
   mounted() {
-    this.datapagination().catch(error => {
-      console.error(error)
-    })
     this.tableProvider()
-    this.rowss = this.items.length
   },
   methods: {
-    halamancustomerfilter(totalPage) {
-      this.perPage = totalPage
-      this.datapagination()
+    halamanpagination(halamantotal) {
+      this.totalper_page = halamantotal
+      this.tableProvider()
     },
     tableProvider() {
       this.loading = true
-      httpKomship.get('/v1/customers', {
-        headers: { Authorization: `Bearer ${useJwt.getToken()}` },
+      return this.$http_komship.get('v1/customers', {
       }).then(response => {
-        const { data } = response.data
+        const { data } = response.data.data
         this.itemsCustomer = data
+        this.totalRows = response.data.data.total
         this.loading = false
-        return this.itemsCustomer
       })
     },
     datapagination() {
@@ -424,8 +420,8 @@ export default {
       if (this.spentTo) Object.assign(params, { spentTo: this.spentTo })
       if (this.pcsFrom) Object.assign(params, { pcsFrom: this.pcsFrom })
       if (this.pcsTo) Object.assign(params, { pcsTo: this.pcsTo })
-      if (this.currentPage) Object.assign(params, { currentPage: this.currentPage })
-      if (this.total_per_page) Object.assign(params, { total_per_page: this.total_per_page })
+      if (this.currentPage) Object.assign(params, { page: this.currentPage })
+      if (this.totalper_page) Object.assign(params, { total_: this.totalper_page })
       httpKomship.get('/v1/customers', {
         params,
       }, {
