@@ -383,7 +383,7 @@
       hide-footer
       modal-class="modal-primary"
       centered
-      size="lg"
+      size="xl"
     >
       <data-order
         :pass-address-id="addressId"

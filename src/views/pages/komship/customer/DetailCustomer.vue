@@ -409,7 +409,7 @@ export default {
     BCol,
     BImg,
     BAvatar,
-    BIconInfoCircle,
+    // BIconInfoCircle,
     BOverlay,
     BContainer,
     BCollapse,
@@ -513,7 +513,7 @@ export default {
       return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
     },
 
-  },
+
 
 }
 

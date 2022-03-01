@@ -375,13 +375,13 @@
             <b-col
               lg="5"
             >
-              Ongkos Kirim Pengembalian (diskon {{ orderData.percentage_cost_retur | 0 }}%)
+              Ongkos Kirim Pengembalian (diskon {{ orderData.percentage_cost_retur }}%)
             </b-col>
             <b-col
               lg="3"
               class="text-right"
             >
-              Rp {{ formatNumber(orderData.shipping_retur | 0) }}
+              Rp {{ formatNumber(orderData.shipping_retur) }}
             </b-col>
           </b-row>
           <b-row class="mt-1">

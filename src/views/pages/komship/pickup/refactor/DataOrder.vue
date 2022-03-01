@@ -193,14 +193,14 @@
               @click="() => handleSetCollapseContent(productData.value.isClose, productData.index)"
             >
               <div v-if="!productData.value.isClose">
-                Tutup
-                <b-icon-chevron-up
+                {{ `${(productData.value.length - 1)} Produk lainnya` }}
+                <b-icon-chevron-down
                   aria-hidden="true"
                 />
               </div>
               <div v-else>
-                {{ `${(productData.value.length - 1)} Produk lainnya` }}
-                <b-icon-chevron-down
+                Tutup
+                <b-icon-chevron-up
                   aria-hidden="true"
                 />
               </div>

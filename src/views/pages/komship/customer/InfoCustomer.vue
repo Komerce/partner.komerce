@@ -231,6 +231,7 @@
           class="btn-icon mr-50"
           size="sm"
           :variant="itemcustomer === per_page ? 'primary' : 'flat-dark'"
+          :variant="itemcustomer === perPage ? 'primary' : 'flat-dark'"
           @click="halamanpagination(itemcustomer)"
         >
           {{ itemcustomer }}
@@ -240,6 +241,7 @@
         v-model="currentPage"
         :total-rows="totalRows"
         :per-page="per_page"
+        :per-page="perPage"
         first-number
         hide-goto-end-buttons
         last-number
@@ -396,6 +398,7 @@ export default {
   methods: {
     halamanpagination(halamantotal) {
       this.totalper_page = halamantotal
+      this.totalPerPage = halamantotal
       this.tableProvider()
     },
     tableProvider() {
@@ -421,7 +424,7 @@ export default {
       if (this.pcsFrom) Object.assign(params, { pcsFrom: this.pcsFrom })
       if (this.pcsTo) Object.assign(params, { pcsTo: this.pcsTo })
       if (this.currentPage) Object.assign(params, { page: this.currentPage })
-      if (this.totalper_page) Object.assign(params, { total_: this.totalper_page })
+      if (this.totalPerPage) Object.assign(params, { perpage: this.totalPerPage })
       httpKomship.get('/v1/customers', {
         params,
       }, {
