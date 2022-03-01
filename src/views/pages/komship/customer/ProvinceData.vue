@@ -108,7 +108,7 @@ export default {
       series: [{
         data: [],
       }],
-      heightBar: 250,
+      heightBar: 120,
       chartOptions: {
         colors: '#34A770',
         chart: {
