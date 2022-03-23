@@ -298,6 +298,7 @@ export default {
   },
   methods: {
     fetchData() {
+      // params dikasih sory_by=email dan order_by=asc atau desc ?
       this.isLoadTable = true
       clearTimeout(timeoutCallApi)
       this.$http_komship({
