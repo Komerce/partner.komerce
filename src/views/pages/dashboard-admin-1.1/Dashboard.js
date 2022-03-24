@@ -252,7 +252,7 @@ export default {
                   class="my-0 mt-1"
                   style="color: ${colorDefaultChart[idx]};"
                 >
-                  ${w.globals.seriesNames[idx]}</span> <span class="text-black"> ${filtersLibs.rupiah(x[dataPointIndex])}
+                  ${w.globals.seriesNames[idx]}</span> <span class="text-black"> ${w.globals.seriesNames[idx].toLowerCase() === 'order' ? x[dataPointIndex] : filtersLibs.rupiah(x[dataPointIndex])}
                 </p>`
               }
             })
