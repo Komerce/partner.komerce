@@ -32,7 +32,7 @@ export default [
   {
     path: '/login',
     name: 'auth-login',
-    component: () => import('@/views/pages/authentication/Login.vue'),
+    component: () => import('@/views/pages/authentication/Login'),
     meta: {
       layout: 'full',
       resource: 'Auth',
@@ -102,6 +102,15 @@ export default [
     path: '/komship-register-berhasil',
     name: 'komship-register-validate',
     component: () => import('@/views/pages/authentication/RegisterValidateKomship'),
+    meta: {
+      layout: 'full',
+      resource: 'Auth',
+    },
+  },
+  {
+    path: '/kompack-register',
+    name: 'kompack-daftar',
+    component: () => import('@/views/pages/authentication/RegisterKompack'),
     meta: {
       layout: 'full',
       resource: 'Auth',

@@ -1,0 +1,206 @@
+<div class="auth-wrapper auth-v1 px-2">
+  <b-row class="m-0 auth__login">
+    <b-col
+      cols="12"
+      class="d-flex justify-content-center"
+    >
+      <b-img
+        src="@/@core/assets/image/logo-komerce-new-tag.png"
+      />
+    </b-col>
+
+    <b-card
+      :class="modeLogin === true ? 'text-white mt-2' : 'd-none'"
+      class="wrappercard__formlogin"
+      bodyClass="customBodyCard"
+    >
+      <b-card-title class="mb-1 text-center text-black">
+        Masuk
+      </b-card-title>
+      <b-card-text class="mb-2 text-center text-black">
+        Silahkan masuk dan memulai kemudahan mengelola e-commerce dalam 1 tempat.
+      </b-card-text>
+      <!-- form -->
+      <validation-observer
+        ref="loginForm"
+        #default="{invalid}"
+      >
+        <b-form
+          class="auth-login-form mt-2"
+          @submit.prevent="login"
+        >
+
+          <b-form-group
+            label="Username atau Email"
+            label-for="login-email"
+          >
+            <validation-provider
+              #default="{ errors }"
+              label="Username atau Email"
+              vid="email"
+              rules="required"
+              :custom-messages="custommessages1"
+            >
+              <b-form-input
+                :autofocus="true"
+                id="login-email"
+                v-model="usernameEmail"
+                :state="errors.length > 0 ? false : null"
+                name="login-email"
+                placeholder="john@mail.com"
+              />
+              <small class="text-primary">{{ errors[0] }}</small>
+              <b-col>
+                <b-row
+                  v-if="!!error"
+                  class="align-items-center justify-content-between mt-50"
+                >
+                  <small
+                    class="text-primary"
+                  >
+                    <strong>
+                      {{ error }}
+                    </strong>
+                  </small>
+                  <b-button
+                    v-if="showResendEmailVerification"
+                    class="ml-50 btn-icon"
+                    variant="flat-primary"
+                    size="sm"
+                    @click="resendEmailVerification"
+                  >
+                    <b-spinner
+                      v-if="loadingResendVerification"
+                      small
+                    />
+                    <strong>
+                      Kirim Ulang
+                    </strong>
+                  </b-button>
+                </b-row>
+                <b-row
+                  v-if="messageResendEmailVerification !== ''"
+                  class="align-items-center mt-50"
+                >
+                  <small
+                    class="text-primary"
+                  >
+                    <strong>
+                      {{ messageResendEmailVerification }}
+                    </strong>
+                  </small>
+                </b-row>
+              </b-col>
+            </validation-provider>
+          </b-form-group>
+
+          <!-- forgot password -->
+          <b-form-group>
+            <label for="login-password">Password</label>
+            <validation-provider
+              #default="{ errors }"
+              name="Password"
+              vid="password"
+              rules="required"
+              :custom-messages="custommessages"
+            >
+              <b-input-group
+                class="input-group-merge"
+                :class="errors.length > 0 ? 'is-invalid' : null"
+              >
+                <b-form-input
+                  id="login-password"
+                  v-model="password"
+                  :state="errors.length > 0 ? false : null"
+                  class="form-control-merge"
+                  :type="passwordFieldType"
+                  name="login-password"
+                  placeholder="Password"
+                />
+                <b-input-group-append is-text>
+                  <feather-icon
+                    class="cursor-pointer"
+                    :icon="passwordToggleIcon"
+                    @click="togglePasswordVisibility"
+                  />
+                </b-input-group-append>
+              </b-input-group>
+              <small class="text-danger">{{ errors[0] }}</small>
+            </validation-provider>
+            <div class="d-flex justify-content-left text-left">
+              <b-link :to="{ name: 'auth-forgot-password' }">
+                <small style="margin-right:10px;">Lupa Password?</small>
+              </b-link>
+            </div>
+          </b-form-group>
+
+          <!-- checkbox -->
+          <b-form-group v-if="false">
+            <b-form-checkbox
+              id="remember-me"
+              v-model="status"
+              name="checkbox-1"
+            >
+              Remember Me
+            </b-form-checkbox>
+          </b-form-group>
+
+          <!-- submit buttons -->
+          <b-button
+            type="submit"
+            variant="primary"
+            block
+            :disabled="invalid || loading"
+            class="btnLoginMasuk"
+          >
+            <b-spinner
+              v-if="loading"
+              small
+              class="mr-1"
+            />
+            <h5 class="my-0 text-white font-weight-bolder">Masuk</h5>
+          </b-button>
+        </b-form>
+      </validation-observer>
+
+      <!-- </b-col> -->
+    </b-card>
+
+    <b-card :class="modeVerificationEmail === true ? 'mt-2 p-1' : 'd-none'">
+      <b-card-title class="mb-1 text-center">
+        <h3 class="text-black">
+          <strong>
+            Verifikasi Email
+          </strong>
+        </h3>
+      </b-card-title>
+      <b-card-text class="mb-1 text-center text-black">
+        Cek email kamu, verifikasi telah dikirimkan.
+        Belum menerima? {{ countTimerEmail === 0 ? 'Kirim ulang (60 detik)' : '' }}
+      </b-card-text>
+      <b-row class="justify-content-center mb-1">
+        <small>Mohon tunggu {{ countTimerEmail }} detik untuk mengirim ulang.</small>
+      </b-row>
+
+      <b-row class="justify-content-center mb-1">
+        <b-button
+          :variant="countTimerEmail === 0 ? 'flat-primary' : 'flat-dark'"
+          size="sm"
+          :disabled="countTimerEmail !== 0"
+          class="btn-icon"
+          @click="resendEmailVerification"
+        >
+          Kirim Ulang
+        </b-button>
+      </b-row>
+
+      <b-button
+        variant="primary"
+        block
+        @click="handleChangeModePage"
+      >
+        Kembali Masuk
+      </b-button>
+    </b-card>
+  </b-row>
+</div>
