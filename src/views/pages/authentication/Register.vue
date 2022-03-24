@@ -20,7 +20,7 @@
             :src="appLogoImage"
             alt="logo"
             class="flat-image"
-            style="width: 36px"
+            style="width: 100px"
           />
           <h2 class="brand-text text-primary ml-50 mt-auto mb-auto">
             <span class="text-white">{{ appName }}</span>
