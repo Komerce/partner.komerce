@@ -1,0 +1,83 @@
+#hosted-form,
+.kirimemail-content {
+  background-color: #0c2556 !important;
+  color: #ffffff !important;
+}
+
+#hosted-form .kirimemail-btn-submit,
+.kirimemail-content .kirimemail-btn-submit {
+  background-color: #0084ff !important;
+  box-shadow: 0 0 0 1px#0084ff !important;
+  color: #ffffff !important;
+}
+[dir] .wrapper-kompship-register {
+  background-color: #FFFFFF;
+}
+
+[dir] .wrapper-preview-dashboard-kompship {
+  background: linear-gradient(147.38deg, rgba(231, 233, 242, 0.76) 0%, rgba(203, 206, 219, 0) 100%);
+}
+
+.register-title{
+  font-weight: 600;
+  font-size: 24px;
+}
+[dir] .input-group-text{
+  background-color: #f6f6f6;
+  border-radius: 13px;
+}
+[dir] .form-control{
+  border-radius: 13px;
+  box-shadow: unset;
+  height: 50px;
+  padding-bottom: 0;
+  color: #222222;
+}
+[dir] .is-invalid{
+  background-color: #FFEDED!important;
+  background-image: unset!important;
+}
+[dir] .form-control:focus{
+  background-color: #FFFFFF!important;
+  border: 1.5px solid #FF6A3A;
+  box-shadow: unset;
+}
+[dir] label {
+    position: absolute;
+    top: 13px;
+    padding-left: 15px;
+    z-index: 99999;
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #828282;
+    transition: 0.2s;
+}
+[dir] .icon-password{
+  position: absolute;
+  top: 16px;
+  font-size: 1.1rem;
+  right: 25px;
+}
+[dir] .form-control:focus ~ label, .form-control:valid ~ label{
+  top: 5px;
+  font-size: 0.7rem;
+  color: #828282;
+}
+[dir] .form-control:focus ~ .input-group-text{
+  background-color: #FFFFFF!important;
+}
+
+/* Responsive */
+@media only screen and (max-width: 991px) {
+  [dir] .wrapper-preview-dashboard-kompship {
+    display: none !important;
+  }
+  [dir] .wrapper-kompship-register {
+    display: none !important;
+  }
+}
+@media only screen and (min-width: 992px) {
+  [dir] .wrapper-register-mobile {
+    display: none !important;
+  }
+}

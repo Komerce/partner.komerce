@@ -107,4 +107,13 @@ export default [
       resource: 'Auth',
     },
   },
+  {
+    path: '/kompack-register',
+    name: 'kompack-daftar',
+    component: () => import('@/views/pages/authentication/RegisterKompack'),
+    meta: {
+      layout: 'full',
+      resource: 'Auth',
+    },
+  },
 ]
