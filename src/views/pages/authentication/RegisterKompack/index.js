@@ -1,3 +1,3 @@
-import RegisterKomship from './RegisterKomship.vue'
+import RegisterKompack from './RegisterKompack.vue'
 
-export default RegisterKomship
+export default RegisterKompack

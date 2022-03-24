@@ -10,8 +10,18 @@
   box-shadow: 0 0 0 1px#0084ff !important;
   color: #ffffff !important;
 }
-[dir] .wrapper-kompship-register {
+[dir] .wrapper__formregister {
   background-color: #FFFFFF;
+}
+.bgDesktopRegister {
+  height: auto;
+}
+.formregister {
+  margin-top: 100px;
+}
+.btnSubmitRegister {
+  height: 50px;
+  border-radius: 12px;
 }
 
 [dir] .wrapper-preview-dashboard-kompship {
@@ -72,7 +82,10 @@
   [dir] .wrapper-preview-dashboard-kompship {
     display: none !important;
   }
-  [dir] .wrapper-kompship-register {
+  [dir] .wrapper__formregister {
+    display: none !important;
+  }
+  .bgDesktopRegister {
     display: none !important;
   }
 }
