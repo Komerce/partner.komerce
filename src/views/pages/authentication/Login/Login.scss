@@ -1,3 +1,8 @@
+.wrappercard__formlogin {
+	background: rgba(255, 255, 255, 0.6);
+  	backdrop-filter: blur(8px);
+  	border-radius: 16px;
+}
 .auth__login {
 	max-width: unset;
 	width: 500px;
