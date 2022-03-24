@@ -32,7 +32,7 @@ export default [
   {
     path: '/login',
     name: 'auth-login',
-    component: () => import('@/views/pages/authentication/Login.vue'),
+    component: () => import('@/views/pages/authentication/Login'),
     meta: {
       layout: 'full',
       resource: 'Auth',

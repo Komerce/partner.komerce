@@ -1,0 +1,16 @@
+.auth__login {
+	max-width: unset;
+	width: 500px;
+}
+.customBodyCard {
+	padding: 30px;
+}
+.btnLoginMasuk {
+	height: 40px;
+}
+
+@media only screen and (max-width: 600px) {
+  .customBodyCard {
+    padding: 16px;
+  }
+}
