@@ -233,7 +233,7 @@ export default {
                   class="my-0 mt-1"
                   style="color: ${colorDefaultChart[idx]};"
                 >
-                  <span>${w.globals.seriesNames[idx]}</span> <span class="text-black"> ${w.globals.seriesNames[idx] === seriesNameChart.order ? x[dataPointIndex] : (filtersLibs.rupiah(x[dataPointIndex] || 0))}</span>${w.globals.seriesNames[idx] === seriesNameChart.total ? `<span class="text-gray-600"> <br/>${w.globals.seriesNames[3]} ${w.globals.collapsedSeries[0].data[dataPointIndex]} (${w.globals.collapsedSeries[0].data[dataPointIndex]} Partner)</span>` : ''}
+                  <span>${w.globals.seriesNames[idx]}</span> <span class="text-black"> ${w.globals.seriesNames[idx] === seriesNameChart.order ? x[dataPointIndex] : (filtersLibs.rupiah(x[dataPointIndex] || 0))}</span>${w.globals.seriesNames[idx] === seriesNameChart.total ? `<span class="text-gray-600"> <br/>${w.globals.seriesNames[3]} ${w.globals.collapsedSeries[0].data[dataPointIndex]} (${w.globals.collapsedSeries[1].data[dataPointIndex]} Partner)</span>` : ''}
                 </p>`
               }
             })
