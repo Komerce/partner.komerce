@@ -1,0 +1,36 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo 'Styling, linting, formatting dan building project sebelum commit'
+# Check Prettier standards
+npm run format ||
+(
+    echo '
+             Kesalahan saat mengecheck prettier. Jalankan manual yarn format or npm run format. Semoga berhasil slurrr 😊';
+    false;
+)
+
+# add extend memory
+export NODE_OPTIONS="--max-old-space-size=8192"
+
+# Check ESLint Standards
+npm run lint:fix ||
+(
+        echo '
+                Style kode anda tidak sesuai dengan aturan standart eslint kami. Silahkan perbaiki lagi kode kamu ya 😊'
+        false; 
+)
+
+# If everything passes... Now we can commit
+echo '🤔🤔🤔🤔... Oke... Coba kita build sekarang. 🤔🤔🤔🤔'
+
+npm run build ||
+(
+    echo '⚙️🔨❌Upsss.... Kesalahan saat build ⚙️🔨❌
+            Lihat apa yang membuat build nya gagal, lalu anda perbaiki lagi😊. 
+    '
+    false;
+)
+
+# If everything passes... Now we can commit
+echo '✅✅✅✅ Yeyyyyy, commit anda sukses ✅✅✅✅'
