@@ -6,7 +6,6 @@
     </b-card-text>
 
     <div class="demo-inline-spacing">
-
       <!-- primary -->
       <b-dropdown
         text="Primary"

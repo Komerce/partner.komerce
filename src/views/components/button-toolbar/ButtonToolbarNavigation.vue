@@ -7,7 +7,6 @@
       aria-label="Toolbar with button groups"
       class="demo-inline-spacing"
     >
-
       <!-- group  1 -->
       <b-button-group>
         <b-button

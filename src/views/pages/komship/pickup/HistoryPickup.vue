@@ -82,7 +82,6 @@
         </b-col>
       </b-row>
     </b-overlay>
-
   </b-card>
 </template>
 
@@ -135,7 +134,7 @@ export default {
   },
   watch: {
     currentPage: {
-      handler(value) {
+      handler() {
         this.getPickup().catch(error => {
           console.error(error)
         })

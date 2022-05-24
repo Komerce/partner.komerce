@@ -292,7 +292,6 @@
                   </h5>
                 </div>
               </template>
-
             </b-table>
           </b-col>
         </b-row>
@@ -372,7 +371,6 @@
       modal-class="modal-primary"
       scrollable
     >
-
       <b-row class="justify-content-end mt-50 mr-50">
         <a
           href="#"
@@ -775,7 +773,6 @@
         </h5>
       </b-row>
     </b-modal>
-
   </b-card>
 </template>
 
@@ -942,7 +939,7 @@ export default {
   },
   watch: {
     timeValue: {
-      handler(newVal, oldVal) {
+      handler(newVal) {
         const newMom = moment(newVal, 'HHmm')
         const timeToday = moment()
         if (newMom.isBefore(timeToday) === true) {
@@ -984,7 +981,7 @@ export default {
     // this.$refs['popup-order'].show()
   },
   methods: {
-    getDataOrderToStore(data, dataItems) {
+    getDataOrderToStore(data) {
       this.selectedOrderToStore = data
       this.itemsPreviewProductOrder = data
       this.$refs['popup-order'].hide()
@@ -1159,7 +1156,7 @@ export default {
     handleSubmitPopUpSuccess() {
       this.$refs['modal-success-request-pickup'].hide()
     },
-    detailOrder(data) {
+    detailOrder() {
       // handle error
     },
     getTotalProductOrder(data) {

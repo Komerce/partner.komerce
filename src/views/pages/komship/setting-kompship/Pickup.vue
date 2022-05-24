@@ -8,7 +8,6 @@
     rounded="sm"
   >
     <b-card>
-
       <h3 class="text-black ml-50">
         <strong>Pengaturan Alamat Penjemputan</strong>
       </h3>
@@ -23,7 +22,6 @@
           cols="11"
           class="border"
         >
-
           <b-row class="d-flex mt-50 mb-1">
             <b-col md="6">
               <h4 class="text-black">
@@ -69,7 +67,6 @@
           >
             <b-form>
               <b-row>
-
                 <b-col
                   cols="12"
                   class="mb-1 ml-16 pl-50"
@@ -397,7 +394,6 @@
                     </b-button>
                   </b-col>
                 </transition>
-
               </b-row>
             </b-form>
           </validation-observer>
@@ -414,7 +410,6 @@
             cols="11"
             class="border"
           >
-
             <b-row class="d-flex mt-50 mb-1">
               <b-col md="6">
                 <h4 class="text-black">
@@ -429,7 +424,6 @@
             >
               <b-form class="">
                 <b-row>
-
                   <b-col
                     cols="12"
                     class="mb-1 ml-16 pl-50"
@@ -694,7 +688,6 @@
                       </b-button>
                     </b-col>
                   </transition>
-
                 </b-row>
               </b-form>
             </validation-observer>
@@ -720,7 +713,6 @@
           </div>
         </b-col>
       </b-row>
-
     </b-card>
 
     <!-- confirm Delete Address -->
@@ -733,7 +725,6 @@
       centered
       title="Primary Modal"
     >
-
       <b-col
         md="12"
         class="d-flex justify-content-center pt-3"
@@ -770,7 +761,6 @@
           </b-button>
         </b-col>
       </template>
-
     </b-modal>
 
     <b-modal
@@ -782,7 +772,6 @@
       centered
       title="Primary Modal"
     >
-
       <b-col
         md="12"
         class="d-flex justify-content-center pt-3"
@@ -813,7 +802,6 @@
           </b-button>
         </b-col>
       </template>
-
     </b-modal>
 
     <!-- Modal can't delete address still in use -->
@@ -825,7 +813,6 @@
       centered
       title="Primary Modal"
     >
-
       <b-col
         md="12"
         class="d-flex justify-content-center pt-3 mb-2"
@@ -855,7 +842,6 @@
           </b-button>
         </b-col>
       </template>
-
     </b-modal>
   </b-overlay>
 </template>

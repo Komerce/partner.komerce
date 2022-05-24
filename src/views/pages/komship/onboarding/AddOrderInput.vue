@@ -50,7 +50,6 @@
       :items="itemsOrder"
       :fields="fieldsOrder"
     >
-
       <template #cell(no)="data">
         {{ data.index+1 }}
       </template>
@@ -225,7 +224,6 @@
       modal-class="modal-danger"
       centered
     >
-
       <!-- Parent Variant -->
       <div v-if="itemsChooseVariation.item.variant[1] !== undefined">
         <div
@@ -387,7 +385,6 @@
           </b-button>
         </b-row>
       </div>
-
     </b-modal>
 
     <section class="view-order-summary">

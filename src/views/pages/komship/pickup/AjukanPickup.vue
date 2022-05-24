@@ -21,7 +21,6 @@
       ref="onboardingElement"
       :current-stage="6"
     />
-
   </b-card>
 </template>
 

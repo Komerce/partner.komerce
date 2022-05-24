@@ -26,7 +26,6 @@
       :options="chartOptionsComputed"
       :series="chartData"
     />
-
   </b-card>
 </template>
 

@@ -1,6 +1,5 @@
 <template>
   <b-card-code title="Basic">
-
     <b-tabs pills>
       <b-tab
         title="Home"

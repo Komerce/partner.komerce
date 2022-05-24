@@ -9,7 +9,6 @@
     </b-card-text>
 
     <div class="demo-inline-spacing">
-
       <!-- button avatar -->
       <b-avatar
         button

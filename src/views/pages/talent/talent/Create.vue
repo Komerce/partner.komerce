@@ -11,7 +11,6 @@
       :start-index="tabIndex"
       @on-change="updateIndex"
     >
-
       <!-- accoint details tab -->
       <tab-content
         title="Detail Profil"
@@ -38,7 +37,6 @@
         <div class="wizard-footer-right" />
       </template>
     </form-wizard>
-
   </div>
 </template>
 

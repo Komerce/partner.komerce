@@ -9,7 +9,6 @@
     </b-card-text>
 
     <div class="d-flex flex-wrap justify-content-between">
-
       <!-- dropdown -->
       <div class="demo-inline-spacing">
         <b-dropdown

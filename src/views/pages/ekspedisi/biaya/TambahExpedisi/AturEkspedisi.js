@@ -109,27 +109,28 @@ export default {
   methods: {
     changeCashbackTo(val) {
       if (val > 100 || val.length > 3) {
-        return this.cashback_to = 100
+        return (this.cashback_to = 100)
       }
     },
     changeSff(val) {
       if (val > 100 || val.length > 3) {
-        return this.service_fee_from = 100
+        return (this.service_fee_from = 100)
       }
     },
     changeSft(val) {
       if (val > 100 || val.length > 3) {
-        return this.service_fee_to = 100
+        return (this.service_fee_to = 100)
       }
     },
     changeCashbackFrom(val) {
       if (val > 100 || val.length > 3) {
-        return this.cashback_from = 100
+        return (this.cashback_from = 100)
       }
     },
     onlyNumber($event) {
-      const keyCode = ($event.keyCode ? $event.keyCode : $event.which)
-      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) { // 46 is dot
+      const keyCode = $event.keyCode ? $event.keyCode : $event.which
+      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
+        // 46 is dot
         $event.preventDefault()
       }
     },
@@ -166,10 +167,11 @@ export default {
         vehicles: this.vehicles,
         criterias: this.changeCriteriasData,
       })
-      getData.then(data => {
-        this.$router.push('/biaya-ekspedisi')
-      })
-        .catch(e => {
+      getData
+        .then(() => {
+          this.$router.push('/biaya-ekspedisi')
+        })
+        .catch(() => {
           this.loadDataAwal = false
         })
         .finally(() => {
@@ -206,12 +208,13 @@ export default {
     },
     getIsland() {
       const endpoint = '/v1/island'
-      axioskomsipdev.get(endpoint)
+      axioskomsipdev
+        .get(endpoint)
         .then(({ data }) => {
           const parseData = JSON.parse(JSON.stringify(data.data))
           this.optionsKota = parseData
         })
-        .catch(e => {
+        .catch(() => {
           this.loadDataAwal = false
         })
         .finally(() => {

@@ -12,7 +12,6 @@
 
     <!-- toolbar -->
     <b-button-toolbar>
-
       <!-- group  1 -->
       <b-button-group
         size="lg"
@@ -36,7 +35,6 @@
           Third
         </b-button>
       </b-button-group>
-
     </b-button-toolbar>
 
     <!-- toolbar -->

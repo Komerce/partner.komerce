@@ -7,7 +7,6 @@
       class="view-all-pickup-table"
       responsive
     >
-
       <template #cell(order_date)="dateData">
         <div class="view-all-pickup-date-text">
           <div class="date-wrapper">
@@ -40,7 +39,6 @@
           Lihat detail...
         </b-button>
       </template>
-
     </b-table>
   </section>
 </template>

@@ -83,7 +83,6 @@
                         name="Deskripsi Video"
                         rules="required"
                       >
-
                         <ckeditor
                           v-model="descriptionVideo"
                           :editor="editor"

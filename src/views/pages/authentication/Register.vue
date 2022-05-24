@@ -1,6 +1,5 @@
 <template>
   <div class="auth-wrapper auth-v2">
-
     <b-row class="auth-inner m-0">
       <!-- Left Text-->
       <b-col
@@ -13,7 +12,6 @@
           backgroundPositionX: 'center',
         }"
       >
-
         <!-- Brand logo-->
         <b-link class="brand-logo d-none d-lg-flex">
           <b-img
@@ -39,7 +37,6 @@
         lg="4"
         class="d-flex align-items-center auth-bg px-2 p-lg-5"
       >
-
         <!-- Brand logo-->
         <b-link class="brand-logo d-flex d-lg-none">
           <b-img

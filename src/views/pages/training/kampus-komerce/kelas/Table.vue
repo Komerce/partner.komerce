@@ -58,7 +58,6 @@
           :tbody-tr-class="rowClass"
           :busy.sync="loading"
         >
-
           <template #cell(class_name)="data">
             <div class="d-flex align-items-center">
               <b-avatar

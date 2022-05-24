@@ -15,7 +15,6 @@
         class="mt-3"
       >
         <b-row>
-
           <b-col
             cols="12"
             class="mb-1"
@@ -201,7 +200,8 @@
                         :src="imageFile ? fileUrl(imageFile) : imageInitialFile"
                         class="mr-50"
                       />
-                    </div></transition>
+                    </div>
+                  </transition>
                   <!-- Button Upload Image -->
                   <label
                     for="uploadImage"
@@ -247,7 +247,8 @@
                         class="d-none"
                       />
                       <small class="text-primary">{{ errors[0] }}</small>
-                    </label></label></validation-provider>
+                    </label></label>
+                </validation-provider>
               </b-col>
             </b-row>
           </b-col>
@@ -825,7 +826,6 @@
                           </b-button>
                         </div>
                       </b-col>
-
                     </b-row>
                   </b-form-group>
                 </transition>
@@ -851,7 +851,6 @@
                         :fields="fields"
                         :items="variantItems"
                       >
-
                         <template #cell(variant1)="data">
                           <div v-if="editMode === true && indexRow === data.index">
                             <b-col
@@ -1087,7 +1086,6 @@
                             Simpan
                           </b-button>
                         </template>
-
                       </b-table>
                     </b-overlay>
                   </b-form-group>
@@ -1584,7 +1582,6 @@
                           </b-button>
                         </div>
                       </b-col>
-
                     </b-row>
                   </b-form-group>
                 </transition>
@@ -1610,7 +1607,6 @@
                         :fields="fields"
                         :items="variantItems"
                       >
-
                         <template #cell(variant1)="data">
                           <div v-if="editMode === true && indexRow === data.index">
                             <b-col
@@ -1846,13 +1842,11 @@
                             Simpan
                           </b-button>
                         </template>
-
                       </b-table>
                     </b-overlay>
                   </b-form-group>
                 </transition>
               </b-col>
-
             </b-row>
           </b-col>
 
@@ -2366,10 +2360,11 @@
           variant="danger"
           class="modalUploadWarning__btn"
           @click="handleOkModalValidationUpload"
-        >Oke</b-button>
+        >
+          Oke
+        </b-button>
       </div>
     </b-modal>
-
   </b-card-actions>
 </template>
 
@@ -2394,7 +2389,7 @@ import {
 import Ripple from 'vue-ripple-directive'
 import BCardActions from '@/@core/components/b-card-actions/BCardActions.vue'
 import draggable from 'vuedraggable'
-import { ValidationObserver, ValidationProvider, number } from 'vee-validate'
+import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { required } from '@validations'
 import { heightTransition } from '@core/mixins/ui/transition'
 import ToastificationContentVue from '@/@core/components/toastification/ToastificationContent.vue'

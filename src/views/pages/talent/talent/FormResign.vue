@@ -260,7 +260,6 @@
                     #default="{ errors }"
                     name="Experience Status"
                   >
-
                     <b-form-radio-group
                       v-model="experienced"
                       class="mt-50"

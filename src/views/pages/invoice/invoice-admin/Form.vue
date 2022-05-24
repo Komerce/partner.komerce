@@ -179,7 +179,9 @@
             <p
               v-else
               class="mt-1"
-            >-</p>
+            >
+              -
+            </p>
           </b-col>
           <b-col md="2">
             <validation-provider

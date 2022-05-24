@@ -247,7 +247,9 @@
             <b-badge
               v-else
               variant="light-secondary"
-            > N/A </b-badge>
+            >
+              N/A
+            </b-badge>
           </b-col>
         </b-row>
         <b-row

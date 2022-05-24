@@ -1,6 +1,5 @@
 <template>
   <div class="cws-container cws-sidebar-right">
-
     <!-- content -->
     <div class="cws-content">
       <slot />

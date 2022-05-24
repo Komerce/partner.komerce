@@ -11,7 +11,6 @@
         :key="grp_index"
         class="suggestions-groups-list"
       >
-
         <!-- Group Header -->
         <p class="suggestion-group-title">
           <slot

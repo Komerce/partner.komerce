@@ -26,7 +26,6 @@
             class="auth-login-form mt-2"
             @submit.prevent="login"
           >
-
             <b-form-group
               label="Username atau Email"
               label-for="login-email"
@@ -198,7 +197,6 @@
       </b-card>
     </b-row>
   </div>
-
 </template>
 
 <script>
@@ -216,7 +214,6 @@ import {
   BInputGroup,
   BInputGroupAppend,
   BFormCheckbox,
-  BAlert,
   VBTooltip,
   BSpinner,
 } from 'bootstrap-vue'
@@ -224,7 +221,6 @@ import useJwt from '@/auth/jwt/useJwt'
 import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
 import ToastificationContentVue from '@/@core/components/toastification/ToastificationContent.vue'
-import store from '@/store/index'
 import { getHomeRouteForLoggedInUser } from '@/auth/utils'
 import { $themeConfig } from '@themeConfig'
 
@@ -310,8 +306,6 @@ export default {
               login_from: 'website',
             })
             .then(response => {
-              const { data } = response
-              const user = data.data
               if (response.data.status === false) {
                 this.error = 'Maaf, username atau password yang Kamu masukan salah'
                 this.loading = false

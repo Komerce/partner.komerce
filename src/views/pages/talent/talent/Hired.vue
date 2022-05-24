@@ -114,12 +114,10 @@
                     <b-form
                       ref="form"
                     >
-
                       <!-- Row Loop -->
                       <b-row
                         ref="row"
                       >
-
                         <!-- Leader -->
                         <b-col md="6">
                           <validation-observer>
@@ -189,7 +187,6 @@
                             </b-form-group>
                           </validation-observer>
                         </b-col>
-
                       </b-row>
                     </b-form>
                   </div>
@@ -410,7 +407,6 @@
       </b-overlay>
 
       <b-card-body class="d-flex justify-content-between flex-wrap pt-0">
-
         <!-- page length -->
         <b-form-group
           label="Per Page"

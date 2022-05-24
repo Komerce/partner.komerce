@@ -13,7 +13,6 @@
 
     <b-row>
       <b-col cols="12">
-
         <!-- select locale-->
         <label for="example-locales">Locale:</label>
         <b-form-select

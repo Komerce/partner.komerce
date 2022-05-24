@@ -122,7 +122,6 @@ import {
   BImg,
   BCol,
   BButton,
-  BContainer,
 } from 'bootstrap-vue'
 import store from '@/store/index'
 import { $themeConfig } from '@themeConfig'

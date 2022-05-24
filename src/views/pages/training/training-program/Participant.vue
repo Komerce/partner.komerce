@@ -88,7 +88,9 @@
                   :href="data.value"
                   target="_blank"
                   class="text-body mr-50"
-                >...{{ data.value.substr(data.value.length - 15) }}</b-link>
+                >
+                  ...{{ data.value.substr(data.value.length - 15) }}
+                </b-link>
                 <b-button
                   v-if="data.value && data.item.is_approved === '0'"
                   size="sm"
@@ -181,7 +183,6 @@
         </b-overlay>
 
         <b-card-body class="d-flex justify-content-between flex-wrap pt-0">
-
           <!-- page length -->
           <b-form-group
             label="Per Page"

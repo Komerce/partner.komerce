@@ -150,7 +150,6 @@
                 </div>
               </div>
             </b-modal>
-
           </div>
         </b-card-body>
       </b-card>
@@ -269,7 +268,7 @@ export default {
   },
   watch: {
     search: {
-      handler(val) {
+      handler() {
         // calling api
       },
     },

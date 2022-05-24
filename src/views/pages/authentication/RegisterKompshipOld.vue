@@ -29,7 +29,6 @@
                 @submit.prevent="register"
               >
                 <b-row>
-
                   <!-- full name -->
                   <b-col
                     cols="9"
@@ -258,7 +257,6 @@
                 @submit.prevent="registerExisting"
               >
                 <b-row>
-
                   <!-- email -->
                   <b-col
                     cols="9"
@@ -376,7 +374,6 @@
               </b-form>
             </validation-observer>
           </b-row>
-
         </b-col>
       </b-col>
     </b-col>
@@ -419,7 +416,6 @@
                 @submit.prevent="register"
               >
                 <b-row>
-
                   <!-- full name -->
                   <b-col
                     cols="12"
@@ -638,7 +634,6 @@
                 @submit.prevent="registerExisting"
               >
                 <b-row>
-
                   <!-- email -->
                   <b-col
                     cols="9"
@@ -756,7 +751,6 @@
               </b-form>
             </validation-observer>
           </b-row>
-
         </b-col>
       </b-col>
     </b-col>
@@ -936,7 +930,7 @@ export default {
         if (success) {
           this.$http.put('/register/partner-existing', {
             email: this.userEmailExisting,
-          }).then(response => {
+          }).then(() => {
             this.loading = false
             this.$router.push({ name: 'komship-register-validate' })
           }).catch(() => {

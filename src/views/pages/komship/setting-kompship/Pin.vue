@@ -1,6 +1,5 @@
 <template>
   <b-card>
-
     <!-- Modal Create PIN -->
     <b-modal
       ref="create-pin"
@@ -11,7 +10,6 @@
       centered
       title="Primary Modal"
     >
-
       <b-col class="d-flex justify-content-center mt-2">
         <h4>
           <strong>Buat PIN</strong>
@@ -53,7 +51,6 @@
           Buat PIN
         </b-button>
       </b-col>
-
     </b-modal>
 
     <b-modal
@@ -66,7 +63,6 @@
       modal-class="modal-primary"
       centered
     >
-
       <b-col class="d-flex justify-content-center mt-2">
         <h4>
           <strong>Konfirmasi PIN</strong>
@@ -120,7 +116,6 @@
           Konfirmasi
         </b-button>
       </b-col>
-
     </b-modal>
 
     <!-- Notif Success Create Pin -->
@@ -130,7 +125,6 @@
       modal-class="modal-dark"
       centered
     >
-
       <b-col
         md="12"
         class="d-flex justify-content-center pt-3"
@@ -151,7 +145,6 @@
           PIN digunakan untuk meningkatkan keamanan transaksi kamu
         </p>
       </b-col>
-
     </b-modal>
     <b-modal
       ref="modal-success-changed-pin"
@@ -161,7 +154,6 @@
       modal-class="modal-dark"
       centered
     >
-
       <b-col
         md="12"
         class="d-flex justify-content-center pt-3"
@@ -179,7 +171,6 @@
           </strong>
         </h4>
       </b-col>
-
     </b-modal>
     <!-- End Create PIN -->
     <!-- =========================================================================================== -->
@@ -193,7 +184,6 @@
         cols="8"
         class="d-flex align-items-center ml-1"
       >
-
         <b-row class="d-flex align-items-center">
           <b-img
             variant="light-primary"
@@ -244,7 +234,6 @@
       modal-class="modal-primary"
       centered
     >
-
       <b-col class="d-flex justify-content-center mt-2">
         <h4>
           <strong>Ganti PIN</strong>
@@ -294,7 +283,6 @@
           Konfirmasi
         </b-button>
       </b-col>
-
     </b-modal>
 
     <!-- Modal Change New PIN -->
@@ -307,7 +295,6 @@
       modal-class="modal-primary"
       centered
     >
-
       <b-col class="d-flex justify-content-center mt-2">
         <h4>
           <strong>Ganti PIN</strong>
@@ -353,7 +340,6 @@
           Ganti PIN
         </b-button>
       </b-col>
-
     </b-modal>
 
     <!-- Konfirmasi New PIN -->
@@ -366,7 +352,6 @@
       modal-class="modal-primary"
       centered
     >
-
       <b-col class="d-flex justify-content-center mt-2">
         <h4>
           <strong>Ganti PIN</strong>
@@ -416,7 +401,6 @@
           Konfirmasi
         </b-button>
       </b-col>
-
     </b-modal>
     <!-- End Change PIN -->
     <!-- =================================================================================================== -->
@@ -431,7 +415,6 @@
       modal-class="modal-primary"
       centered
     >
-
       <b-col class="d-flex justify-content-center mt-2">
         <h4>
           <strong>Lupa PIN</strong>
@@ -457,7 +440,6 @@
           </div>
         </b-col>
       </b-row>
-
     </b-modal>
 
     <!-- By No -->
@@ -470,7 +452,6 @@
       modal-class="modal-primary"
       centered
     >
-
       <b-col class="d-flex justify-content-center mt-2">
         <h4>
           <strong>Lupa PIN</strong>
@@ -532,7 +513,6 @@
           Ganti PIN
         </b-button>
       </b-col>
-
     </b-modal>
 
     <b-modal
@@ -544,7 +524,6 @@
       modal-class="modal-primary"
       centered
     >
-
       <b-col class="d-flex justify-content-center mt-2">
         <h4>
           <strong>Masukan PIN Baru</strong>
@@ -579,7 +558,6 @@
           Ganti PIN
         </b-button>
       </b-col>
-
     </b-modal>
 
     <b-modal
@@ -591,7 +569,6 @@
       modal-class="modal-primary"
       centered
     >
-
       <b-col class="d-flex justify-content-center mt-2">
         <h4>
           <strong>Masukan Ulang PIN</strong>
@@ -627,7 +604,6 @@
           Ganti PIN
         </b-button>
       </b-col>
-
     </b-modal>
 
     <!-- By Email -->
@@ -641,7 +617,6 @@
       modal-class="modal-primary"
       centered
     >
-
       <b-col class="d-flex justify-content-center mt-2">
         <h4>
           <strong>Lupa PIN</strong>
@@ -705,7 +680,6 @@
           Ganti PIN
         </b-button>
       </b-col>
-
     </b-modal>
 
     <b-modal
@@ -718,7 +692,6 @@
       modal-class="modal-primary"
       centered
     >
-
       <b-col class="d-flex justify-content-center mt-2">
         <h4>
           <strong>Masukan PIN Baru</strong>
@@ -753,7 +726,6 @@
           Ganti PIN
         </b-button>
       </b-col>
-
     </b-modal>
 
     <b-modal
@@ -766,7 +738,6 @@
       modal-class="modal-primary"
       centered
     >
-
       <b-col class="d-flex justify-content-center mt-2">
         <h4>
           <strong>Masukan Ulang PIN</strong>
@@ -802,12 +773,10 @@
           Ganti PIN
         </b-button>
       </b-col>
-
     </b-modal>
 
     <!-- End Forgot PIN -->
     <!-- =============================================================================================== -->
-
   </b-card>
 </template>
 

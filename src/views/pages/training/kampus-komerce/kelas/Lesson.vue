@@ -88,7 +88,6 @@
           :tbody-tr-class="rowClass"
           :busy.sync="loading"
         >
-
           <template #cell(lessons)="data">
             <b-form-row>
               <b-col cols="auto">

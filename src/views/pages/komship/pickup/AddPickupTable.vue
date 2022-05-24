@@ -13,7 +13,6 @@
         :items="items"
         borderless
       >
-
         <template #head(qty)="data">
           <div class="add-pickup-header-table-qty">
             {{ data.label }}
@@ -50,7 +49,6 @@
                 </button>
               </div>
             </div>
-
           </div>
         </template>
 
@@ -65,7 +63,6 @@
             </div>
           </div>
         </template>
-
       </b-table>
     </div>
 

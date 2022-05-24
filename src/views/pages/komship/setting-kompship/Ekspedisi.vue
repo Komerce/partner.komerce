@@ -155,9 +155,7 @@
         </b-button>
       </b-row>
     </b-modal>
-
   </b-overlay>
-
 </template>
 
 <script>

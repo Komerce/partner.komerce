@@ -34,7 +34,6 @@
       </b-button-group>
     </div>
     <div>
-
       <!-- default -->
       <b-button-group
         class="my-1"
@@ -61,7 +60,6 @@
     </div>
 
     <div>
-
       <!-- size -->
       <b-button-group
         size="sm"

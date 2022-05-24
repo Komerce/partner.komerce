@@ -16,7 +16,6 @@
         <b-form
           class="mt-3"
         >
-
           <h4 class="ml-1">
             <strong>Profil Penanggung Jawab</strong>
           </h4>
@@ -113,7 +112,6 @@ Tamansari, Karangmoncol, Purbalingga, Jawa tengah,
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
               </b-form-group>
-
             </b-col>
             <b-col
               md="6"
@@ -168,7 +166,9 @@ Tamansari, Karangmoncol, Purbalingga, Jawa tengah,
                           class="d-none"
                           @change="changeFile"
                         />
-                      </label></div></div>
+                      </label>
+                    </div>
+                  </div>
                   <label
                     v-if="logobisnis.length === 0"
                     for="uploadLogo"
@@ -208,7 +208,9 @@ Tamansari, Karangmoncol, Purbalingga, Jawa tengah,
                       icon="Trash2Icon"
                       size="20"
                     />
-                  </label></div></b-form-group>
+                  </label>
+                </div>
+              </b-form-group>
               <b-form-file
                 id="uploadLogo"
                 v-model="imageFile"
@@ -303,7 +305,6 @@ Tamansari, Karangmoncol, Purbalingga, Jawa tengah,
           </b-row>
         </b-form>
       </validation-observer>
-
     </b-card>
   </b-overlay>
 </template>

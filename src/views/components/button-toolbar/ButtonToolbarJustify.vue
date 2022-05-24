@@ -7,7 +7,6 @@
     </b-card-text>
 
     <b-button-toolbar justify>
-
       <!--group 1 -->
       <b-button-group
         class="mr-2 mb-1"

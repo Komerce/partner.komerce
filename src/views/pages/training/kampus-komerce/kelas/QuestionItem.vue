@@ -11,7 +11,6 @@
           @submit.prevent
         >
           <b-row>
-
             <!-- question -->
             <b-col cols="12">
               <b-form-group

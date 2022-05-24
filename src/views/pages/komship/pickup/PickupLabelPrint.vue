@@ -160,7 +160,7 @@ export default {
         style: this.getStyle(),
         scanStyles: false,
         honorMarginPadding: false,
-        onError: e => {
+        onError: () => {
           // handle error
         },
       })

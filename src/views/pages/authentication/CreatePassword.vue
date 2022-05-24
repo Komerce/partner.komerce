@@ -24,7 +24,6 @@
             class="auth-reset-password-form mt-2"
             @submit.prevent="submit"
           >
-
             <b-form-group>
               <label for="login-password">Password</label>
               <validation-provider
@@ -123,7 +122,6 @@
           modal-class="modal-dark"
           centered
         >
-
           <b-col
             md="12"
             class="d-flex justify-content-center pt-3"
@@ -140,7 +138,6 @@
                 Password telah berhasil diubah.
               </strong>
             </h4>
-
           </b-col>
           <b-button
             type="submit"
@@ -151,7 +148,6 @@
           >
             Kembali Masuk
           </b-button>
-
         </b-modal>
       </b-card>
     </div>
@@ -165,9 +161,7 @@ import {
   BCard, BCardTitle, BForm, BFormGroup, BInputGroup, BInputGroupAppend, BLink, BFormInput, BButton,
 } from 'bootstrap-vue'
 import useJwt from '@/auth/jwt/useJwt'
-import { required, email } from '@validations'
 import { togglePasswordVisibility } from '@core/mixins/ui/forms'
-import store from '@/store/index'
 import { $themeConfig } from '@themeConfig'
 
 export default {

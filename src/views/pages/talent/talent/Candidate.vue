@@ -114,12 +114,10 @@
                       <b-form
                         ref="formFilterDropdown"
                       >
-
                         <!-- Row Loop -->
                         <b-row
                           ref="row"
                         >
-
                           <!-- Pendidikan Terakhir -->
                           <b-col md="5">
                             <b-form-group
@@ -167,7 +165,6 @@
                             </validation-observer>
                           </b-col>
                         </b-row>
-
                       </b-form>
                     </validation-observer>
                   </div>
@@ -211,7 +208,6 @@
           </b-col>
         </b-row>
         <b-row>
-
           <!-- Lama Bekerja -->
           <transition name="fade">
             <b-col
@@ -410,7 +406,6 @@
       </b-overlay>
 
       <b-card-body class="d-flex justify-content-between flex-wrap pt-0">
-
         <!-- page length -->
         <b-form-group
           label="Per Page"
@@ -492,7 +487,6 @@
                   #default="{ errors }"
                   name="Experience Status"
                 >
-
                   <b-form-radio-group
                     v-model="filterExperienced"
                     class="mt-50"

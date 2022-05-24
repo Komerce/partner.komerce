@@ -20,7 +20,6 @@
         centered
         title="Primary Modal"
       >
-
         <b-col class="d-flex justify-content-center mt-50">
           <h4>
             <strong>Verifikasi PIN</strong>
@@ -88,7 +87,6 @@
             Buat PIN!
           </b-button>
         </b-col>
-
       </b-modal>
 
       <!-- Verification No. HP -->
@@ -101,7 +99,6 @@
         modal-class="modal-primary"
         centered
       >
-
         <b-col class="d-flex justify-content-center mt-50">
           <h4>
             <strong>Verifikasi No HP</strong>
@@ -148,7 +145,6 @@
             Kembali
           </b-button>
         </b-col>
-
       </b-modal>
 
       <b-col cols="12">
@@ -163,7 +159,6 @@
         md="10"
         class="border ml-1 mt-2"
       >
-
         <b-row class="d-flex align-items-center mb-1">
           <b-col>
             <h5>
@@ -315,7 +310,6 @@
                   </b-button>
                 </b-col>
               </transition>
-
             </b-row>
           </b-form>
         </validation-observer>
@@ -327,7 +321,6 @@
         md="10"
         class="border ml-1 mt-2"
       >
-
         <b-row class="d-flex align-items-center mb-1">
           <b-col>
             <h5>
@@ -339,7 +332,6 @@
         <validation-observer ref="formRulesAdd">
           <b-form>
             <b-row>
-
               <b-col cols="10">
                 <b-form-group
                   label="Nama Bank"
@@ -430,7 +422,6 @@
                   Simpan
                 </b-button>
               </b-col>
-
             </b-row>
           </b-form>
         </validation-observer>
@@ -456,7 +447,6 @@
           </b-button>
         </div>
       </b-col>
-
     </b-card>
     <b-modal
       ref="modal-verification-submit"
@@ -467,7 +457,6 @@
       modal-class="modal-primary"
       centered
     >
-
       <b-col
         v-if="errorConfirmOtp === true"
         class="d-flex justify-content-center mt-2"
@@ -575,7 +564,6 @@
           Konfirmasi
         </b-button>
       </b-col>
-
     </b-modal>
 
     <!-- Modal Validate Profile -->
@@ -751,7 +739,7 @@ export default {
             formData.append('phone_number', this.phoneNumber)
             httpKomship.post('/v1/partner/sms/otp', formData, {
               headers: { Authorization: `Bearer ${useJwt.getToken()}` },
-            }).then(response => {
+            }).then(() => {
               this.loadingSubmit = false
               this.$refs['modal-verification-submit'].show()
               this.countDownTimerOtp()

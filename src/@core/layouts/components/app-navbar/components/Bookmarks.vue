@@ -45,7 +45,6 @@
           :class="{'show': filteredData.pages && filteredData.pages.length }"
           tagname="ul"
         >
-
           <b-dropdown-item
             v-for="(suggestion, index) in filteredData.pages || bookmarks"
             :key="index"
@@ -67,17 +66,16 @@
               :class="{'text-warning': suggestion.isBookmarked}"
               @click.stop.prevent="toggleBookmarked(suggestion)"
             />
-
           </b-dropdown-item>
           <b-dropdown-item
             v-show="!(filteredData.pages && filteredData.pages.length) && searchQuery"
             disabled
           >
             No Results Found.
-          </b-dropdown-item></vue-perfect-scrollbar>
+          </b-dropdown-item>
+        </vue-perfect-scrollbar>
       </li>
     </b-nav-item-dropdown>
-
   </b-navbar-nav>
 </template>
 

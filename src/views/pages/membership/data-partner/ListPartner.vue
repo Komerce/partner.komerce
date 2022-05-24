@@ -138,7 +138,6 @@
         </div>
       </div>
     </b-modal>
-
   </div>
 </template>
 
@@ -238,7 +237,7 @@ export default {
   },
   watch: {
     search: {
-      handler(val) {
+      handler() {
         // calling api
 
       },

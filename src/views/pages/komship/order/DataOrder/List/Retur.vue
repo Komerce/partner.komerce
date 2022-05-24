@@ -342,7 +342,7 @@ export default {
   },
   watch: {
     currentPage: {
-      handler(value) {
+      handler() {
         this.fetchData().catch(error => {
           console.error(error)
         })

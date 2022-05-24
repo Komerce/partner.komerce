@@ -200,7 +200,6 @@
         </b-button>
       </div>
     </b-modal>
-
   </div>
 </template>
 

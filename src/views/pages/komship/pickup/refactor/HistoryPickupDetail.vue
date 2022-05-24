@@ -229,7 +229,6 @@
                     </strong>
                   </h5>
                 </template>
-
               </b-table>
             </b-col>
           </b-row>
@@ -254,7 +253,6 @@
               </div>
             </b-col>
           </b-row>
-
         </b-form>
       </b-overlay>
     </div>
@@ -813,7 +811,6 @@
               <div
                 class="border-4 border-black px-50 mb-50"
               >
-
                 <b-row>
                   <b-col
                     class="align-self-center text-center"
@@ -1119,7 +1116,6 @@
                     </span>
                   </b-col>
                 </b-row>
-
               </div>
               <div class="html2pdf__page-break" />
             </div>
@@ -1136,7 +1132,6 @@
               class="border-4 border-black mt-1"
               style="width: 100%; height:35rem;"
             >
-
               <b-row>
                 <b-col
                   cols="4"
@@ -1536,7 +1531,6 @@
           class="border-4 border-black"
           style="width: 100%; height:25rem;"
         >
-
           <b-row>
             <b-col
               cols="4"
@@ -1890,7 +1884,6 @@
               </strong>
             </span>
           </b-row>
-
         </div>
         <div class="html2pdf__page-break" />
       </section>
@@ -1921,7 +1914,6 @@
           class="border-4 border-black mt-1"
           style="width: 100%; height:35rem;"
         >
-
           <b-row>
             <b-col
               cols="4"
@@ -2275,12 +2267,10 @@
               </strong>
             </span>
           </b-row>
-
         </div>
         <div class="html2pdf__page-break" />
       </section>
     </vue-html2pdf>
-
   </b-card>
 </template>
 
@@ -2297,24 +2287,19 @@ import {
   BOverlay,
   BContainer,
   BImg,
-  BListGroup,
-  BListGroupItem,
   BFormCheckbox,
   VBModal,
   BPagination,
   BCollapse,
-  BInputGroupAppend,
   BSpinner,
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
 import useJwt from '@/auth/jwt/useJwt'
 import vSelect from 'vue-select'
 import { dateFormat } from '@core/mixins/ui/date'
-import moment from 'moment'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import VueHtml2pdf from 'vue-html2pdf'
 import VueBarcode from 'vue-barcode'
-import AddPickupPopupPrint from '../AddPickupPopupPrint.vue'
 import AddPickupPrintPanel from '../AddPickupPrintPanel.vue'
 // import httpKomship from '../../setting-kompship/http_komship'
 
@@ -2601,7 +2586,7 @@ export default {
         this.$refs.print.show()
       }
     },
-    getPrintLabelBase64(values) {
+    getPrintLabelBase64() {
       this.loadingButtonPrintLabel = true
       this.$http_komship.get('v1/generate/print-label', {
         params: {

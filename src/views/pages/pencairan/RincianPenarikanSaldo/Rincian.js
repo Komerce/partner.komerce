@@ -149,7 +149,7 @@ export default {
     this.fetchData()
   },
   methods: {
-    formatNumber: value => (`${value}`).replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.'),
+    formatNumber: value => `${value}`.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.'),
     selectText(element) {
       let range
       if (document.selection) {
@@ -205,17 +205,18 @@ export default {
       formData.append('_method', 'PUT')
       formData.append('status', 'on_review')
       formData.append('notes', this.catatanReview)
-      this.$http_komship.post(endpoint, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
+      this.$http_komship
+        .post(endpoint, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
         .then(({ data }) => {
           if (data) {
             this.fetchData()
           }
         })
-        .catch(e => {
+        .catch(() => {
           this.loadDataAwal = false
         })
       // then hide modal
@@ -234,15 +235,16 @@ export default {
       const formData = new FormData()
       formData.append('withdrawal_id', this.$route.params.slug)
       formData.append('_method', 'PUT')
-      this.$http_komship.put(endpoint, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-        .then(({ data }) => {
+      this.$http_komship
+        .put(endpoint, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        .then(() => {
           this.$bvModal.show('modal-transfer-berhasil')
         })
-        .catch(e => {
+        .catch(() => {
           this.$bvModal.show('modal-transfer-gagal')
         })
     },
@@ -276,15 +278,19 @@ export default {
     async fetchData() {
       this.isLoadTable = true
       const endpoint = `/v1/admin/withdrawal/detail/${this.$route.params.slug}`
-      this.$http_komship.get(endpoint)
+      this.$http_komship
+        .get(endpoint)
         .then(({ data }) => {
           const parseData = JSON.parse(JSON.stringify(data.data))
-          this.$store.commit('pencairan/UPDATE_PENCAIRAN_STATUS', parseData.status)
+          this.$store.commit(
+            'pencairan/UPDATE_PENCAIRAN_STATUS',
+            parseData.status,
+          )
           this.detailData = parseData
           this.items = data.data.order
           this.totalRows = data.data.order.length
         })
-        .catch(e => {
+        .catch(() => {
           this.loadDataAwal = false
         })
         .finally(() => {

@@ -1,9 +1,6 @@
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import {
-  BModal,
-  VBModal,
-  BSpinner,
-  BOverlay,
+  BModal, VBModal, BSpinner, BOverlay,
 } from 'bootstrap-vue'
 import { ValidationObserver, ValidationProvider } from 'vee-validate'
 import { required } from '@validations'
@@ -61,7 +58,8 @@ export default {
   },
   methods: {
     getProfile() {
-      httpKomship2.post('v1/my-profile')
+      httpKomship2
+        .post('v1/my-profile')
         .then(res => {
           this.profile = res.data.data
           this.quickType = res.data.data.partner_is_allowed_edit
@@ -76,36 +74,54 @@ export default {
         })
     },
     setQuickType() {
-      this.$http.post(`/user/partner/setting/isAllowedEdit/${this.profile.partner_id}`, { is_allowed_edit: this.quickType })
+      this.$http
+        .post(
+          `/user/partner/setting/isAllowedEdit/${this.profile.partner_id}`,
+          { is_allowed_edit: this.quickType },
+        )
         .then(res => {
           if (res.data.code === 200) {
             this.getProfile()
-            this.$toast({
-              component: ToastificationContent,
-              props: {
-                title: 'Success',
-                icon: 'CheckIcon',
-                text: `Input Cepat Berhasil ${this.quickType ? 'Diaktifkan' : 'Dinonaktifkan'}`,
-                variant: 'success',
+            this.$toast(
+              {
+                component: ToastificationContent,
+                props: {
+                  title: 'Success',
+                  icon: 'CheckIcon',
+                  text: `Input Cepat Berhasil ${
+                    this.quickType ? 'Diaktifkan' : 'Dinonaktifkan'
+                  }`,
+                  variant: 'success',
+                },
               },
-            }, 2000)
+              2000,
+            )
           }
         })
     },
     setMutationBank() {
-      this.$http.post(`user/partner/setting/isMutationBank/${this.profile.partner_id}`, { is_mutation_bank: this.mutationBank ? '1' : '0' })
+      this.$http
+        .post(
+          `user/partner/setting/isMutationBank/${this.profile.partner_id}`,
+          { is_mutation_bank: this.mutationBank ? '1' : '0' },
+        )
         .then(res => {
           if (res.data.code === 200) {
             this.getProfile()
-            this.$toast({
-              component: ToastificationContent,
-              props: {
-                title: 'Success',
-                icon: 'CheckIcon',
-                text: `Mutasi Rekening Berhasil ${this.mutationBank ? 'Diaktifkan' : 'Dinonaktifkan'}`,
-                variant: 'success',
+            this.$toast(
+              {
+                component: ToastificationContent,
+                props: {
+                  title: 'Success',
+                  icon: 'CheckIcon',
+                  text: `Mutasi Rekening Berhasil ${
+                    this.mutationBank ? 'Diaktifkan' : 'Dinonaktifkan'
+                  }`,
+                  variant: 'success',
+                },
               },
-            }, 2000)
+              2000,
+            )
           }
         })
     },
@@ -114,21 +130,71 @@ export default {
         this.$refs['modal-set-custom-label'].show()
       }
       if (this.customLabel && this.isNotSetActive) {
-        this.$http.post(`/user/partner/setting/isCustomLabel/${this.profile.partner_id}`, {
-          is_custom_label: 1,
-        })
-          .then(response => {
-            this.$toast({
+        this.$http
+          .post(
+            `/user/partner/setting/isCustomLabel/${this.profile.partner_id}`,
+            {
+              is_custom_label: 1,
+            },
+          )
+          .then(() => {
+            this.$toast(
+              {
+                component: ToastificationContent,
+                props: {
+                  title: 'Success',
+                  icon: 'CheckIcon',
+                  text: 'Custom Label berhasil diaktifkan',
+                  variant: 'success',
+                },
+              },
+              2000,
+            )
+          })
+          .catch(() => {
+            this.$toast(
+              {
+                component: ToastificationContent,
+                props: {
+                  title: 'Gagal',
+                  icon: 'AlertCircleIcon',
+                  text: 'Gagal update custom label',
+                  variant: 'danger',
+                },
+              },
+              2000,
+            )
+          })
+      }
+    },
+    handleNotActiveCustomLabel() {
+      this.$http
+        .post(
+          `/user/partner/setting/isCustomLabel/${this.profile.partner_id}`,
+          {
+            is_custom_label: 0,
+          },
+        )
+        .then(() => {
+          this.$toast(
+            {
               component: ToastificationContent,
               props: {
                 title: 'Success',
                 icon: 'CheckIcon',
-                text: 'Custom Label berhasil diaktifkan',
+                text: 'Custom Label berhasil dinonaktifkan',
                 variant: 'success',
               },
-            }, 2000)
-          }).catch(() => {
-            this.$toast({
+            },
+            2000,
+          )
+          this.customLabel = false
+          this.isNotSetActive = true
+          this.$refs['modal-set-custom-label'].hide()
+        })
+        .catch(() => {
+          this.$toast(
+            {
               component: ToastificationContent,
               props: {
                 title: 'Gagal',
@@ -136,37 +202,9 @@ export default {
                 text: 'Gagal update custom label',
                 variant: 'danger',
               },
-            }, 2000)
-          })
-      }
-    },
-    handleNotActiveCustomLabel() {
-      this.$http.post(`/user/partner/setting/isCustomLabel/${this.profile.partner_id}`, {
-        is_custom_label: 0,
-      })
-        .then(response => {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: 'Success',
-              icon: 'CheckIcon',
-              text: 'Custom Label berhasil dinonaktifkan',
-              variant: 'success',
             },
-          }, 2000)
-          this.customLabel = false
-          this.isNotSetActive = true
-          this.$refs['modal-set-custom-label'].hide()
-        }).catch(() => {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: 'Gagal',
-              icon: 'AlertCircleIcon',
-              text: 'Gagal update custom label',
-              variant: 'danger',
-            },
-          }, 2000)
+            2000,
+          )
         })
     },
     alertCustomLabel() {
@@ -176,18 +214,26 @@ export default {
     },
     getCustomLabel() {
       this.loadingWrapperCustom = true
-      this.$http_komship.get(`/v1/custom-labels/${this.profile.partner_id}`)
+      this.$http_komship
+        .get(`/v1/custom-labels/${this.profile.partner_id}`)
         .then(response => {
           const { data } = response.data
           this.itemsCustomLabel = data
-          const getDefault = this.itemsCustomLabel.find(items => items.is_default === 1)
-          const getSenderIdentity1 = this.itemsCustomLabel.find(items => items.name_label === this.profile.partner_name)
+          const getDefault = this.itemsCustomLabel.find(
+            items => items.is_default === 1,
+          )
+          const getSenderIdentity1 = this.itemsCustomLabel.find(
+            items => items.name_label === this.profile.partner_name,
+          )
           this.senderIdentity1Name = getSenderIdentity1.name_label
           this.senderIdentity1NoHp = getSenderIdentity1.no_hp
           if (getSenderIdentity1 !== undefined) {
             // eslint-disable-next-line no-plusplus
             for (let x = 0; x < this.itemsCustomLabel.length; x++) {
-              if (this.itemsCustomLabel[x].name_label === this.profile.partner_name) {
+              if (
+                this.itemsCustomLabel[x].name_label
+                === this.profile.partner_name
+              ) {
                 this.itemsCustomLabel.splice(x, 1)
               }
             }
@@ -202,7 +248,8 @@ export default {
             this.itemsCustomLabel.unshift(getDefault)
           }
           this.loadingWrapperCustom = false
-        }).catch(err => {
+        })
+        .catch(err => {
           console.log(err)
           this.loadingWrapperCustom = false
         })
@@ -216,33 +263,41 @@ export default {
           formData.append('no_hp', this.noHPSender)
           formData.append('partner_id', this.profile.partner_id)
           formData.append('is_default', this.senderIsDefault ? 1 : 0)
-          this.$http_komship.post('/v1/custom-labels/store', formData)
+          this.$http_komship
+            .post('/v1/custom-labels/store', formData)
             .then(response => {
-              this.$toast({
-                component: ToastificationContent,
-                props: {
-                  title: 'Success',
-                  icon: 'CheckIcon',
-                  text: response.data.message,
-                  variant: 'success',
+              this.$toast(
+                {
+                  component: ToastificationContent,
+                  props: {
+                    title: 'Success',
+                    icon: 'CheckIcon',
+                    text: response.data.message,
+                    variant: 'success',
+                  },
                 },
-              }, 2000)
+                2000,
+              )
               this.nameSender = ''
               this.noHPSender = ''
               this.senderIsDefault = false
               this.getCustomLabel()
               this.fieldAddSender = false
               this.loadingSubmitSender = false
-            }).catch(err => {
-              this.$toast({
-                component: ToastificationContent,
-                props: {
-                  title: 'Failure',
-                  icon: 'AlertCircleIcon',
-                  text: err.response.message,
-                  variant: 'danger',
+            })
+            .catch(err => {
+              this.$toast(
+                {
+                  component: ToastificationContent,
+                  props: {
+                    title: 'Failure',
+                    icon: 'AlertCircleIcon',
+                    text: err.response.message,
+                    variant: 'danger',
+                  },
                 },
-              }, 2000)
+                2000,
+              )
               this.loadingSubmitSender = false
             })
         } else {
@@ -260,30 +315,41 @@ export default {
           formData.append('no_hp', this.editNoHPSender)
           formData.append('is_default', this.editSenderIsDefault ? 1 : 0)
           formData.append('_method', 'put')
-          this.$http_komship.post(`/v1/custom-labels/update/${this.idCustomLabelEdit}`, formData)
+          this.$http_komship
+            .post(
+              `/v1/custom-labels/update/${this.idCustomLabelEdit}`,
+              formData,
+            )
             .then(response => {
-              this.$toast({
-                component: ToastificationContent,
-                props: {
-                  title: 'Success',
-                  icon: 'CheckIcon',
-                  text: response.data.message,
-                  variant: 'success',
+              this.$toast(
+                {
+                  component: ToastificationContent,
+                  props: {
+                    title: 'Success',
+                    icon: 'CheckIcon',
+                    text: response.data.message,
+                    variant: 'success',
+                  },
                 },
-              }, 2000)
+                2000,
+              )
               this.getCustomLabel()
               this.loadingSubmitSender = false
               this.customLabelEditMode = false
-            }).catch(err => {
-              this.$toast({
-                component: ToastificationContent,
-                props: {
-                  title: 'Failure',
-                  icon: 'AlertCircleIcon',
-                  text: err.response.message,
-                  variant: 'danger',
+            })
+            .catch(err => {
+              this.$toast(
+                {
+                  component: ToastificationContent,
+                  props: {
+                    title: 'Failure',
+                    icon: 'AlertCircleIcon',
+                    text: err.response.message,
+                    variant: 'danger',
+                  },
                 },
-              }, 2000)
+                2000,
+              )
               this.loadingSubmitSender = false
             })
         } else {
@@ -293,30 +359,38 @@ export default {
     },
     deleteSenderLabel(data) {
       this.loadingDeleteSender = true
-      this.$http_komship.delete(`/v1/custom-labels/delete/${data.id}`)
+      this.$http_komship
+        .delete(`/v1/custom-labels/delete/${data.id}`)
         .then(response => {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: 'Success',
-              icon: 'CheckIcon',
-              text: response.data.message,
-              variant: 'success',
+          this.$toast(
+            {
+              component: ToastificationContent,
+              props: {
+                title: 'Success',
+                icon: 'CheckIcon',
+                text: response.data.message,
+                variant: 'success',
+              },
             },
-          }, 2000)
+            2000,
+          )
           this.getCustomLabel()
           this.loadingDeleteSender = false
           this.customLabelEditMode = false
-        }).catch(err => {
-          this.$toast({
-            component: ToastificationContent,
-            props: {
-              title: 'Failure',
-              icon: 'AlertCircleIcon',
-              text: err.response.message,
-              variant: 'danger',
+        })
+        .catch(err => {
+          this.$toast(
+            {
+              component: ToastificationContent,
+              props: {
+                title: 'Failure',
+                icon: 'AlertCircleIcon',
+                text: err.response.message,
+                variant: 'danger',
+              },
             },
-          }, 2000)
+            2000,
+          )
           this.loadingDeleteSender = false
         })
     },
@@ -364,7 +438,12 @@ export default {
       return String(e).substring(0, 30)
     },
     validateInputNameSender(e) {
-      if (e.keyCode === 47 || e.keyCode === 61 || e.keyCode === 58 || e.keyCode === 59) {
+      if (
+        e.keyCode === 47
+        || e.keyCode === 61
+        || e.keyCode === 58
+        || e.keyCode === 59
+      ) {
         e.preventDefault()
         this.messageErrorLengthSenderName = true
       } else {

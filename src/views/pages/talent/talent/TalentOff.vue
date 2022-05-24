@@ -99,12 +99,10 @@
                   <b-form
                     ref="formFilterDropdown"
                   >
-
                     <!-- Row Loop -->
                     <b-row
                       ref="row"
                     >
-
                       <!-- Filter Resign -->
                       <b-col md="3">
                         <b-form-group
@@ -126,7 +124,6 @@
                         </b-form-group>
                       </b-col>
                     </b-row>
-
                   </b-form>
                 </validation-observer>
               </div>
@@ -252,7 +249,6 @@
       </b-overlay>
 
       <b-card-body class="d-flex justify-content-between flex-wrap pt-0">
-
         <!-- page length -->
         <b-form-group
           label="Per Page"

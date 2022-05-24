@@ -39,7 +39,6 @@
     >
       <!-- Skin, RTL, Router Animation -->
       <div class="customizer-section">
-
         <!-- Skin -->
         <b-form-group label="Skin">
           <b-form-radio-group
@@ -93,7 +92,6 @@
 
       <!-- SECTION: Menu -->
       <div class="customizer-section">
-
         <!-- Layout Type -->
         <b-form-group
           label="Menu Layout"
@@ -131,12 +129,10 @@
             inline
           />
         </div>
-
       </div>
 
       <!-- SECTION: Navbar -->
       <div class="customizer-section">
-
         <!-- Navbar Color -->
         <b-form-group
           v-show="layoutType === 'vertical'"
@@ -163,7 +159,6 @@
 
       <!-- SECTION: Footer -->
       <div class="customizer-section">
-
         <!-- Footer Type -->
         <b-form-group label="Footer Type">
           <b-form-radio-group

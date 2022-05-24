@@ -43,7 +43,6 @@
                   :tbody-tr-class="rowClass"
                   :busy.sync="loading"
                 >
-
                   <!-- A custom formatted column -->
                   <template #cell(question)="data">
                     <b-row>
@@ -99,7 +98,6 @@
                       </b-button>
                     </div>
                   </template>
-
                 </b-table>
                 <b-button
                   variant="danger"
@@ -128,7 +126,6 @@
                     @submit.prevent
                   >
                     <b-row>
-
                       <!-- question -->
                       <b-col cols="12">
                         <b-form-group

@@ -14,7 +14,6 @@
         md="6"
         class="mt-1"
       >
-
         <!-- calendar -->
         <b-calendar
           v-model="value"
@@ -23,7 +22,6 @@
         />
       </b-col>
       <b-col md="6">
-
         <!-- prism -->
         <div class="mt-1">
           <prism

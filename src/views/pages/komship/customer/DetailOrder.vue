@@ -176,7 +176,6 @@
             :fields="fields"
             :items="items"
           >
-
             <template #cell(product_name)="data">
               <b-row class="d-flex align-items-center">
                 <div class="d-flex align-items-center mb-1">
@@ -212,17 +211,14 @@
             <template #cell(product)="data">
               Rp {{ data.item.product_price * data.item.qty }}
             </template>
-
           </b-table>
 
           <hr>
 
           <b-row class="d-flex justify-content-end">
-
             <b-col
               cols="12"
             >
-
               <b-row class="d-flex justify-content-end align-items-center mt-2">
                 <b-col
                   md="8"
@@ -332,12 +328,10 @@
                   </b-list-group>
                 </b-col>
               </b-row>
-
             </b-col>
           </b-row>
         </b-card>
       </b-col>
-
     </b-card>
   </b-overlay>
 </template>

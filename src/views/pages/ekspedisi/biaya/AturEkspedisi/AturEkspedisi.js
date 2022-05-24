@@ -143,8 +143,7 @@ export default {
     submitData() {
       this.loadDataAwal = true
       const endpoint = `/v1/admin/shipment/update/${this.$route.params.id}`
-      let getData = null
-      getData = axioskomsipdev.put(endpoint, {
+      axioskomsipdev.put(endpoint, {
         shipping_name: this.shipping_name,
         service_name: this.service_name,
         cashback_from: this.cashback_from,
@@ -186,12 +185,13 @@ export default {
     },
     getIsland() {
       const endpoint = '/v1/island'
-      axioskomsipdev.get(endpoint)
+      axioskomsipdev
+        .get(endpoint)
         .then(({ data }) => {
           const parseData = JSON.parse(JSON.stringify(data.data))
           this.optionsKota = parseData
         })
-        .catch(e => {
+        .catch(() => {
           this.loadDataAwal = false
         })
         .finally(() => {
@@ -209,7 +209,8 @@ export default {
         if (this.criteriasDataStoreUpdate[x].destination !== []) this.criteriasDataStoreUpdate[x].destination = []
       }
       const enpoint = `/v1/admin/shipment/detail/${this.shippingId}`
-      axioskomsipdev.get(enpoint)
+      axioskomsipdev
+        .get(enpoint)
         .then(({ data }) => {
           const res = data.data
           this.shipping_name = res.shipping_name
@@ -217,7 +218,9 @@ export default {
           this.cashback_to = res.cashback_to
           this.cashback_from = res.cashback_from
           this.service_fee_to = res.service_fee_to
-          const onlyLeters = res.service_name.replace(/[^a-zA-Z]+/g, '').toLowerCase()
+          const onlyLeters = res.service_name
+            .replace(/[^a-zA-Z]+/g, '')
+            .toLowerCase()
           // const serviceName = onlyLeters.charAt(0).toUpperCase() + onlyLeters.slice(1)
           this.service_name = onlyLeters
           // eslint-disable-next-line no-plusplus
@@ -226,36 +229,37 @@ export default {
             for (let y = 0; y < res.criterias[x].origin.length; y++) {
               // eslint-disable-next-line no-plusplus
               for (let z = 0; z < this.criteriasData.length; z++) {
-                this.criteriasData[x].origin.push(
-                  {
-                    label: res.criterias[x].origin[y],
-                    value: res.criterias[x].origin_value[y],
-                  },
-                )
+                this.criteriasData[x].origin.push({
+                  label: res.criterias[x].origin[y],
+                  value: res.criterias[x].origin_value[y],
+                })
                 this.criteriasData[x].type = res.criterias[x].type
                 this.criteriasData[x].retur = res.criterias[x].retur
                 this.criteriasData[x].delivery = res.criterias[x].delivery
                 this.criteriasDataStoreUpdate[x].type = res.criterias[x].type
                 this.criteriasDataStoreUpdate[x].retur = res.criterias[x].retur
                 this.criteriasDataStoreUpdate[x].delivery = res.criterias[x].delivery
-                this.criteriasDataStoreUpdate[x].origin.push(Number(res.criterias[x].origin_value[y]))
+                this.criteriasDataStoreUpdate[x].origin.push(
+                  Number(res.criterias[x].origin_value[y]),
+                )
               }
             }
             // eslint-disable-next-line no-plusplus
             for (let y = 0; y < res.criterias[x].destination.length; y++) {
               // eslint-disable-next-line no-plusplus
               for (let z = 0; z < this.criteriasData.length; z++) {
-                this.criteriasData[x].destination.push(
-                  {
-                    label: res.criterias[x].destination[y],
-                    value: res.criterias[x].destination_value[y],
-                  },
+                this.criteriasData[x].destination.push({
+                  label: res.criterias[x].destination[y],
+                  value: res.criterias[x].destination_value[y],
+                })
+                this.criteriasDataStoreUpdate[x].destination.push(
+                  Number(res.criterias[x].destination_value[y]),
                 )
-                this.criteriasDataStoreUpdate[x].destination.push(Number(res.criterias[x].destination_value[y]))
               }
             }
           }
-        }).catch(e => {
+        })
+        .catch(() => {
           this.loadDataAwal = false
         })
         .finally(() => {

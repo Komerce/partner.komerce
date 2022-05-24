@@ -10,7 +10,6 @@
     </b-card-text>
 
     <app-collapse hover>
-
       <app-collapse-item title="Accordion Item 1">
         Pie dragée muffin. Donut cake liquorice marzipan carrot cake topping powder candy. Sugar plum brownie brownie cotton candy. Tootsie roll cotton candy pudding bonbon chocolate cake lemon drops candy. Jelly marshmallow chocolate cake carrot cake bear claw ice cream chocolate. Fruitcake apple pie pudding jelly beans pie candy canes candy canes jelly-o. Tiramisu brownie gummi bears soufflé dessert cake.
       </app-collapse-item>

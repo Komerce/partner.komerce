@@ -117,7 +117,6 @@
                       <b-row
                         ref="row"
                       >
-
                         <!-- Talent lead terakhir -->
                         <b-col md="8">
                           <validation-observer>
@@ -151,7 +150,6 @@
                             </b-form-group>
                           </validation-observer>
                         </b-col>
-
                       </b-row>
                     </b-form>
                   </div>
@@ -177,7 +175,6 @@
                       <b-row
                         ref="row"
                       >
-
                         <!-- Waktu kosong -->
                         <b-col md="6">
                           <validation-observer>
@@ -222,7 +219,6 @@
                             </b-form-group>
                           </validation-observer>
                         </b-col>
-
                       </b-row>
                     </b-form>
                   </div>
@@ -256,12 +252,10 @@
                     <b-form
                       ref="form"
                     >
-
                       <!-- Row Loop -->
                       <b-row
                         ref="row"
                       >
-
                         <!-- Waktu kosong -->
                         <b-col md="6">
                           <validation-observer>
@@ -302,9 +296,7 @@
                             </b-form-group>
                           </validation-observer>
                         </b-col>
-
                       </b-row>
-
                     </b-form>
                   </div>
                 </div>
@@ -313,7 +305,6 @@
           </b-col>
         </b-row>
         <!-- end sortir mobile -->
-
       </div>
 
       <div class="mb-1 pl-2 d-flex overflow-x-scroll overflow-y-hidden">
@@ -451,7 +442,6 @@
       </b-overlay>
 
       <b-card-body class="d-flex justify-content-between flex-wrap pt-0">
-
         <!-- page length -->
         <b-form-group
           label="Per Page"

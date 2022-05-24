@@ -8,7 +8,6 @@
     rounded="sm"
     class="p-2"
   >
-
     <b-card-actions
       no-actions
     >

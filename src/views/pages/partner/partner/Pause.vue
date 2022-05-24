@@ -97,12 +97,10 @@
                 <b-form
                   ref="form"
                 >
-
                   <!-- Row Loop -->
                   <b-row
                     ref="row"
                   >
-
                     <!-- Sektor Bisnis -->
                     <b-col md="4">
                       <b-form-group
@@ -297,7 +295,6 @@
       </b-overlay>
 
       <b-card-body class="d-flex justify-content-between flex-wrap pt-0">
-
         <!-- page length -->
         <b-form-group
           label="Per Page"

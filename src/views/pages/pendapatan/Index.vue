@@ -178,7 +178,7 @@ export default {
           const ubahDataShipment = parseData.map(x => ({ title: x.shipping_name }))
           this.shipment = ubahDataShipment
         })
-        .catch(e => {
+        .catch(() => {
           this.$toast({
             component: ToastificationContent,
             props: {

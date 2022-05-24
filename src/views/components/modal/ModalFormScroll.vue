@@ -1,6 +1,5 @@
 <template>
   <b-card-code title="Form & Scrolling Modals">
-
     <div class="demo-inline-spacing">
       <!-- modal login button -->
       <b-button

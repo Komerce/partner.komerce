@@ -1,6 +1,5 @@
 <template>
   <b-card-code title="Prigrammatic activation">
-
     <!-- Tabs with card integration -->
     <b-tabs
       v-model="tabIndex"

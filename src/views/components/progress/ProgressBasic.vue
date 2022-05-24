@@ -1,6 +1,5 @@
 <template>
   <b-card-code title="Basic Progress">
-
     <div class="demo-vertical-spacing">
       <div class="progress-wrapper">
         <b-card-text class="mb-0">

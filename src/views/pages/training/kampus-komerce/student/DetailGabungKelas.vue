@@ -45,7 +45,6 @@
             :fields="tableFields"
             :items="tableProvider"
           >
-
             <template #cell(modules)="data">
               <h4>{{ data.item.module_title }}</h4>
               <p>{{ data.item.module_subtitle }}</p>
@@ -58,7 +57,6 @@
             <template #cell(user_module_score)="data">
               <span>{{ data.value }}</span>
             </template>
-
           </b-table>
         </b-card-actions>
       </b-col>

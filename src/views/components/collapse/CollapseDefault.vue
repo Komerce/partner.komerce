@@ -10,7 +10,6 @@
     </b-card-text>
 
     <app-collapse>
-
       <app-collapse-item title="Collapse Item 1">
         Pie dragée muffin. Donut cake liquorice marzipan carrot cake topping powder candy. Sugar plum brownie
         brownie cotton candy. Tootsie roll cotton candy pudding bonbon chocolate cake lemon drops candy. Jelly

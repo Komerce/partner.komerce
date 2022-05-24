@@ -769,7 +769,6 @@
                 />
               </b-button>
             </template>
-
           </b-table>
         </b-overlay>
       </b-col>
@@ -785,7 +784,6 @@
       centered
       title="Primary Modal"
     >
-
       <b-col
         md="12"
         class="d-flex justify-content-center pt-3"
@@ -822,9 +820,7 @@
           </b-button>
         </b-col>
       </template>
-
     </b-modal>
-
   </b-col>
 </template>
 

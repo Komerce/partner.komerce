@@ -4,7 +4,6 @@
       class="demo-inline-spacing"
       aria-label="Toolbar with button groups and dropdown menu"
     >
-
       <!-- group -->
       <b-button-group>
         <b-button

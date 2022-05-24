@@ -6,7 +6,6 @@
     </b-card-text>
 
     <div class="demo-inline-spacing">
-
       <!-- default -->
       <b-button
         v-b-tooltip.hover

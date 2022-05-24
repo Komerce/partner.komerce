@@ -8,7 +8,6 @@
     rounded="sm"
   >
     <b-card>
-
       <b-row class="mt-3">
         <b-col>
           <h3 class="mb-50 mb-md-0">
@@ -60,7 +59,6 @@
           </div>
         </b-col>
       </b-row>
-
     </b-card>
   </b-overlay>
 </template>

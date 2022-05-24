@@ -22,7 +22,6 @@
             @change="changeData"
           />
         </b-col>
-
       </b-row>
 
       <b-row class="d-flex align-items-center">
@@ -62,7 +61,6 @@
           </div>
         </b-col>
       </b-row>
-
     </b-card>
   </b-overlay>
 </template>

@@ -199,7 +199,6 @@
         :show-empty="!loading"
         @row-clicked="onRowClicked"
       >
-
         <template #head(customer_name)="data">
           <span class="capitalizeText">{{ data.label }}</span>
         </template>
@@ -244,7 +243,8 @@
         hide-goto-end-buttons
         last-number
         class="pagination-primary"
-      /></b-row>
+      />
+    </b-row>
   </b-card>
 </template>
 <script>
@@ -383,7 +383,7 @@ export default {
 
   watch: {
     currentPage: {
-      handler(value) {
+      handler() {
         this.tableProvider().catch(error => {
           console.error(error)
         })

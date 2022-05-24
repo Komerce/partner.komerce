@@ -229,7 +229,8 @@ export default {
         paramsTemp.shipper = params.shipper
         paramsTemp.month = params.month
       }
-      axioskomsipdev.get(`/v1/admin/dashboard/performance/${type}`, { params: paramsTemp })
+      axioskomsipdev
+        .get(`/v1/admin/dashboard/performance/${type}`, { params: paramsTemp })
         .then(({ data }) => {
           if (Array.isArray(data.data)) {
             this[`categoriesChart${type}`] = []
@@ -258,7 +259,7 @@ export default {
             this[`seriesChart${type}`] = mappinData
           }
         })
-        .catch(e => {
+        .catch(() => {
           this.loadDataAwal = false
         })
         .finally(() => {
@@ -266,12 +267,13 @@ export default {
         })
     },
     async fetchDataTop(type = '') {
-      axioskomsipdev.get(`/v1/admin/dashboard/top/${type}`)
+      axioskomsipdev
+        .get(`/v1/admin/dashboard/top/${type}`)
         .then(({ data }) => {
           this[`top${type.charAt(0).toUpperCase()}${type.substring(1)}Temp`] = data.data
           this[`top${type.charAt(0).toUpperCase()}${type.substring(1)}`] = data.data.cod
         })
-        .catch(e => {
+        .catch(() => {
           this.loadDataAwal = false
         })
         .finally(() => {
@@ -280,11 +282,10 @@ export default {
     },
     objectToQueryString(obj = {}) {
       const str = []
-      Object.keys(obj)
-        .map(x => {
-          str.push(`${encodeURIComponent(x)}=${encodeURIComponent(obj[x])}`)
-          return str
-        })
+      Object.keys(obj).map(x => {
+        str.push(`${encodeURIComponent(x)}=${encodeURIComponent(obj[x])}`)
+        return str
+      })
       return str.join('&')
     },
     toPage(params = '') {

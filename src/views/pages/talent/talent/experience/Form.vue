@@ -106,7 +106,8 @@
       </b-col>
     </b-row>
     <div v-else>
-      <br><br><br><br><br></div>
+      <br><br><br><br><br>
+    </div>
     <b-modal
       id="form-modal"
       ref="formModal"

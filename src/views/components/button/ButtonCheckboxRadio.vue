@@ -2,7 +2,6 @@
   <b-card-code title="Checkbox & radio group">
     <b-row>
       <b-col md="6">
-
         <!-- checkbox button  -->
         <b-form-group>
           <b-form-checkbox-group
@@ -15,7 +14,6 @@
         </b-form-group>
       </b-col>
       <b-col md="6">
-
         <!-- radio button -->
         <b-form-group>
           <b-form-radio-group

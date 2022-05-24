@@ -17,7 +17,6 @@
     </b-card-text>
 
     <div class="demo-inline-spacing">
-
       <!--transparent img -->
       <b-img
         v-bind="mainProps"

@@ -201,7 +201,6 @@ import {
 import VueHtml2pdf from 'vue-html2pdf'
 import VueBarcode from 'vue-barcode'
 import { $themeConfig } from '@themeConfig'
-import DataOrderTable from '../order/DataOrderDetail.vue'
 import AddPickupPopupPrint from './AddPickupPopupPrint.vue'
 import PickupLabelPrint from './PickupLabelPrint.vue'
 
@@ -210,7 +209,6 @@ export default {
     BButton,
     BIconChevronLeft,
     BBadge,
-    DataOrderTable,
     AddPickupPopupPrint,
     VueHtml2pdf,
     barcode: VueBarcode,
@@ -260,7 +258,7 @@ export default {
         this.$refs.printLabelContent.changePrintOption(this.printOption)
       }
     },
-    onSubmitPrint(values) {
+    onSubmitPrint() {
       // if (values) this.$refs.printLabelContent.printContent()
 
       this.$refs.html2Pdf.generatePdf()

@@ -13,7 +13,6 @@
         :navbarTypeClass="[...navbarTypeClass, 'header-navbar navbar navbar-shadow align-items-center']"
       >
         <div class="navbar-container d-flex content align-items-center">
-
           <b-navbar-nav class="nav d-flex align-items-center mr-auto">
             <span class="brand-logo">
               <b-img
@@ -41,7 +40,6 @@
           :start-index="tabIndex"
           @on-change="updateIndex"
         >
-
           <!-- accoint details tab -->
           <tab-content
             title="Pendaftaran"
@@ -70,7 +68,6 @@
         </form-wizard>
       </div>
     </div>
-
   </div>
 </template>
 

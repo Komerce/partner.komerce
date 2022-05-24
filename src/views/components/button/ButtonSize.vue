@@ -14,7 +14,6 @@
 
     <b-row>
       <b-col md="6">
-
         <!-- filled button size -->
         <div class="demo-inline-spacing">
           <b-button
@@ -40,7 +39,6 @@
         </div>
       </b-col>
       <b-col>
-
         <!-- outline button size -->
         <div class="demo-inline-spacing">
           <b-button

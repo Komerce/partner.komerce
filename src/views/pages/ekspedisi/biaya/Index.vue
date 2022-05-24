@@ -35,15 +35,21 @@
                   <b-tr>
                     <b-th
                       class="font-weight-bolder text-capitalize"
-                    >Ekpedisi</b-th>
+                    >
+                      Ekpedisi
+                    </b-th>
                     <b-th
                       class="font-weight-bolder text-capitalize"
                       colspan="2"
-                    >Dari Ekspedisi</b-th>
+                    >
+                      Dari Ekspedisi
+                    </b-th>
                     <b-th
                       class="font-weight-bolder text-capitalize"
                       colspan="2"
-                    >Ke Pengguna</b-th>
+                    >
+                      Ke Pengguna
+                    </b-th>
                     <b-th />
                   </b-tr>
                 </template>
@@ -156,7 +162,6 @@
                 </div>
               </div>
             </b-modal>
-
           </div>
           <b-button
             variant="outline-primary"
@@ -279,7 +284,7 @@ export default {
   },
   watch: {
     search: {
-      handler(val) {
+      handler() {
 
       },
     },
@@ -307,7 +312,7 @@ export default {
         this.totalRows = parseData.length
         this.loadDataAwal = false
       })
-        .catch(e => {
+        .catch(() => {
           this.loadDataAwal = false
         })
         .finally(() => {

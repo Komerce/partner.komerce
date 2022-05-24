@@ -262,7 +262,7 @@ export default {
           }
           this.isLoadTable = false
         })
-        .catch(e => {
+        .catch(() => {
           this.$toast({
             component: ToastificationContent,
             props: {

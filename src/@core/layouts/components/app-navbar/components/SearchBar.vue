@@ -1,6 +1,5 @@
 <template>
   <li class="nav-item nav-search">
-
     <!-- Icon -->
     <a
       href="javascript:void(0)"
@@ -55,7 +54,6 @@
           :key="grp_index"
           class="suggestions-groups-list"
         >
-
           <!-- Group Header -->
           <p class="suggestion-group-title">
             <span>

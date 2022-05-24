@@ -58,7 +58,6 @@
                 #default="{errors}"
                 name="Upload Gambar"
               >
-
                 <!-- Preview Image -->
                 <transition name="fade">
                   <b-avatar
@@ -616,7 +615,6 @@
                         </b-button>
                       </div>
                     </b-col>
-
                   </b-row>
                 </b-form-group>
               </transition>
@@ -642,7 +640,6 @@
                       :fields="fields"
                       :items="variantItems"
                     >
-
                       <template #cell(variant1)="data">
                         <div v-if="editMode === true && indexRow === data.index">
                           <b-col
@@ -918,12 +915,10 @@
                           Simpan
                         </b-button>
                       </template>
-
                     </b-table>
                   </b-overlay>
                 </b-form-group>
               </transition>
-
             </b-form-group>
           </b-col>
 
@@ -1139,15 +1134,18 @@
           height="134.43px"
           class="modalUploadWarning__img"
         >
-        <p class="modalUploadWarning__text">Maaf, maksimal file hanya 2 MB.</p>
+        <p class="modalUploadWarning__text">
+          Maaf, maksimal file hanya 2 MB.
+        </p>
         <b-button
           variant="danger"
           class="modalUploadWarning__btn"
           @click="handleOkModalValidationUpload"
-        >Oke</b-button>
+        >
+          Oke
+        </b-button>
       </div>
     </b-modal>
-
   </b-card-actions>
 </template>
 

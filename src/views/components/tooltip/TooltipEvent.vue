@@ -1,7 +1,6 @@
 <template>
   <b-card-code title="Tooltip Events">
     <div class="demo-inline-spacing">
-
       <!-- show button -->
       <b-button
         id="tooltip-button-show-event"

@@ -5,7 +5,6 @@
     :data-col="isNavMenuHidden ? '1-column' : null"
     style="height:inherit"
   >
-
     <!-- NAVBAR -->
     <b-navbar
       :style="{

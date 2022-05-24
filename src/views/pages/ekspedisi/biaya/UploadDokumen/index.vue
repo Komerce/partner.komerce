@@ -152,7 +152,7 @@ export default {
           .then(({ data }) => {
             this.filesUploaded.push(data)
           })
-          .catch(err => {
+          .catch(() => {
             // handle error
           })
       })
@@ -163,20 +163,20 @@ export default {
       this.fileUploadCount = 0
       const endpointDeleteUpload = '/v1/admin/no-cod/temp/delete'
       axioskomsipdev.delete(endpointDeleteUpload)
-        .then(({ data }) => {
+        .then(() => {
           this.$router.go(-1)
         })
-        .catch(err => {
+        .catch(() => {
           // handle error
         })
     },
     handleKonfirmasi() {
       const endpointSaveUpload = '/v1/admin/no-cod/save'
       axioskomsipdev.post(endpointSaveUpload)
-        .then(({ data }) => {
+        .then(() => {
           this.$router.go(-1)
         })
-        .catch(err => {
+        .catch(() => {
           // handle error
         })
     },

@@ -1,6 +1,5 @@
 <template>
   <b-card-code title="Filled">
-
     <b-tabs
       fill
       pills

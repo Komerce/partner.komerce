@@ -17,7 +17,6 @@
           </div>
           <b-card-body>
             <div class="d-flex justify-content-start flex-wrap">
-
               <b-button
                 v-ripple.400="'rgba(255, 255, 255, 0.15)'"
                 v-b-toggle.collapse-1
@@ -242,7 +241,6 @@
           </b-overlay>
 
           <b-card-body class="d-flex justify-content-between flex-wrap pt-0">
-
             <!-- page length -->
             <b-form-group
               label="Per Page"

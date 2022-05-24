@@ -151,7 +151,9 @@
               <b-badge
                 v-if="data.value == 'rp'"
                 variant="success"
-              >Nominal Rupiah</b-badge>
+              >
+                Nominal Rupiah
+              </b-badge>
               <b-badge
                 v-else
                 variant="primary"

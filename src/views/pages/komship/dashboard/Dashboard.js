@@ -2,10 +2,13 @@ import CodeInput from 'vue-verification-code-input'
 import { mapState, mapGetters } from 'vuex'
 import { mapFields } from 'vuex-map-fields'
 import {
-  BFormGroup, BModal, BFormInput, BFormSelect, BSpinner,
+  BFormGroup,
+  BModal,
+  BFormInput,
+  BFormSelect,
+  BSpinner,
 } from 'bootstrap-vue'
 import useJwt from '@/auth/jwt/useJwt'
-import PincodeInput from 'vue-pincode-input'
 import vSelect from 'vue-select'
 import moment from 'moment'
 import LottieAnimation from 'lottie-vuejs/src/LottieAnimation.vue'
@@ -39,7 +42,11 @@ export default {
     last30.setHours(0, 0, 0, 0)
 
     const firstDateOfMonth = new Date(today.getFullYear(), today.getMonth(), 1)
-    const lastDateOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0)
+    const lastDateOfMonth = new Date(
+      today.getFullYear(),
+      today.getMonth() + 1,
+      0,
+    )
 
     return {
       topCustomerServices: [
@@ -76,7 +83,12 @@ export default {
       ],
       selectedPenghasilan: 'Komship',
       optionsPenghasilan: ['Komship'],
-      dropDownValues: ['Real Time', '7 Hari Terakhir', '30 Hari Terakhir', 'Custom Tanggal'],
+      dropDownValues: [
+        'Real Time',
+        '7 Hari Terakhir',
+        '30 Hari Terakhir',
+        'Custom Tanggal',
+      ],
       selectedCstDateBefore: null,
       selectedCstDate: 'Real Time',
       customDate: Date.now(),
@@ -137,7 +149,10 @@ export default {
     }
   },
   computed: {
-    ...mapFields('dashboard', { selectedProdukTerlaris: 'selectedProdukTerlaris', selectedChart: 'selectedChart' }),
+    ...mapFields('dashboard', {
+      selectedProdukTerlaris: 'selectedProdukTerlaris',
+      selectedChart: 'selectedChart',
+    }),
     ...mapState('dashboard', [
       'saldo',
       'saldoPending',
@@ -160,18 +175,20 @@ export default {
     ...mapGetters('saldo', ['rekenings', 'rekening', 'rekTujuanOptions']),
   },
   mounted() {
-    this.$http_komship.post('v1/my-profile', {
-      headers: { Authorization: `Bearer ${useJwt.getToken()}` },
-    }).then(response => {
-      const { data } = response.data
-      if (data) {
-        if (!data.is_onboarding) {
-          this.$bvModal.show('modal-onboarding')
-        } else {
-          this.loadingOnboarding = false
+    this.$http_komship
+      .post('v1/my-profile', {
+        headers: { Authorization: `Bearer ${useJwt.getToken()}` },
+      })
+      .then(response => {
+        const { data } = response.data
+        if (data) {
+          if (!data.is_onboarding) {
+            this.$bvModal.show('modal-onboarding')
+          } else {
+            this.loadingOnboarding = false
+          }
         }
-      }
-    })
+      })
   },
   beforeMount() {
     this.$store.dispatch('dashboard/init')
@@ -190,14 +207,15 @@ export default {
     },
     updateProfileOnBoarding() {
       this.disabledOnboardingMulai = true
-      this.$http_komship.put('/v1/partner/onboarding/update', {})
+      this.$http_komship
+        .put('/v1/partner/onboarding/update', {})
         .then(resp => {
-          if ((resp.data.code === 200) && (resp.data.status === 'success')) {
+          if (resp.data.code === 200 && resp.data.status === 'success') {
             this.loadingOnboarding = false
             this.$bvModal.hide('modal-onboarding')
           }
         })
-        .catch(err => {
+        .catch(() => {
           this.disabledOnboardingMulai = false
         })
     },
@@ -313,32 +331,34 @@ export default {
             if (!response.data.data.is_match) {
               throw { message: 'Maaf pin yang anda masukkan salah' } // eslint-disable-line
             }
-            responseReq.then(val => {
-              const { data } = val
+            responseReq
+              .then(val => {
+                const { data } = val
 
-              this.$nextTick(() => {
-                this.stepNow = 2
-                this.modalTitle = null
-                this.status = data.status
-              })
-            }).catch(e => {
-              if (e.response.status === 400) {
-                this.$swal({
-                  title:
-                    '<span class="font-weight-bold h4">Penarikan Saldo Gagal</span>',
-                  text: 'Maaf, kamu tidak bisa melakukan penarikan saldo dikarenakan kamu masih memilikiantrian penarikanyang belum disetujui.',
-                  imageUrl: require('@/assets/images/icons/fail.svg'), // eslint-disable-line
-                  showCloseButton: false,
-                  focusConfirm: true,
-                  confirmButtonText: 'Oke',
-                  customClass: {
-                    confirmButton: 'btn bg-orange2 btn-primary rounded-lg',
-                    popup: 'mr-2 ml-1',
-                  },
-                  buttonsStyling: false,
+                this.$nextTick(() => {
+                  this.stepNow = 2
+                  this.modalTitle = null
+                  this.status = data.status
                 })
-              }
-            })
+              })
+              .catch(e => {
+                if (e.response.status === 400) {
+                  this.$swal({
+                    title:
+                      '<span class="font-weight-bold h4">Penarikan Saldo Gagal</span>',
+                    text: 'Maaf, kamu tidak bisa melakukan penarikan saldo dikarenakan kamu masih memilikiantrian penarikanyang belum disetujui.',
+                    imageUrl: require('@/assets/images/icons/fail.svg'), // eslint-disable-line
+                    showCloseButton: false,
+                    focusConfirm: true,
+                    confirmButtonText: 'Oke',
+                    customClass: {
+                      confirmButton: 'btn bg-orange2 btn-primary rounded-lg',
+                      popup: 'mr-2 ml-1',
+                    },
+                    buttonsStyling: false,
+                  })
+                }
+              })
 
             this.visibilityPin = 'password'
           } catch (e) {
@@ -403,7 +423,8 @@ export default {
     },
     alertFail() {
       this.$swal({
-        title: '<span class="font-weight-bold h4">Maaf sedang ada gangguan,<br>coba lagi nanti</span>',
+        title:
+          '<span class="font-weight-bold h4">Maaf sedang ada gangguan,<br>coba lagi nanti</span>',
         imageUrl: require('@/assets/images/icons/fail.svg'), // eslint-disable-line
         showCloseButton: false,
         focusConfirm: true,
@@ -433,22 +454,38 @@ export default {
       }
     },
     getRange(first, last) {
-      if (moment(first).format('l') === moment(this.today).format('l') && moment(last).format('l') === moment(this.today).format('l')) {
+      if (
+        moment(first).format('l') === moment(this.today).format('l')
+        && moment(last).format('l') === moment(this.today).format('l')
+      ) {
         this.changeData(1)
         return 'Real Time'
-      } else if (moment(first).format('l') === moment(this.last7).format('l') && moment(last).format('l') === moment(this.today).format('l')) { // eslint-disable-line
+      }
+      if (
+        moment(first).format('l') === moment(this.last7).format('l')
+        && moment(last).format('l') === moment(this.today).format('l')
+      ) {
+        // eslint-disable-line
         this.changeData(2)
         return '7 Hari Terakhir'
-      } else if (moment(first).format('l') === moment(this.last30).format('l') && moment(last).format('l') === moment(this.today).format('l')) {
+      }
+      if (
+        moment(first).format('l') === moment(this.last30).format('l')
+        && moment(last).format('l') === moment(this.today).format('l')
+      ) {
         this.changeData(3)
         return '30 Hari Terakhir'
-      } else if (moment(first).format('l') === moment(this.firstDateOfMonth).format('l') && moment(last).format('l') === moment(this.lastDateOfMonth).format('l')) {
+      }
+      if (
+        moment(first).format('l')
+          === moment(this.firstDateOfMonth).format('l')
+        && moment(last).format('l') === moment(this.lastDateOfMonth).format('l')
+      ) {
         this.changeData(4)
         return 'Bulan Ini'
-      } else {
-        this.changeData(5)
-        return 'Custom Tanggal'
       }
+      this.changeData(5)
+      return 'Custom Tanggal'
     },
     changeData(val) {
       const lcategories = []
@@ -468,21 +505,53 @@ export default {
               data: ['4', '3', '7', '10', '5', '8', '1'],
             },
           ]
-          this.categories = ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00', '24:00']
+          this.categories = [
+            '00:00',
+            '04:00',
+            '08:00',
+            '12:00',
+            '16:00',
+            '20:00',
+            '24:00',
+          ]
           break
         case 2:
           this.series = [
             {
               name: 'Leads',
-              data: ['2400000', '2300000', '2700000', '2000000', '2500000', '2800000', '2100000'],
+              data: [
+                '2400000',
+                '2300000',
+                '2700000',
+                '2000000',
+                '2500000',
+                '2800000',
+                '2100000',
+              ],
             },
             {
               name: 'Orders',
-              data: ['1400000', '1300000', '1700000', '2000000', '1500000', '1800000', '1100000'],
+              data: [
+                '1400000',
+                '1300000',
+                '1700000',
+                '2000000',
+                '1500000',
+                '1800000',
+                '1100000',
+              ],
             },
             {
               name: 'Pcs',
-              data: ['400000', '300000', '700000', '1000000', '500000', '800000', '100000'],
+              data: [
+                '400000',
+                '300000',
+                '700000',
+                '1000000',
+                '500000',
+                '800000',
+                '100000',
+              ],
             },
           ]
           this.categories = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min']
@@ -493,18 +562,67 @@ export default {
           this.series = [
             {
               name: 'Leads',
-              data: ['24', '23', '27', '20', '25', '28', '21', '24', '23', '27', '20', '25', '28', '21', '24'],
+              data: [
+                '24',
+                '23',
+                '27',
+                '20',
+                '25',
+                '28',
+                '21',
+                '24',
+                '23',
+                '27',
+                '20',
+                '25',
+                '28',
+                '21',
+                '24',
+              ],
             },
             {
               name: 'Orders',
-              data: ['14', '13', '17', '20', '15', '18', '11', '14', '13', '17', '20', '15', '18', '11', '14'],
+              data: [
+                '14',
+                '13',
+                '17',
+                '20',
+                '15',
+                '18',
+                '11',
+                '14',
+                '13',
+                '17',
+                '20',
+                '15',
+                '18',
+                '11',
+                '14',
+              ],
             },
             {
               name: 'Pcs',
-              data: ['4', '3', '7', '10', '5', '8', '1', '4', '3', '7', '10', '5', '8', '1', '4'],
+              data: [
+                '4',
+                '3',
+                '7',
+                '10',
+                '5',
+                '8',
+                '1',
+                '4',
+                '3',
+                '7',
+                '10',
+                '5',
+                '8',
+                '1',
+                '4',
+              ],
             },
           ]
-          for (let i = 0; i < 29; i++) { //eslint-disable-line
+          for (let i = 0; i < 29; i += 1) {
+            //eslint-disable-line
             if (i % 2 !== 0) {
               lcategories.push(`${i}`)
             }

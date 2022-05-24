@@ -42,7 +42,6 @@
           sm="10"
           class="d-flex justify-content-center"
         >
-
           <!-- apex chart -->
           <vue-apex-charts
             type="radialBar"

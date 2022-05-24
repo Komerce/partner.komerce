@@ -1,7 +1,6 @@
 <template>
   <b-card-code title="Custom Content">
     <app-timeline>
-
       <!-- 12 INVOICES HAVE BEEN PAID -->
       <app-timeline-item>
         <div class="d-flex flex-sm-row flex-column flex-wrap justify-content-between mb-1 mb-sm-0">
@@ -21,7 +20,6 @@
       </app-timeline-item>
 
       <app-timeline-item variant="secondary">
-
         <div class="d-flex flex-sm-row flex-column flex-wrap justify-content-between mb-1 mb-sm-0">
           <h6>Client Meeting</h6>
           <small class="text-muted">45 min ago</small>
@@ -38,7 +36,6 @@
 
       <!-- FINANCIAL REPORT -->
       <app-timeline-item variant="success">
-
         <div class="d-flex flex-sm-row flex-column flex-wrap justify-content-between mb-1 mb-sm-0">
           <h6>Financial Report</h6>
           <small class="text-muted">2 hours ago</small>
@@ -123,7 +120,6 @@
 
       <!-- ONLINE STORE -->
       <app-timeline-item variant="danger">
-
         <div class="d-flex flex-sm-row flex-column flex-wrap justify-content-between mb-1 mb-sm-0">
           <h6>Online Store</h6>
           <small class="text-muted">03:00 PM</small>
@@ -170,7 +166,6 @@
 
       <!-- DESIGNING UI -->
       <app-timeline-item variant="info">
-
         <div class="d-flex align-items-start flex-sm-row flex-column flex-wrap justify-content-between mb-1 mb-sm-50">
           <h6>Designing UI</h6>
           <b-badge

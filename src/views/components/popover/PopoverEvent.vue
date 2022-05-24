@@ -5,7 +5,6 @@
     </b-card-text>
 
     <div class="demo-inline-spacing">
-
       <!-- button show -->
       <b-button
         id="popover-button-show-event"

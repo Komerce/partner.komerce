@@ -519,7 +519,6 @@
         </b-button>
       </b-row>
     </b-modal>
-
   </b-card>
 </template>
 <script>
@@ -569,7 +568,7 @@ export default {
   methods: {
     lacakresi() {
       this.isLoading = true
-      const modal = new Promise((resolve, reject) => {
+      const modal = new Promise(resolve => {
         this.$refs['bv-modal-cek-resi'].show()
         resolve(true)
       })
@@ -616,7 +615,7 @@ export default {
         const { data } = res.data
         this.itemAwb = data.history
         this.isLoading = false
-      }).catch(err => {
+      }).catch(() => {
         this.isLoading = false
       })
     },

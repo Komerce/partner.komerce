@@ -11,7 +11,6 @@
     </b-card-text>
 
     <div class="demo-inline-spacing">
-
       <!-- primary -->
       <b-dropdown
         v-ripple.400="'rgba(255, 255, 255, 0.15)'"

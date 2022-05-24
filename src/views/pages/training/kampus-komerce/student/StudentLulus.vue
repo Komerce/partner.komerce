@@ -183,7 +183,6 @@
           :sort-desc.sync="sortDesc"
           :sort-compare.sync="sortCompare"
         >
-
           <template #cell(student_user_id)="data">
             <span>{{ data.item.student_user_id }}</span>
           </template>

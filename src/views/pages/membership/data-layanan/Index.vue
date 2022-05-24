@@ -46,7 +46,6 @@
           </b-table>
         </b-card-body>
       </b-card>
-
     </div>
 
     <div
@@ -138,9 +137,7 @@ export default {
       handler(val) {
         // calling api for table and update data table
         if (val.indexOf('to') !== -1) {
-          const [startDate, endDate] = val.split(' to ')
-        } else {
-          // handle error
+          val.split(' to ')
         }
       },
     },

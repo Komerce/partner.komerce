@@ -171,7 +171,7 @@ export default {
   },
   watch: {
     currentPage: {
-      handler(value) {
+      handler() {
         this.fetchData().catch(error => {
           console.error(error)
         })
@@ -232,7 +232,7 @@ export default {
           this.loadTable = false
           return data.data
         })
-        .catch(error => {
+        .catch(() => {
           // handle error
         })
     },

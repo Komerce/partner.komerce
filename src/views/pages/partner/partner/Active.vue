@@ -112,12 +112,10 @@
                     <b-form
                       ref="form"
                     >
-
                       <!-- Row Loop -->
                       <b-row
                         ref="row"
                       >
-
                         <!-- Sektor bisnis -->
                         <b-col md="6">
                           <b-form-group
@@ -178,14 +176,11 @@
                             </validation-provider>
                           </b-form-group>
                         </b-col>
-
                       </b-row>
-
                     </b-form>
                   </div>
                 </div>
                 <!-- End Filter dropdown -->
-
               </b-card>
             </b-collapse>
           </b-col>
@@ -202,12 +197,10 @@
                     <b-form
                       ref="form"
                     >
-
                       <!-- Row Loop -->
                       <b-row
                         ref="row"
                       >
-
                         <!-- Bakat dipekerjakan -->
                         <b-col md="5">
                           <validation-observer>
@@ -251,9 +244,7 @@
                             </b-form-group>
                           </validation-observer>
                         </b-col>
-
                       </b-row>
-
                     </b-form>
                   </div>
                 </div>
@@ -286,12 +277,10 @@
                     <b-form
                       ref="form"
                     >
-
                       <!-- Row Loop -->
                       <b-row
                         ref="row"
                       >
-
                         <!-- Bakat dipekerjakan -->
                         <b-col md="5">
                           <validation-observer>
@@ -335,9 +324,7 @@
                             </b-form-group>
                           </validation-observer>
                         </b-col>
-
                       </b-row>
-
                     </b-form>
                   </div>
                 </div>
@@ -451,7 +438,6 @@
       </b-overlay>
 
       <b-card-body class="d-flex justify-content-between flex-wrap pt-0">
-
         <!-- page length -->
         <b-form-group
           label="Per Page"

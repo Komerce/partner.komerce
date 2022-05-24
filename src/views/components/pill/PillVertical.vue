@@ -1,6 +1,5 @@
 <template>
   <b-card-code title="Vertically Stacked Pills">
-
     <b-tabs
       pills
       vertical

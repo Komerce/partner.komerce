@@ -1,6 +1,5 @@
 <template>
   <b-row>
-
     <!-- Link Badge -->
     <b-col md="6">
       <b-card-code title="Link Badge">
@@ -51,7 +50,6 @@
         </template>
       </b-card-code>
     </b-col>
-
   </b-row>
 </template>
 

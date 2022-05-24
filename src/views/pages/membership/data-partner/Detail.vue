@@ -30,7 +30,8 @@
               size="sm"
               class="mr-50 btn-custom btn-custom--edit"
               @click="toogleFormEdit"
-            >Edit
+            >
+              Edit
             </b-button>
             <div
               v-else
@@ -42,14 +43,16 @@
                 size="sm"
                 class="mr-1 btn-custom btn-custom--edit"
                 @click="toogleFormEdit"
-              >Batal
+              >
+                Batal
               </b-button>
               <b-button
                 variant="primary"
                 size="sm"
                 class="btn-custom btn-custom--edit"
                 @click="simpanFormEdit"
-              >Simpan
+              >
+                Simpan
               </b-button>
             </div>
           </div>
@@ -119,7 +122,6 @@
                   </b-form-group>
                 </b-col>
               </b-row>
-
             </b-form>
           </div>
 
@@ -209,7 +211,6 @@
               </b-col>
             </b-row>
           </div>
-
         </b-card-body>
       </b-card>
       <b-modal
@@ -262,7 +263,6 @@
           </div>
         </div>
       </b-modal>
-
     </div>
 
     <div

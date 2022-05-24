@@ -1,7 +1,14 @@
 /* eslint-disable global-require */
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import {
-  BCard, BSpinner, BForm, BFormGroup, BInputGroup, BInputGroupAppend, BFormInput, BButton,
+  BCard,
+  BSpinner,
+  BForm,
+  BFormGroup,
+  BInputGroup,
+  BInputGroupAppend,
+  BFormInput,
+  BButton,
 } from 'bootstrap-vue'
 import {
   resetpasswordrequired,
@@ -67,13 +74,15 @@ export default {
         if (success) {
           this.loading = true
           // eslint-disable-next-line
-          this.$http.post('/v1/partner/reset-password', {
-            code: this.$route.query.code,
-            password: this.passwordNew,
-          })
+          this.$http
+            .post('/v1/partner/reset-password', {
+              code: this.$route.query.code,
+              password: this.passwordNew,
+            })
             .then(() => {
               this.successChanged = true
-            }).catch(err => {
+            })
+            .catch(() => {
               this.loading = false
             })
         }

@@ -1,9 +1,5 @@
 import {
-  BRow,
-  BCol,
-  BCard,
-  BButton,
-  BFormGroup,
+  BRow, BCol, BCard, BButton, BFormGroup,
 } from 'bootstrap-vue'
 import VSelect from 'vue-select'
 import VueApexCharts from 'vue-apexcharts'
@@ -106,12 +102,7 @@ export default {
         },
         tooltip: {
           // intersect: true,
-          custom: ({
-            series,
-            seriesIndex,
-            dataPointIndex,
-            w,
-          }) => {
+          custom: ({ dataPointIndex, w }) => {
             let htmlRender = ''
             const arrayData = [...w.globals.series]
             arrayData.forEach((x, idx) => {
@@ -122,7 +113,11 @@ export default {
                   class="my-0 mt-1"
                   style="color: ${colorDefaultChart[idx]};"
                 >
-                  ${w.globals.seriesNames[idx]}</span> <span class="text-black"> ${filtersLibs.rupiah(x[dataPointIndex] || 0)}
+                  ${
+  w.globals.seriesNames[idx]
+}</span> <span class="text-black"> ${filtersLibs.rupiah(
+  x[dataPointIndex] || 0,
+)}
                 </p>`
               }
             })
@@ -205,12 +200,7 @@ export default {
         },
         tooltip: {
           // intersect: true,
-          custom: ({
-            series,
-            seriesIndex,
-            dataPointIndex,
-            w,
-          }) => {
+          custom: ({ dataPointIndex, w }) => {
             // console.log('ini series', series)
             // console.log('ini series index', seriesIndex)
             // console.log('ini W', w)
@@ -233,7 +223,17 @@ export default {
                   class="my-0 mt-1"
                   style="color: ${colorDefaultChart[idx]};"
                 >
-                  <span>${w.globals.seriesNames[idx]}</span> <span class="text-black"> ${w.globals.seriesNames[idx] === seriesNameChart.order ? x[dataPointIndex] : (filtersLibs.rupiah(x[dataPointIndex] || 0))}</span>${w.globals.seriesNames[idx] === seriesNameChart.total ? `<span class="text-gray-600"> <br/>${w.globals.seriesNames[3]} ${w.globals.collapsedSeries[0].data[dataPointIndex]} (${w.globals.collapsedSeries[1].data[dataPointIndex]} Partner)</span>` : ''}
+                  <span>${
+  w.globals.seriesNames[idx]
+}</span> <span class="text-black"> ${
+  w.globals.seriesNames[idx] === seriesNameChart.order
+    ? x[dataPointIndex]
+    : filtersLibs.rupiah(x[dataPointIndex] || 0)
+}</span>${
+  w.globals.seriesNames[idx] === seriesNameChart.total
+    ? `<span class="text-gray-600"> <br/>${w.globals.seriesNames[3]} ${w.globals.collapsedSeries[0].data[dataPointIndex]} (${w.globals.collapsedSeries[1].data[dataPointIndex]} Partner)</span>`
+    : ''
+}
                 </p>`
               }
             })
@@ -278,7 +278,20 @@ export default {
           value: 0,
         },
       ],
-      monthlabel: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Dec'],
+      monthlabel: [
+        'Jan',
+        'Feb',
+        'Mar',
+        'Apr',
+        'Mei',
+        'Jun',
+        'Jul',
+        'Agu',
+        'Sep',
+        'Okt',
+        'Nov',
+        'Dec',
+      ],
       bulanChartExpedisi: '2022-02-02',
       filterdata: {
         ekspedisi: {
@@ -336,42 +349,42 @@ export default {
   },
   watch: {
     'filterdata.ekspedisi.chart.selectOpt': {
-      handler(val) {
+      handler() {
         this.fetchDataChart(typeOfCallingApi.chart.ekspedisi)
       },
     },
     'filterdata.ekspedisi.chart.bulan': {
-      handler(val) {
+      handler() {
         this.fetchDataChart(typeOfCallingApi.chart.ekspedisi)
       },
     },
     'filterdata.ekspedisi.toplist.selectOpt': {
-      handler(val) {
+      handler() {
         this.fetchDataTop(typeOfCallingApi.toplist.ekspedisi)
       },
     },
     'filterdata.ekspedisi.toplist.bulan': {
-      handler(val) {
+      handler() {
         this.fetchDataTop(typeOfCallingApi.toplist.ekspedisi)
       },
     },
     'filterdata.partner.chart.selectOpt': {
-      handler(val) {
+      handler() {
         this.fetchDataChart(typeOfCallingApi.chart.partner)
       },
     },
     'filterdata.partner.chart.bulan': {
-      handler(val) {
+      handler() {
         this.fetchDataChart(typeOfCallingApi.chart.partner)
       },
     },
     'filterdata.partner.toplist.selectOpt': {
-      handler(val) {
+      handler() {
         this.fetchDataTop(typeOfCallingApi.toplist.partner)
       },
     },
     'filterdata.partner.toplist.bulan': {
-      handler(val) {
+      handler() {
         this.fetchDataTop(typeOfCallingApi.toplist.partner)
       },
     },
@@ -386,9 +399,13 @@ export default {
   },
   methods: {
     getDataShippingName() {
-      this.$http_komship.get('/v1/admin/dashboard/shippingName')
+      this.$http_komship
+        .get('/v1/admin/dashboard/shippingName')
         .then(({ data }) => {
-          const oriOptions = data.data.map((x, idx) => ({ name: x, value: (idx + 1) }))
+          const oriOptions = data.data.map((x, idx) => ({
+            name: x,
+            value: idx + 1,
+          }))
           const optPartner = [...oriOptions]
           optPartner.unshift({
             name: 'Semua',
@@ -404,30 +421,49 @@ export default {
           })
         })
         .catch(() => {
-          this.$toast({
-            component: ToastificationContentVue,
-            props: {
-              title: 'Gagal',
-              text: 'Gagal untuk mengambil data, silahkan coba lagi!',
-              icon: 'AlertCircleIcon',
-              variant: 'danger',
+          this.$toast(
+            {
+              component: ToastificationContentVue,
+              props: {
+                title: 'Gagal',
+                text: 'Gagal untuk mengambil data, silahkan coba lagi!',
+                icon: 'AlertCircleIcon',
+                variant: 'danger',
+              },
             },
-          }, 2000)
+            2000,
+          )
         })
     },
     clickLegendPartner(event, chartContext, config) {
       if (config.globals.collapsedSeriesIndices.indexOf(3) !== -1) {
-        this.$refs.chartPerformancePartner.chart.hideSeries(seriesNameChart.noncod)
-        this.$refs.chartPerformancePartner.chart.hideSeries(seriesNameChart.total)
+        this.$refs.chartPerformancePartner.chart.hideSeries(
+          seriesNameChart.noncod,
+        )
+        this.$refs.chartPerformancePartner.chart.hideSeries(
+          seriesNameChart.total,
+        )
         this.$refs.chartPerformancePartner.chart.hideSeries(seriesNameChart.cod)
-        this.$refs.chartPerformancePartner.chart.hideSeries(seriesNameChart.partner)
-        this.$refs.chartPerformancePartner.chart.showSeries(seriesNameChart.order)
+        this.$refs.chartPerformancePartner.chart.hideSeries(
+          seriesNameChart.partner,
+        )
+        this.$refs.chartPerformancePartner.chart.showSeries(
+          seriesNameChart.order,
+        )
       } else {
-        this.$refs.chartPerformancePartner.chart.showSeries(seriesNameChart.noncod)
-        this.$refs.chartPerformancePartner.chart.showSeries(seriesNameChart.total)
+        this.$refs.chartPerformancePartner.chart.showSeries(
+          seriesNameChart.noncod,
+        )
+        this.$refs.chartPerformancePartner.chart.showSeries(
+          seriesNameChart.total,
+        )
         this.$refs.chartPerformancePartner.chart.showSeries(seriesNameChart.cod)
-        this.$refs.chartPerformancePartner.chart.hideSeries(seriesNameChart.partner)
-        this.$refs.chartPerformancePartner.chart.hideSeries(seriesNameChart.order)
+        this.$refs.chartPerformancePartner.chart.hideSeries(
+          seriesNameChart.partner,
+        )
+        this.$refs.chartPerformancePartner.chart.hideSeries(
+          seriesNameChart.order,
+        )
       }
     },
     fetchDataTop(type = '') {
@@ -452,20 +488,24 @@ export default {
         default:
           break
       }
-      this.$http_komship.get(`/v1/admin/dashboard/${endpoint}`, { params })
+      this.$http_komship
+        .get(`/v1/admin/dashboard/${endpoint}`, { params })
         .then(({ data }) => {
           this.datatoplist[type.toLowerCase()] = data.data
         })
         .catch(() => {
-          this.$toast({
-            component: ToastificationContentVue,
-            props: {
-              title: 'Gagal',
-              text: 'Gagal untuk mengambil data, silahkan coba lagi!',
-              icon: 'AlertCircleIcon',
-              variant: 'danger',
+          this.$toast(
+            {
+              component: ToastificationContentVue,
+              props: {
+                title: 'Gagal',
+                text: 'Gagal untuk mengambil data, silahkan coba lagi!',
+                icon: 'AlertCircleIcon',
+                variant: 'danger',
+              },
             },
-          }, 2000)
+            2000,
+          )
         })
     },
     fetchDataChart(type = '') {
@@ -481,7 +521,10 @@ export default {
           dtbulan = this.filterdata.partner.chart.bulan
           params.start_date = this.parseStartDate(dtbulan)
           params.end_date = this.parseEndDate(dtbulan)
-          params.expedition_option = this.filterdata.partner.chart.selectOpt.name.toLowerCase() === 'semua' ? this.optionChartEkspedisi.map(x => x.name).join() : this.filterdata.partner.chart.selectOpt.name
+          params.expedition_option = this.filterdata.partner.chart.selectOpt.name.toLowerCase()
+            === 'semua'
+            ? this.optionChartEkspedisi.map(x => x.name).join()
+            : this.filterdata.partner.chart.selectOpt.name
           this.chartOptionsPartner = {
             ...this.chartOptionsPartner,
             xaxis: {
@@ -509,7 +552,8 @@ export default {
         default:
           break
       }
-      this.$http_komship.get(`/v1/admin/dashboard/${endpoint}`, { params })
+      this.$http_komship
+        .get(`/v1/admin/dashboard/${endpoint}`, { params })
         .then(({ data }) => {
           switch (type) {
             case typeOfCallingApi.chart.ekspedisi:
@@ -566,8 +610,12 @@ export default {
                 },
               }
               this.$nextTick(() => {
-                this.$refs.chartPerformancePartner.chart.hideSeries(seriesNameChart.order)
-                this.$refs.chartPerformancePartner.chart.hideSeries(seriesNameChart.partner)
+                this.$refs.chartPerformancePartner.chart.hideSeries(
+                  seriesNameChart.order,
+                )
+                this.$refs.chartPerformancePartner.chart.hideSeries(
+                  seriesNameChart.partner,
+                )
               })
               break
             default:
@@ -575,15 +623,18 @@ export default {
           }
         })
         .catch(() => {
-          this.$toast({
-            component: ToastificationContentVue,
-            props: {
-              title: 'Gagal',
-              text: 'Gagal untuk mengambil data, silahkan coba lagi!',
-              icon: 'AlertCircleIcon',
-              variant: 'danger',
+          this.$toast(
+            {
+              component: ToastificationContentVue,
+              props: {
+                title: 'Gagal',
+                text: 'Gagal untuk mengambil data, silahkan coba lagi!',
+                icon: 'AlertCircleIcon',
+                variant: 'danger',
+              },
             },
-          }, 2000)
+            2000,
+          )
         })
     },
     parseStartDate(dt) {

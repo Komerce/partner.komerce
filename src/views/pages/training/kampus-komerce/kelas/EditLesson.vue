@@ -107,7 +107,6 @@
                           #default="{ errors }"
                           name="Deskripsi Video"
                         >
-
                           <ckeditor
                             v-model="videoDescription"
                             :editor="editor"

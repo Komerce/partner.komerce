@@ -76,8 +76,8 @@
                         @input="filterPercent"
                       />
                     </b-form-group>
-
-                  </validation-provider></b-col>
+                  </validation-provider>
+                </b-col>
                 <b-col
                   cols="auto"
                   md="auto"
@@ -186,7 +186,6 @@
           :sort-by.sync="sortBy"
           :sort-desc.sync="sortDesc"
         >
-
           <template #cell(student_user_id)="data">
             <span>{{ data.value }}</span>
           </template>

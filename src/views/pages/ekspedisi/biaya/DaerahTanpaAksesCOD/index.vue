@@ -120,7 +120,7 @@ export default {
           vm.currentPage = parseData.current_page
           callback(parseData.data)
         })
-        .catch(e => {
+        .catch(() => {
           vm.loadDataAwal = false
         })
         .finally(() => {
@@ -133,7 +133,7 @@ export default {
       this.totalRows = filteredItems.length
       this.currentPage = 1
     },
-    deleteDaerahTanpaAksesCOD(val) {
+    deleteDaerahTanpaAksesCOD() {
       this.$bvModal.show('modal-delete-daerah')
     },
     handleImportExcelDaerahCOD() {

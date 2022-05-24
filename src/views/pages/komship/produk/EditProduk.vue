@@ -189,7 +189,6 @@
                     #default="{errors}"
                     name="Upload Gambar"
                   >
-
                     <!-- Preview Image -->
                     <transition name="fade">
                       <b-avatar
@@ -811,7 +810,6 @@
                             </b-button>
                           </div>
                         </b-col>
-
                       </b-row>
                     </b-form-group>
                   </transition>
@@ -829,7 +827,6 @@
                         :fields="fields"
                         :items="variantItems"
                       >
-
                         <template #cell(variant1)="data">
                           <div v-if="editMode === true && indexRow === data.index">
                             <b-col
@@ -1055,11 +1052,9 @@
                             Simpan
                           </b-button>
                         </template>
-
                       </b-table>
                     </b-form-group>
                   </transition>
-
                 </b-col>
 
                 <!-- Mobile -->
@@ -1546,7 +1541,6 @@
                             </b-button>
                           </div>
                         </b-col>
-
                       </b-row>
                     </b-form-group>
                   </transition>
@@ -1564,7 +1558,6 @@
                         :fields="fields"
                         :items="variantItems"
                       >
-
                         <template #cell(variant1)="data">
                           <div v-if="editMode === true && indexRow === data.index">
                             <b-col
@@ -1790,11 +1783,9 @@
                             Simpan
                           </b-button>
                         </template>
-
                       </b-table>
                     </b-form-group>
                   </transition>
-
                 </b-col>
               </b-row>
             </b-col>
@@ -2278,7 +2269,6 @@
           </b-row>
         </b-form>
       </validation-observer>
-
     </b-card-actions>
   </b-overlay>
 </template>

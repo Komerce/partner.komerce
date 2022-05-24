@@ -34,7 +34,6 @@
               empty-text="Tidak ada data untuk ditampilkan."
               responsive
             >
-
               <template
                 #head(order_date)="data"
               >
@@ -401,7 +400,6 @@
                   </b-button>
                 </div>
               </template>
-
             </b-table>
           </b-row>
 
@@ -449,7 +447,6 @@
 
 <script>
 import {
-  BCard,
   BOverlay,
   BTable,
   BButton,
@@ -592,7 +589,7 @@ export default {
     this.reload()
   },
   methods: {
-    getSelectOrder(data) {
+    getSelectOrder() {
       // handle error
     },
     getDataOrderFromChild(data) {

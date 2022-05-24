@@ -1,8 +1,5 @@
 import {
-  BTable,
-  BCard,
-  BSpinner,
-  BCardBody,
+  BTable, BCard, BSpinner, BCardBody,
 } from 'bootstrap-vue'
 import moment from 'moment'
 import filterLib from '@/libs/filters'
@@ -41,12 +38,34 @@ export default {
       locale: {
         format: 'dd/mm/yyyy',
         daysOfWeek: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
-        monthNames: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
+        monthNames: [
+          'Jan',
+          'Feb',
+          'Mar',
+          'Apr',
+          'Mei',
+          'Jun',
+          'Jul',
+          'Agu',
+          'Sep',
+          'Okt',
+          'Nov',
+          'Des',
+        ],
       },
       ranges: {
-        '7 Hari Terakhir': [this.$moment().subtract(7, 'days').startOf('day').toDate(), today],
-        '30 Hari Terakhir': [this.$moment().subtract(30, 'days').startOf('day').toDate(), today],
-        '2 Bulan Terakhir': [this.$moment().subtract(60, 'days').startOf('day').toDate(), today],
+        '7 Hari Terakhir': [
+          this.$moment().subtract(7, 'days').startOf('day').toDate(),
+          today,
+        ],
+        '30 Hari Terakhir': [
+          this.$moment().subtract(30, 'days').startOf('day').toDate(),
+          today,
+        ],
+        '2 Bulan Terakhir': [
+          this.$moment().subtract(60, 'days').startOf('day').toDate(),
+          today,
+        ],
         'Bulan Ini': [this.$moment().startOf('month').toDate(), today],
       },
       rangeDate: {
@@ -112,7 +131,9 @@ export default {
           sortable: true,
           class: 'text-black text-right',
           tdClass: 'cell__custom',
-          formatter: val => (this.$moment(val).isValid() ? this.$moment(val).format('DD MMMM YYYY') : val),
+          formatter: val => (this.$moment(val).isValid()
+            ? this.$moment(val).format('DD MMMM YYYY')
+            : val),
           thStyle: {
             color: 'black',
             minWidth: '190px',
@@ -126,7 +147,9 @@ export default {
           sortable: true,
           class: 'text-black text-right',
           tdClass: 'text-capitalize',
-          formatter: val => (this.$moment(val).isValid() ? this.$moment(val).format('DD MMMM YYYY') : val),
+          formatter: val => (this.$moment(val).isValid()
+            ? this.$moment(val).format('DD MMMM YYYY')
+            : val),
           thStyle: {
             color: 'black',
             minWidth: '190px',
@@ -152,7 +175,9 @@ export default {
           sortable: true,
           class: 'text-black text-right',
           tdClass: 'text-capitalize',
-          formatter: val => (this.$moment(val).isValid() ? this.$moment(val).format('DD MMMM YYYY') : val),
+          formatter: val => (this.$moment(val).isValid()
+            ? this.$moment(val).format('DD MMMM YYYY')
+            : val),
           thStyle: {
             color: 'black',
             minWidth: '190px',
@@ -166,7 +191,9 @@ export default {
           sortable: true,
           class: 'text-black text-right',
           tdClass: 'text-capitalize',
-          formatter: val => (this.$moment(val).isValid() ? this.$moment(val).format('DD MMMM YYYY') : val),
+          formatter: val => (this.$moment(val).isValid()
+            ? this.$moment(val).format('DD MMMM YYYY')
+            : val),
           thStyle: {
             color: 'black',
             minWidth: '190px',
@@ -180,7 +207,9 @@ export default {
           sortable: true,
           class: 'text-black text-right',
           tdClass: 'text-capitalize',
-          formatter: val => (this.$moment(val).isValid() ? this.$moment(val).format('DD MMMM YYYY') : val),
+          formatter: val => (this.$moment(val).isValid()
+            ? this.$moment(val).format('DD MMMM YYYY')
+            : val),
           thStyle: {
             color: 'black',
             minWidth: '190px',
@@ -194,7 +223,9 @@ export default {
           sortable: true,
           class: 'text-black text-right',
           tdClass: 'text-capitalize',
-          formatter: val => (this.$moment(val).isValid() ? this.$moment(val).format('DD MMMM YYYY') : val),
+          formatter: val => (this.$moment(val).isValid()
+            ? this.$moment(val).format('DD MMMM YYYY')
+            : val),
           thStyle: {
             color: 'black',
             minWidth: '190px',
@@ -275,11 +306,19 @@ export default {
         // calling api for table and update data table
         if (val) {
           const { startDate, endDate } = val
-          this.paramsCallAPI.start_date = this.$moment(startDate).startOf('day').format(formatDate)
-          this.paramsCallAPI.end_date = this.$moment(endDate).endOf('day').format(formatDate)
+          this.paramsCallAPI.start_date = this.$moment(startDate)
+            .startOf('day')
+            .format(formatDate)
+          this.paramsCallAPI.end_date = this.$moment(endDate)
+            .endOf('day')
+            .format(formatDate)
         } else {
-          this.paramsCallAPI.start_date = this.$moment(val.startDate).startOf('day').format(formatDate)
-          this.paramsCallAPI.end_date = this.$moment(val.endDate).endOf('day').format(formatDate)
+          this.paramsCallAPI.start_date = this.$moment(val.startDate)
+            .startOf('day')
+            .format(formatDate)
+          this.paramsCallAPI.end_date = this.$moment(val.endDate)
+            .endOf('day')
+            .format(formatDate)
         }
       },
       deep: true,
@@ -346,7 +385,7 @@ export default {
           this.loadDataAwal = false
           this.isLoadTable = false
         })
-        .catch(e => {
+        .catch(() => {
           this.$toast({
             component: ToastificationContent,
             props: {
@@ -367,7 +406,9 @@ export default {
       // date format Wed Apr 06 2022 12:00:00 GMT+0700 (Western Indonesia Time)
       const dataclass = classes
       if (!dataclass.disabled) {
-        dataclass.disabled = this.$moment(date.getTime()).startOf('day').isAfter(this.$moment())
+        dataclass.disabled = this.$moment(date.getTime())
+          .startOf('day')
+          .isAfter(this.$moment())
       }
       return dataclass
     },

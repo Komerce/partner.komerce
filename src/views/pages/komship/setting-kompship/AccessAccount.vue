@@ -39,7 +39,6 @@
             :items="tableProvider"
             :busy.sync="loading"
           >
-
             <template #cell(full_name)="data">
               <h5 class="text-black">
                 <strong>{{ data.item.full_name }}</strong>
@@ -88,7 +87,6 @@
                 </b-button>
               </b-col>
             </template>
-
           </b-table>
         </b-overlay>
       </b-col>
@@ -115,7 +113,6 @@
       <validation-observer ref="formRules">
         <b-form>
           <b-row>
-
             <b-col
               v-if="!editMode"
               cols="10"
@@ -221,7 +218,6 @@
                     </b-form-checkbox>
                   </b-form-group>
                 </b-col>
-
               </b-form-group>
             </b-col>
 
@@ -413,10 +409,8 @@
                     </b-form-checkbox>
                   </b-form-group>
                 </b-col>
-
               </b-form-group>
             </b-col>
-
           </b-row>
         </b-form>
       </validation-observer>
@@ -456,7 +450,6 @@
         </b-row>
       </template>
     </b-modal>
-
   </b-card>
 </template>
 

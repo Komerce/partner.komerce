@@ -396,7 +396,7 @@ export default {
         this.items = [...data].sort((a, b) => b.withdrawal_id - a.withdrawal_id)
         this.totalRows = data.length
       })
-        .catch(e => {
+        .catch(() => {
           this.loadDataAwal = false
           // handle error
         })

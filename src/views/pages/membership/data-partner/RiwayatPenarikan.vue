@@ -72,7 +72,6 @@
           </b-table>
         </b-card-body>
       </b-card>
-
     </div>
 
     <div
@@ -201,9 +200,7 @@ export default {
       handler(val) {
         // calling api for table and update data table
         if (val.indexOf('to') !== -1) {
-          const [startDate, endDate] = val.split(' to ')
-        // eslint-disable-next-line no-empty
-        } else {
+          val.split(' to ')
         }
       },
     },

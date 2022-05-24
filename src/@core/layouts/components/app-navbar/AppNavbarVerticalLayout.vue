@@ -1,6 +1,5 @@
 <template>
   <div class="navbar-container d-flex content align-items-center">
-
     <!-- Nav Menu Toggler -->
     <ul class="nav navbar-nav">
       <li class="nav-item">

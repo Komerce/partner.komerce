@@ -7,7 +7,6 @@
     </b-card-text>
 
     <div class="demo-inline-spacing">
-
       <!-- default -->
       <b-button
         variant="gradient-primary"

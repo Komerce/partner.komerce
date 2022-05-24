@@ -112,7 +112,6 @@
                   class="ml-1 "
                 />
               </div>
-
             </b-col>
             <b-col>
               <div class="mt-1">
@@ -374,7 +373,6 @@
               </b-collapse>
             </b-col>
           </b-row>
-
         </div>
       </b-container>
     </b-card>
@@ -389,7 +387,6 @@ import {
   BImg,
   BAvatar,
   BOverlay,
-  BIconInfoCircle,
   BCard,
   BContainer,
   BCollapse,

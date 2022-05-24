@@ -1,5 +1,3 @@
-/* eslint-disable no-plusplus */
-import axioskomsipdev from '@/libs/axioskomsipdev'
 import {
   BImg,
   BCard,
@@ -42,20 +40,32 @@ export default {
 
     this.$nextTick(() => {
       if (this.dragAndDropCapable) {
-      /*
+        /*
           Listen to all of the drag events and bind an event listener to each
           for the fileform.
         */
-        ['drag', 'dragstart', 'dragend', 'dragover', 'dragenter', 'dragleave', 'drop'].forEach(evt => {
-        /*
+        [
+          'drag',
+          'dragstart',
+          'dragend',
+          'dragover',
+          'dragenter',
+          'dragleave',
+          'drop',
+        ].forEach(evt => {
+          /*
             For each event add an event listener that prevents the default action
             (opening the file in the browser) and stop the propagation of the event (so
             no other elements open the file in the browser)
           */
-          this.$refs.fileform.addEventListener(evt, e => {
-            e.preventDefault()
-            e.stopPropagation()
-          }, false)
+          this.$refs.fileform.addEventListener(
+            evt,
+            e => {
+              e.preventDefault()
+              e.stopPropagation()
+            },
+            false,
+          )
         })
 
         /*
@@ -63,7 +73,7 @@ export default {
         */
         this.$refs.fileform.addEventListener('drop', e => {
           const { files } = e.dataTransfer
-          for (let index = 0; index < files.length; index++) {
+          for (let index = 0; index < files.length; index += 1) {
             if (files.length > 3) {
               this.$refs.failUploadPopup.show()
             }
@@ -98,10 +108,11 @@ export default {
         We also check to see if the window has `FormData` and `FileReader` objects
         present so we can do our AJAX uploading
       */
-      return (('draggable' in div)
-              || ('ondragstart' in div && 'ondrop' in div))
-              && 'FormData' in window
-              && 'FileReader' in window
+      return (
+        ('draggable' in div || ('ondragstart' in div && 'ondrop' in div))
+        && 'FormData' in window
+        && 'FileReader' in window
+      )
     },
     uploadFile() {
       // this.$refs.filebuktitransfer.click()
@@ -127,22 +138,26 @@ export default {
         // formData.append('status', 'completed')
         // formData.append('notes', '')
         formData.append('_method', 'PUT')
-        this.$http.post(endpoint, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-          onUploadProgress: progressEvent => {
-            const progressPercent = parseInt(Math.round((progressEvent.loaded / progressEvent.total) * 100), 10)
-            this.valueProgressUpload = progressPercent
-            if (progressPercent === 100) {
-              this.fileUploadCount += 1
-            }
-          },
-        })
+        this.$http
+          .post(endpoint, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+            onUploadProgress: progressEvent => {
+              const progressPercent = parseInt(
+                Math.round((progressEvent.loaded / progressEvent.total) * 100),
+                10,
+              )
+              this.valueProgressUpload = progressPercent
+              if (progressPercent === 100) {
+                this.fileUploadCount += 1
+              }
+            },
+          })
           .then(({ data }) => {
             this.filesUploaded.push(data)
           })
-          .catch(e => {
+          .catch(() => {
             // handle error
           })
       })
@@ -150,7 +165,9 @@ export default {
     handleBatalDataUpload(file) {
       const fileListArr = Array.from(this.filesSettled)
       // notes: ketika nama file sama dan ada bnyak akan ke filter(hapus) semua
-      const filteredFiles = fileListArr.filter(x => (x.name !== file.name && x.lastModified !== file.lastModified))
+      const filteredFiles = fileListArr.filter(
+        x => x.name !== file.name && x.lastModified !== file.lastModified,
+      )
       this.filesSettled = filteredFiles
       this.fileUploadCount = filteredFiles.length
       this.filesUploaded = filteredFiles
@@ -163,7 +180,7 @@ export default {
       const sizesUnit = ['Bytes', 'KB', 'MB', 'GB', 'TB']
       if (size === 0) return '0 Byte'
       const i = parseInt(Math.floor(Math.log(size) / Math.log(1024)), 10)
-      return `${Math.round(size / (1024 ** i), 2)} ${sizesUnit[i]}`
+      return `${Math.round(size / 1024 ** i, 2)} ${sizesUnit[i]}`
     },
   },
 }

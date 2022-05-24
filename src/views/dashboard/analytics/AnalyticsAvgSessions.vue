@@ -1,7 +1,6 @@
 <template>
   <b-card v-if="data">
     <b-row class="pb-50">
-
       <!-- text and button -->
       <b-col
         sm="6"

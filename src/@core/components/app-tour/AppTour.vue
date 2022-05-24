@@ -27,7 +27,6 @@
           :is-last="tour.isLast"
           :labels="tour.labels"
         >
-
           <div
             slot="actions"
             class="tour-actions d-flex justify-content-between"
@@ -91,7 +90,6 @@
               />
             </b-button>
           </div>
-
         </v-step>
         <!-- eslint-enable vue/no-use-v-if-with-v-for -->
       </transition>

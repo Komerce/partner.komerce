@@ -37,14 +37,12 @@ import {
   BButton,
   BIconXCircle,
 } from 'bootstrap-vue'
-import DataOrderTable from '../order/DataOrderTable.vue'
 
 export default {
   components: {
     BModal,
     BButton,
     BIconXCircle,
-    DataOrderTable,
   },
   props: {
     dataOrders: {

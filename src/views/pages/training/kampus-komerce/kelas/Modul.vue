@@ -63,7 +63,6 @@
           :tbody-tr-class="rowClass"
           :busy.sync="loading"
         >
-
           <template #cell(modules)="data">
             <h4>{{ data.item.module_title }}</h4>
             <p>{{ data.item.module_subtitle }}</p>

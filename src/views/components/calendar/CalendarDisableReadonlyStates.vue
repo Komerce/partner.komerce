@@ -15,7 +15,6 @@
 
     <div class="d-flex justify-content-center">
       <div>
-
         <!-- checkbox -->
         <b-form-group label="Select calendar interactive state">
           <b-form-radio-group
