@@ -14,7 +14,7 @@ npm run format ||
 export NODE_OPTIONS="--max-old-space-size=8192"
 
 # Check ESLint Standards
-npm run lint:fix ||
+npm run lint ||
 (
         echo '
                 Style kode anda tidak sesuai dengan aturan standart eslint kami. Silahkan perbaiki lagi kode kamu ya 😊'
