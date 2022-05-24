@@ -1,14 +1,7 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-echo 'Styling, linting, formatting dan building project sebelum commit'
-# Check Prettier standards
-npm run format ||
-(
-    echo '
-             Kesalahan saat mengecheck prettier. Jalankan manual yarn format or npm run format. Semoga berhasil slurrr 😊';
-    false;
-)
+echo 'Styling, linting, formatting dan building project sebelum commit hehehe 😀😀'
 
 # add extend memory
 export NODE_OPTIONS="--max-old-space-size=8192"
