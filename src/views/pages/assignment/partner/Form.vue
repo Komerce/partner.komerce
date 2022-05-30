@@ -30,7 +30,7 @@
                       rules="required|min:3"
                     >
                       <b-form-input
-                        v-model="sk_number"
+                        v-model="skNumbers"
                         :state="
                           errors.length > 0 || submitErrors.name ? false : null
                         "
@@ -54,7 +54,7 @@
                       rules="required|url"
                     >
                       <b-form-input
-                        v-model="document_url"
+                        v-model="documentsUrl"
                         :state="
                           errors.length > 0 || submitErrors.name ? false : null
                         "
@@ -78,7 +78,7 @@
                       rules="required"
                     >
                       <flat-pickr
-                        v-model="release_date"
+                        v-model="releaseDates"
                         class="form-control"
                         :config="{
                           altInput: true,
@@ -109,21 +109,12 @@
           >
             <b-row>
               <b-col md="1">
-                <b>List Talent</b>
+                <b>List Team Lead</b>
               </b-col>
-              <b-col md="2">
-                <b>Nama</b>
-              </b-col>
-              <b-col md="2">
-                <b>Partner</b>
-              </b-col>
-              <b-col md="2">
+              <b-col md="4">
                 <b>Team Lead</b>
               </b-col>
-              <b-col md="2">
-                <b>Device</b>
-              </b-col>
-              <b-col md="2">
+              <b-col md="4">
                 <b>Kantor</b>
               </b-col>
               <b-col
@@ -140,69 +131,9 @@
                 class="mt-1"
               >
                 <b-col
-                  md="2"
+                  md="4"
                   offset-md="1"
                 >
-                  <validation-provider
-                    #default="{ errors }"
-                    name="Talent"
-                    rules="required"
-                  >
-                    <v-select
-                      v-model="assignment.talent"
-                      label="full_name"
-                      :options="talentItems"
-                      placeholder="Ketik untuk mencari..."
-                      @search="onSearchTalent"
-                    >
-                      <li
-                        v-if="hasMoreTalent"
-                        slot="list-footer"
-                        class="
-                          vs__dropdown-option vs__dropdown-option--disabled
-                        "
-                      >
-                        <feather-icon
-                          icon="MoreHorizontalIcon"
-                          size="16"
-                        />
-                      </li>
-                    </v-select>
-                    <small class="text-danger">{{ errors[0] }}</small>
-                  </validation-provider>
-                </b-col>
-                <b-col md="2">
-                  <validation-provider
-                    #default="{ errors }"
-                    name="Partner"
-                    rules="required"
-                  >
-                    <v-select
-                      v-model="assignment.partner"
-                      label="label"
-                      :options="partnerItems"
-                      placeholder="Ketik untuk mencari..."
-                      :filterable="false"
-                      @input="val => loadDevices('', val)"
-                      @search="onSearchPartner"
-                    >
-                      <li
-                        v-if="hasMorePartner"
-                        slot="list-footer"
-                        class="
-                          vs__dropdown-option vs__dropdown-option--disabled
-                        "
-                      >
-                        <feather-icon
-                          icon="MoreHorizontalIcon"
-                          size="16"
-                        />
-                      </li>
-                    </v-select>
-                    <small class="text-danger">{{ errors[0] }}</small>
-                  </validation-provider>
-                </b-col>
-                <b-col md="2">
                   <validation-provider
                     #default="{ errors }"
                     name="Team Lead"
@@ -231,40 +162,7 @@
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
                 </b-col>
-                <b-col md="2">
-                  <validation-provider
-                    #default="{ errors }"
-                    name="Device"
-                    rules="required"
-                  >
-                    <v-select
-                      v-model="assignment.device"
-                      label="brancd"
-                      :options="deviceItems"
-                      placeholder="Ketik untuk mencari..."
-                      :disabled="!assignment.partner"
-                      @search="
-                        (search, loading) =>
-                          onSearchDevice(search, loading, assignment.partner)
-                      "
-                    >
-                      <li
-                        v-if="hasMoreDevice"
-                        slot="list-footer"
-                        class="
-                          vs__dropdown-option vs__dropdown-option--disabled
-                        "
-                      >
-                        <feather-icon
-                          icon="MoreHorizontalIcon"
-                          size="16"
-                        />
-                      </li>
-                    </v-select>
-                    <small class="text-danger">{{ errors[0] }}</small>
-                  </validation-provider>
-                </b-col>
-                <b-col md="2">
+                <b-col md="4">
                   <validation-provider
                     #default="{ errors }"
                     name="Kantor"
@@ -317,24 +215,12 @@
                 class="mt-1"
               >
                 <b-col
-                  md="2"
+                  md="4"
                   offset-md="1"
                 >
-                  <p>{{ assignment.talent.user.full_name }}</p>
-                </b-col>
-                <b-col md="2">
-                  <p>
-                    {{ assignment.partner.no_partner }}
-                    {{ assignment.partner.user.full_name }}
-                  </p>
-                </b-col>
-                <b-col md="2">
                   <p>{{ assignment.staff.user.full_name }}</p>
                 </b-col>
-                <b-col md="2">
-                  <p>{{ assignment.device.brancd }}</p>
-                </b-col>
-                <b-col md="2">
+                <b-col md="4">
                   <p>{{ assignment.office.office_name }}</p>
                 </b-col>
                 <b-col md="12">
@@ -343,7 +229,10 @@
               </b-row>
             </template>
             <b-row>
-              <b-col class="text-right">
+              <b-col
+                offset-md="9"
+                md="2"
+              >
                 <b-button
                   v-if="!showMode"
                   variant="outline-danger"
@@ -356,11 +245,6 @@
             </b-row>
           </b-col>
           <b-col md="12">
-            <p>
-              <small>
-                * Assign akan mengganti status Talent dari Non Job menjadi Hired
-              </small>
-            </p>
             <b-button
               v-if="!showMode"
               variant="primary"
@@ -381,9 +265,9 @@
     </b-card-actions>
     <modal
       ref="confirmationModalComponent"
-      :sk_number="sk_number"
-      :document_url="document_url"
-      :release_date="release_date"
+      :sk-numbers="skNumbers"
+      :documents-url="documentsUrl"
+      :release-dates="releaseDates"
       :assignments="assignments"
       :loading-submit="loadingSubmit"
       :save="save"
@@ -444,21 +328,15 @@ export default {
       min,
       integer,
 
-      hasMoreTalent: false,
-      talentItems: [],
-      hasMorePartner: false,
-      partnerItems: [],
       hasMoreTeamLead: false,
       teamLeadItems: [],
-      hasMoreDevice: false,
-      deviceItems: [],
       hasMoreOffice: false,
       officeItems: [],
 
-      sk_number: '',
-      release_date: null,
+      skNumbers: '',
+      releaseDates: null,
       document_type: 'partner assignment',
-      document_url: '',
+      documentsUrl: '',
       assignments: [],
     }
   },
@@ -473,7 +351,7 @@ export default {
       return `Satu ${this.$route.meta.name.singular} berhasil ditambah`
     },
     endpoint() {
-      const endpoint = '/skDocument/skPartnerAssignment'
+      const endpoint = '/skDocument/skTeamleadOfficeAssignment'
       return this.showMode ? `${endpoint}/${this.id}` : endpoint
     },
   },
@@ -482,89 +360,12 @@ export default {
     if (this.showMode) {
       await this.loadForm()
     } else {
-      this.loadTalents()
-      this.loadPartners()
       this.loadTeamLeads()
       this.loadOffices()
     }
     this.loading = false
   },
   methods: {
-    onSearchTalent(search, loading) {
-      if (search.length) {
-        this.searchTalent(loading, search, this)
-      }
-    },
-    searchTalent: _.debounce((loading, search, that) => {
-      loading(true)
-      that.loadTalents(search).finally(() => loading(false))
-    }, 500),
-    loadTalents(search) {
-      return this.$http
-        .get('/talent', {
-          params: {
-            keyword: search,
-            page: 1,
-            limit: 5,
-            sort: 'name',
-            direction: 'asc',
-            status: 'selected,hired,non job',
-          },
-        })
-        .then(async response => {
-          const { data } = response.data.data
-          this.talentItems = this.assignments.map(
-            assignment => assignment.talent,
-          )
-          data.forEach(res => {
-            this.talentItems.push(res)
-          })
-          this.talentItems = this.talentItems.filter(
-            (item, val) => this.talentItems.indexOf(item) === val && item?.id,
-          )
-          this.hasMoreTalent = response.data.data.total > this.talentItems.length
-        })
-    },
-    onSearchPartner(search, loading) {
-      if (search.length) {
-        this.searchPartner(loading, search, this)
-      }
-    },
-    searchPartner: _.debounce((loading, search, that) => {
-      loading(true)
-      that.loadPartners(search).finally(() => loading(false))
-    }, 500),
-    loadPartners(search) {
-      const key = /^-?\d+$/.test(search) ? 'no_partner' : 'name'
-
-      return this.$http
-        .get('/user/partner/pagination', {
-          params: {
-            [key]: search,
-            page: 1,
-            limit: 5,
-            sort: 'name',
-            direction: 'asc',
-            account_status: 'active',
-          },
-        })
-        .then(async response => {
-          const { data } = response.data.data
-          for (let i = 0; i < data.length; i += 1) {
-            data[i].label = `${data[i].no_partner} - ${data[i].full_name}`
-          }
-          this.partnerItems = this.assignments.map(
-            assignment => assignment.partner,
-          )
-          data.forEach(res => {
-            this.partnerItems.push(res)
-          })
-          this.partnerItems = this.partnerItems.filter(
-            (item, val) => this.partnerItems.indexOf(item) === val && item?.id,
-          )
-          this.hasMorePartner = response.data.data.total > this.partnerItems.length
-        })
-    },
     onSearchTeamLead(search, loading) {
       if (search.length) {
         this.searchTeamLead(loading, search, this)
@@ -598,41 +399,6 @@ export default {
             (item, val) => this.teamLeadItems.indexOf(item) === val && item?.id,
           )
           this.hasMoreTeamLead = response.data.data.total > this.teamLeadItems.length
-        })
-    },
-    onSearchDevice(search, loading, partner) {
-      if (search.length) {
-        this.searchDevice(loading, search, this, partner)
-      }
-    },
-    searchDevice: _.debounce((loading, search, that, partner) => {
-      loading(true)
-      that.loadDevices(search, partner).finally(() => loading(false))
-    }, 500),
-    loadDevices(search, partner) {
-      return this.$http
-        .get('/device/pagination', {
-          params: {
-            brancd: search,
-            no_partner: partner?.no_partner,
-            page: 1,
-            limit: 5,
-            sort: 'name',
-            direction: 'asc',
-          },
-        })
-        .then(async response => {
-          const { data } = response.data.data
-          this.deviceItems = this.assignments.map(
-            assignment => assignment.device,
-          )
-          data.forEach(res => {
-            this.deviceItems.push(res)
-          })
-          this.deviceItems = this.deviceItems.filter(
-            (item, val) => this.deviceItems.indexOf(item) === val && item?.id,
-          )
-          this.hasMoreDevice = response.data.data.total > this.deviceItems.length
         })
     },
     onSearchOffice(search, loading) {
@@ -707,16 +473,13 @@ export default {
 
           const data = {
             _method: this.method,
-            sk_number: this.sk_number,
-            release_date: this.release_date,
+            skNumbers: this.skNumbers,
+            releaseDates: this.releaseDates,
             document_type: this.document_type,
-            document_url: this.document_url,
+            documentsUrl: this.documentsUrl,
             assignments: this.assignments.map(assignment => ({
               office_id: assignment.office.id,
-              talent_id: assignment.talent.talent.id,
-              partner_id: assignment.partner.partner_detail.id,
               staff_id: assignment.staff.staff.id,
-              device_id: assignment.device.id,
             })),
           }
 
@@ -786,10 +549,10 @@ export default {
         .get(this.endpoint)
         .then(async response => {
           const { data } = response.data
-          this.sk_number = data.sk_number
-          this.release_date = data.release_date
-          this.document_url = data.document_url
-          this.assignments = data.sk_partner_assignments
+          this.skNumbers = data.skNumbers
+          this.releaseDates = data.releaseDates
+          this.documentsUrl = data.documentsUrl
+          this.assignments = data.sk_teamlead_office_assignments
         })
         .catch(error => {
           if (!error.response?.data.status) {

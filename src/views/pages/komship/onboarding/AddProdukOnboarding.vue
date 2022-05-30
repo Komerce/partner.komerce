@@ -1139,7 +1139,9 @@
           height="134.43px"
           class="modalUploadWarning__img"
         >
-        <p class="modalUploadWarning__text">Maaf, maksimal file hanya 2 MB.</p>
+        <p class="modalUploadWarning__text">
+          Maaf, maksimal file hanya 2 MB.
+        </p>
         <b-button
           variant="danger"
           class="modalUploadWarning__btn"

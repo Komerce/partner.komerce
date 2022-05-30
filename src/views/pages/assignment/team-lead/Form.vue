@@ -30,7 +30,7 @@
                       rules="required|min:3"
                     >
                       <b-form-input
-                        v-model="sk_number"
+                        v-model="skNumbers"
                         :state="
                           errors.length > 0 || submitErrors.name ? false : null
                         "
@@ -54,7 +54,7 @@
                       rules="required|url"
                     >
                       <b-form-input
-                        v-model="document_url"
+                        v-model="documentsUrl"
                         :state="
                           errors.length > 0 || submitErrors.name ? false : null
                         "
@@ -78,7 +78,7 @@
                       rules="required"
                     >
                       <flat-pickr
-                        v-model="release_date"
+                        v-model="releaseDates"
                         class="form-control"
                         :config="{
                           altInput: true,
@@ -300,9 +300,9 @@
     </b-card-actions>
     <modal
       ref="confirmationModalComponent"
-      :sk_number="sk_number"
-      :document_url="document_url"
-      :release_date="release_date"
+      :sk-numbers="skNumbers"
+      :documents-url="documentsUrl"
+      :release-dates="releaseDates"
       :assignments="assignments"
       :loading-submit="loadingSubmit"
       :save="save"
@@ -370,10 +370,10 @@ export default {
       hasMoreOffice: false,
       officeItems: [],
 
-      sk_number: '',
-      release_date: null,
+      skNumbers: '',
+      releaseDates: null,
       document_type: 'partner assignment',
-      document_url: '',
+      documentsUrl: '',
       assignments: [],
     }
   },
@@ -546,10 +546,10 @@ export default {
 
           const data = {
             _method: this.method,
-            sk_number: this.sk_number,
-            release_date: this.release_date,
+            skNumbers: this.skNumbers,
+            releaseDates: this.releaseDates,
             document_type: this.document_type,
-            document_url: this.document_url,
+            documentsUrl: this.documentsUrl,
             assignments: this.assignments.map(assignment => ({
               office_id: assignment.office.id,
               talent_id: assignment.talent.talent.id,
@@ -623,9 +623,9 @@ export default {
         .get(this.endpoint)
         .then(async response => {
           const { data } = response.data
-          this.sk_number = data.sk_number
-          this.release_date = data.release_date
-          this.document_url = data.document_url
+          this.skNumbers = data.skNumbers
+          this.releaseDates = data.releaseDates
+          this.documentsUrl = data.documentsUrl
           this.assignments = data.sk_teamlead_assignments
         })
         .catch(error => {

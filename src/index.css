@@ -1,3 +1,33 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+.daterangepicker td.active,.daterangepicker td.active:hover{
+    background-color: #FF6A3A !important;
+    color: white !important;
+  }
+ 
+  .daterangepicker td.in-range {
+    background-color: #FFECE9 !important;
+    border-color: transparent;
+    color: #000;
+    border-radius: 0;
+}
+ .daterangepicker td.active{
+    border-color: transparent;
+    color: #000;
+    border-radius: 0;
+    background-color: #FF6A3A !important;
+}
+
+.daterangepicker .ranges li.active{
+    background-color: #FF6A3A !important;
+}
+
+.daterangepicker .btn-primary, .daterangepicker .btn-success {
+    background-color: #FF6A3A !important;
+    border-color: #FF6A3A !important;
+}
+
+
+    @media screen and (max-width: 767px) {
+        .daterangepicker.show-calendar .drp-buttons, .daterangepicker.show-calendar .drp-calendar {
+            display: flex !important;
+        }
+    }

@@ -23,7 +23,7 @@
             No SK
           </b-col>
           <b-col md="6">
-            <b>{{ sk_number }}</b>
+            <b>{{ skNumbers }}</b>
           </b-col>
         </b-row>
         <b-row class="mb-1">
@@ -32,9 +32,9 @@
           </b-col>
           <b-col md="6">
             <a
-              :href="document_url"
+              :href="documentsUrl"
               target="_blank"
-            ><b>{{ document_url }}</b></a>
+            ><b>{{ documentsUrl }}</b></a>
           </b-col>
         </b-row>
         <b-row class="mb-1">
@@ -42,7 +42,7 @@
             Tanggal
           </b-col>
           <b-col md="6">
-            <b>{{ release_date | date }}</b>
+            <b>{{ releaseDates | date }}</b>
           </b-col>
         </b-row>
       </b-col>
@@ -86,23 +86,28 @@ import { BRow, BCol, BModal } from 'bootstrap-vue'
 export default {
   components: { BRow, BCol, BModal },
   props: {
-    sk_number: {
+    skNumbers: {
       type: String,
+      default: '',
     },
-    document_url: {
+    documentsUrl: {
       type: String,
+      default: '',
     },
-    release_date: {
+    releaseDates: {
       type: String,
+      default: '',
     },
     loadingSubmit: {
       type: Boolean,
     },
     save: {
       type: Function,
+      default: null,
     },
     assignments: {
       type: Array,
+      default: null,
     },
   },
   methods: {
