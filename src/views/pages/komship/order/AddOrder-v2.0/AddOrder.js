@@ -889,7 +889,7 @@ export default {
             this.loadingCalculate = false
           }
           this.loadingCalculate = false
-        }).catch(async err => {
+        }).catch(async () => {
           this.calculate(getAdditional)
           this.loadingWrapperOtherCost = false
           this.loadingCalculate = false
