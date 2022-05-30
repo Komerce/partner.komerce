@@ -5,6 +5,11 @@ module.exports = {
   devServer: {
     proxy: 'http://localhost:8080',
   },
+  pluginOptions: {
+    webpackBundleAnalyzer: {
+      openAnalyzer: false,
+    },
+  },
   css: {
     loaderOptions: {
       sass: {

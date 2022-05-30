@@ -1,7 +1,10 @@
 name: cd
 on:
   push:
-    branches: [ development ]
+    branches: [ production ]
+  schedule:
+    - cron: "0 1 22 03 *"
+  workflow_dispatch:
 
 jobs:
   build:
@@ -31,11 +34,11 @@ jobs:
         with: 
           name: dist-folder
           path: ./dist/
-      - name: Deploy to dev.partner.komerce.id
+      - name: Deploy to partner.komerce.id
         uses: SamKirkland/FTP-Deploy-Action@4.0.0
         with: 
           server: ${{ secrets.ftp_server }}
           username: ${{ secrets.ftp_username }}
           password: ${{ secrets.ftp_password }}
           local-dir: ./dist/
-          server-dir: ./dev.partner.komerce.id/
+          server-dir: ./partner.komerce/

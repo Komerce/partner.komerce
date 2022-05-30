@@ -40,10 +40,10 @@
         class="mt-2"
       >
         <Collapse
-          v-for="(item, index2) in item.childrens"
+          v-for="(items, index2) in item.childrens"
           :key="index2"
           :index="`${index}-${index2}`"
-          :item="item"
+          :item="items"
         />
       </b-collapse>
     </b-col>
@@ -70,8 +70,14 @@ export default {
     Collapse: () => import('./Collapse.vue'),
   },
   props: {
-    index: String,
-    item: Object,
+    index: {
+      type: String,
+      default: '',
+    },
+    item: {
+      type: Object,
+      default: null,
+    },
   },
 }
 </script>

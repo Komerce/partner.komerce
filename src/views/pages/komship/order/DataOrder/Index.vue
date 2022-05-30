@@ -94,6 +94,7 @@
 import {
   BCard, BTabs, BTab, BDropdown, BDropdownItem, BButton, BBadge,
 } from 'bootstrap-vue'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import All from './List/All.vue'
 import Created from './List/Created.vue'
 import Packing from './List/Packing.vue'
@@ -110,7 +111,7 @@ export default {
     return {
       tabIndex: tabs.indexOf(this.$route.query.tab),
       tabs,
-      profile: null,
+      profile: JSON.parse(localStorage.userData),
       totalAjukan: null,
       totalPacking: null,
       totalKirim: null,
@@ -122,34 +123,58 @@ export default {
       this.$router.replace({ query: { tab } }).catch(() => {})
     },
   },
-  mounted() {
+  created() {
     this.fetchData()
   },
   methods: {
-    async fetchData() {
-      const profile = await this.$http_komship.post('v1/my-profile')
-      const dataProfile = await profile.data.data
-      this.profile = await dataProfile
-      await this.$http_komship.get(`v1/order/${this.profile.partner_id}`, {
+    fetchData() {
+      this.$http_komship.get(`v1/order/${this.profile.partner_detail.id}`, {
         params: { order_status: 'Diajukan' },
       }).then(res => {
         const { data } = res.data
         this.totalAjukan = data.total
-        return this.totalAjukan
+      }).catch(err => {
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: 'Gagal',
+            icon: 'AlertCircleIcon',
+            text: err,
+            variant: 'danger',
+          },
+        })
       })
-      await this.$http_komship.get(`v1/order/${this.profile.partner_id}`, {
+      this.$http_komship.get(`v1/order/${this.profile.partner_detail.id}`, {
         params: { order_status: 'Dipacking' },
       }).then(res => {
         const { data } = res.data
         this.totalPacking = data.total
-        return this.totalPacking
+      }).catch(err => {
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: 'Gagal',
+            icon: 'AlertCircleIcon',
+            text: err,
+            variant: 'danger',
+          },
+        })
       })
-      await this.$http_komship.get(`v1/order/${this.profile.partner_id}`, {
+      this.$http_komship.get(`v1/order/${this.profile.partner_detail.id}`, {
         params: { order_status: 'Dikirim' },
       }).then(res => {
         const { data } = res.data
         this.totalKirim = data.total
-        return this.totalKirim
+      }).catch(err => {
+        this.$toast({
+          component: ToastificationContent,
+          props: {
+            title: 'Gagal',
+            icon: 'AlertCircleIcon',
+            text: err,
+            variant: 'danger',
+          },
+        })
       })
     },
   },

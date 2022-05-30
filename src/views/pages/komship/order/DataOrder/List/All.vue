@@ -298,6 +298,7 @@ import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css'
 import flatPickr from 'vue-flatpickr-component'
 import '@/@core/scss/vue/libs/vue-flatpicker.scss'
+import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 
 export default {
   components: {
@@ -308,7 +309,7 @@ export default {
   },
   data() {
     return {
-      profile: {},
+      profile: JSON.parse(localStorage.userData),
       items: [],
       fields: [
         {
@@ -353,10 +354,7 @@ export default {
     },
   },
   mounted() {
-    this.fetchData().catch(error => {
-      console.error(error)
-    })
-    this.getProduct()
+    this.fetchData()
   },
   created() {
     window.addEventListener('click', async e => {
@@ -378,12 +376,9 @@ export default {
       }
       return date
     },
-    async fetchData(search) {
+    fetchData(search) {
       this.loadTable = true
-      const profile = await this.$http_komship.post('v1/my-profile')
-      const dataProfile = await profile.data.data
-      this.profile = await dataProfile
-      this.items = await this.$http_komship.get(`v1/order/${this.profile.partner_id}`, {
+      this.$http_komship.get(`v1/order/${this.profile.partner_detail.id}`, {
         params: {
           customer_name: search,
           product_name: this.productName,
@@ -395,27 +390,48 @@ export default {
         },
       })
         .then(res => {
-          const { data } = res.data
-          this.totalItems = data.total
+          const { data } = res.data.data
+          this.totalItems = res.data.data.total
           this.loadTable = false
-          return data.data
+          this.items = data
+          this.getProduct()
+          this.loadTable = false
+        }).catch(err => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Gagal',
+              icon: 'AlertCircleIcon',
+              text: err,
+              variant: 'danger',
+            },
+          })
+          this.loadTable = false
         })
-        .then(items => items)
     },
     resetFilter() {
       this.startDate = null
       this.endDate = null
       this.productName = null
       this.paymentMethod = null
-      return this.fetchData()
+      this.fetchData()
     },
-    async getProduct() {
-      const profile = await this.$http_komship.post('v1/my-profile')
-      const dataProfile = await profile.data.data
-      this.profile = await dataProfile
-      const product = await this.$http_komship.get(`v1/partner-product/${this.profile.partner_id}`)
-      const { data } = await product.data
-      this.productList = data
+    getProduct() {
+      this.$http_komship.get(`v1/partner-product/${this.profile.partner_detail.id}`)
+        .then(response => {
+          const { data } = response.data
+          this.productList = data
+        }).catch(err => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Gagal',
+              icon: 'AlertCircleIcon',
+              text: err,
+              variant: 'danger',
+            },
+          })
+        })
     },
     shippingTypeLabel(value) {
       if (value === 'REG19' || value === 'SIUNT' || value === 'STD' || value === 'IDlite' || value === 'CTC19') {
@@ -425,7 +441,7 @@ export default {
       }
       return value
     },
-    async setPage(totalPage) {
+    setPage(totalPage) {
       this.perPage = totalPage
       this.fetchData()
     },

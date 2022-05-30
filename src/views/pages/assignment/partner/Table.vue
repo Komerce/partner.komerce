@@ -17,9 +17,9 @@ export default {
     return {
       endpointGetAll: '/skDocument/skPartnerAssignment',
       fields: [
-        { key: 'sk_number', label: 'No. SK' },
+        { key: 'skNumbers', label: 'No. SK' },
         {
-          key: 'release_date',
+          key: 'releaseDates',
           label: 'Tanggal Diterbitkan',
           formatter: val => filters.date(Date.parse(val)),
         },

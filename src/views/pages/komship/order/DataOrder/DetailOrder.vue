@@ -690,7 +690,7 @@ export default {
     },
     cancelPickup() {
       this.loadingCancelPickup = true
-      this.$http_komship.put(`/v1/order/${this.profile.partner_id}/cancel/${this.idEditOrder}`)
+      this.$http_komship.put(`/v2/order/${this.profile.partner_id}/cancel/${this.idEditOrder}`)
         .then(() => {
           this.loadingCancelPickup = false
           this.$refs['popup-success-cancel-pickup'].show()

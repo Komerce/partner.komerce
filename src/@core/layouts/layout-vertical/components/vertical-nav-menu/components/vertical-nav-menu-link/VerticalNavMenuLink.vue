@@ -14,8 +14,10 @@
     >
       <div
         v-if="item.customicon"
-        v-html="item.customicon"
-      />
+      ><img
+        :src="item.customicon"
+        alt=""
+      ></div>
       <feather-icon
         v-else
         :icon="item.icon || (!Boolean(item.hasParent) ? 'CircleIcon' : '')"

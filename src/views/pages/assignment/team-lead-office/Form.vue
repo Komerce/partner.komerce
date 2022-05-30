@@ -30,7 +30,7 @@
                       rules="required|min:3"
                     >
                       <b-form-input
-                        v-model="sk_number"
+                        v-model="skNumbers"
                         :state="
                           errors.length > 0 || submitErrors.name ? false : null
                         "
@@ -54,7 +54,7 @@
                       rules="required|url"
                     >
                       <b-form-input
-                        v-model="document_url"
+                        v-model="documentsUrl"
                         :state="
                           errors.length > 0 || submitErrors.name ? false : null
                         "
@@ -78,7 +78,7 @@
                       rules="required"
                     >
                       <flat-pickr
-                        v-model="release_date"
+                        v-model="releaseDates"
                         class="form-control"
                         :config="{
                           altInput: true,
@@ -109,12 +109,15 @@
           >
             <b-row>
               <b-col md="1">
-                <b>List Team Lead</b>
+                <b>List Talent</b>
               </b-col>
-              <b-col md="4">
+              <b-col md="2">
+                <b>Nama</b>
+              </b-col>
+              <b-col md="2">
                 <b>Team Lead</b>
               </b-col>
-              <b-col md="4">
+              <b-col md="2">
                 <b>Kantor</b>
               </b-col>
               <b-col
@@ -131,9 +134,38 @@
                 class="mt-1"
               >
                 <b-col
-                  md="4"
+                  md="2"
                   offset-md="1"
                 >
+                  <validation-provider
+                    #default="{ errors }"
+                    name="Talent"
+                    rules="required"
+                  >
+                    <v-select
+                      v-model="assignment.talent"
+                      label="full_name"
+                      :options="talentItems"
+                      placeholder="Ketik untuk mencari..."
+                      @search="onSearchTalent"
+                    >
+                      <li
+                        v-if="hasMoreTalent"
+                        slot="list-footer"
+                        class="
+                          vs__dropdown-option vs__dropdown-option--disabled
+                        "
+                      >
+                        <feather-icon
+                          icon="MoreHorizontalIcon"
+                          size="16"
+                        />
+                      </li>
+                    </v-select>
+                    <small class="text-danger">{{ errors[0] }}</small>
+                  </validation-provider>
+                </b-col>
+                <b-col md="2">
                   <validation-provider
                     #default="{ errors }"
                     name="Team Lead"
@@ -162,7 +194,7 @@
                     <small class="text-danger">{{ errors[0] }}</small>
                   </validation-provider>
                 </b-col>
-                <b-col md="4">
+                <b-col md="2">
                   <validation-provider
                     #default="{ errors }"
                     name="Kantor"
@@ -215,12 +247,15 @@
                 class="mt-1"
               >
                 <b-col
-                  md="4"
+                  md="2"
                   offset-md="1"
                 >
+                  <p>{{ assignment.talent.user.full_name }}</p>
+                </b-col>
+                <b-col md="2">
                   <p>{{ assignment.staff.user.full_name }}</p>
                 </b-col>
-                <b-col md="4">
+                <b-col md="2">
                   <p>{{ assignment.office.office_name }}</p>
                 </b-col>
                 <b-col md="12">
@@ -230,7 +265,7 @@
             </template>
             <b-row>
               <b-col
-                offset-md="9"
+                offset-md="7"
                 md="2"
               >
                 <b-button
@@ -265,9 +300,9 @@
     </b-card-actions>
     <modal
       ref="confirmationModalComponent"
-      :sk_number="sk_number"
-      :document_url="document_url"
-      :release_date="release_date"
+      :sk-numbers="skNumbers"
+      :documents-url="documentsUrl"
+      :release-dates="releaseDates"
       :assignments="assignments"
       :loading-submit="loadingSubmit"
       :save="save"
@@ -328,15 +363,17 @@ export default {
       min,
       integer,
 
+      hasMoreTalent: false,
+      talentItems: [],
       hasMoreTeamLead: false,
       teamLeadItems: [],
       hasMoreOffice: false,
       officeItems: [],
 
-      sk_number: '',
-      release_date: null,
+      skNumbers: '',
+      releaseDates: null,
       document_type: 'partner assignment',
-      document_url: '',
+      documentsUrl: '',
       assignments: [],
     }
   },
@@ -351,7 +388,7 @@ export default {
       return `Satu ${this.$route.meta.name.singular} berhasil ditambah`
     },
     endpoint() {
-      const endpoint = '/skDocument/skTeamleadOfficeAssignment'
+      const endpoint = '/skDocument/skTeamLeadAssignment'
       return this.showMode ? `${endpoint}/${this.id}` : endpoint
     },
   },
@@ -360,12 +397,48 @@ export default {
     if (this.showMode) {
       await this.loadForm()
     } else {
+      this.loadTalents()
       this.loadTeamLeads()
       this.loadOffices()
     }
     this.loading = false
   },
   methods: {
+    onSearchTalent(search, loading) {
+      if (search.length) {
+        this.searchTalent(loading, search, this)
+      }
+    },
+    searchTalent: _.debounce((loading, search, that) => {
+      loading(true)
+      that.loadTalents(search).finally(() => loading(false))
+    }, 500),
+    loadTalents(search) {
+      return this.$http
+        .get('/talent', {
+          params: {
+            keyword: search,
+            page: 1,
+            limit: 5,
+            sort: 'name',
+            direction: 'asc',
+            status: 'selected,hired,non job',
+          },
+        })
+        .then(async response => {
+          const { data } = response.data.data
+          this.talentItems = this.assignments.map(
+            assignment => assignment.talent,
+          )
+          data.forEach(res => {
+            this.talentItems.push(res)
+          })
+          this.talentItems = this.talentItems.filter(
+            (item, val) => this.talentItems.indexOf(item) === val && item?.id,
+          )
+          this.hasMoreTalent = response.data.data.total > this.talentItems.length
+        })
+    },
     onSearchTeamLead(search, loading) {
       if (search.length) {
         this.searchTeamLead(loading, search, this)
@@ -473,12 +546,13 @@ export default {
 
           const data = {
             _method: this.method,
-            sk_number: this.sk_number,
-            release_date: this.release_date,
+            skNumbers: this.skNumbers,
+            releaseDates: this.releaseDates,
             document_type: this.document_type,
-            document_url: this.document_url,
+            documentsUrl: this.documentsUrl,
             assignments: this.assignments.map(assignment => ({
               office_id: assignment.office.id,
+              talent_id: assignment.talent.talent.id,
               staff_id: assignment.staff.staff.id,
             })),
           }
@@ -549,10 +623,10 @@ export default {
         .get(this.endpoint)
         .then(async response => {
           const { data } = response.data
-          this.sk_number = data.sk_number
-          this.release_date = data.release_date
-          this.document_url = data.document_url
-          this.assignments = data.sk_teamlead_office_assignments
+          this.skNumbers = data.skNumbers
+          this.releaseDates = data.releaseDates
+          this.documentsUrl = data.documentsUrl
+          this.assignments = data.sk_teamlead_assignments
         })
         .catch(error => {
           if (!error.response?.data.status) {
