@@ -11,7 +11,6 @@ import Dropdown from 'vue-simple-search-dropdown'
 import router from './router'
 import store from './store'
 import App from './App.vue'
-import './index.css'
 // Global Components
 import './global-components'
 

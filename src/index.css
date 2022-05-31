@@ -1,4 +1,4 @@
-.daterangepicker td.active,.daterangepicker td.active:hover{
+/* .daterangepicker td.active,.daterangepicker td.active:hover{
     background-color: #FF6A3A !important;
     color: white !important;
   }
@@ -31,3 +31,7 @@
             display: flex !important;
         }
     }
+
+    .form-control, .reportrange-text{
+        height: auto !important;
+      } */
