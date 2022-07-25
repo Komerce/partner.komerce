@@ -121,10 +121,10 @@
                   show
                   :variant="statusOrder"
                   class="px-1 w-36 text-center wrapper__status__order"
-                  style="padding: 5px 0;"
+                  :style="orderData.order_status === 'Hilang' ? 'padding: 5px 0; background-color: #FCBEBE!important; color: #E31A1A!important' : 'padding: 5px 0;' "
                 >
                   <span v-if="orderData.order_status === 'Diajukan'">Order Dibuat</span>
-                  <span v-else>{{ orderData.order_status }}</span>
+                  <span v-else>{{ orderData.order_status === 'Hilang' ? 'Paket Hilang' : orderData.order_status }}</span>
                 </b-alert>
                 <b-badge
                   show
@@ -132,7 +132,7 @@
                   class="wrapper__status__order__mobile"
                 >
                   <span v-if="orderData.order_status === 'Diajukan'">Order Dibuat</span>
-                  <span v-else>{{ orderData.order_status }}</span>
+                  <span v-else>{{ orderData.order_status === 'Hilang' ? 'Paket Hilang' : orderData.order_status }}</span>
                 </b-badge>
               </b-col>
             </b-row>
@@ -713,6 +713,8 @@ export default {
         this.statusOrderMobile = 'light-danger'
       } else if (status === 'Batal') {
         this.statusOrderMobile = 'light-dark'
+      } else if (status === 'Hilang') {
+        this.statusOrderMobile = 'light-danger'
       }
       return this.statusOrderMobile
     },
@@ -729,6 +731,8 @@ export default {
         this.statusOrder = 'danger'
       } else if (status === 'Batal') {
         this.statusOrder = 'dark'
+      } else if (status === 'Hilang') {
+        this.statusOrder = 'danger'
       }
       return this.statusOrder
     },
