@@ -77,6 +77,7 @@ export default {
           shipping_name: this.expedition[index].shipping_name,
           is_active: this.expedition[index].is_active ? 1 : 0,
           partner_id: this.profile.partner_detail.id,
+          is_komship: 1,
         })
           .then(() => {
             this.$toast({
