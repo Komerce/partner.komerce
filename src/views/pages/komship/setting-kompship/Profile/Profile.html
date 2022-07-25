@@ -37,6 +37,7 @@
                   v-model="fullname"
                   placeholder="Nama Lengkap"
                   :state="errors.length > 0 ? false:null"
+                  @keypress="handleEnter"
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
@@ -62,12 +63,12 @@
                   <b-form-input
                     v-model="username"
                     placeholder="Username"
-                    :disabled="userData.username_change === false"
+                    :disabled="true"
                     :state="errors.length > 0 ? false:null"
-                    style="background: white;"
+                    style="background: white; border: 1.5px solid #F3F3F3 !important"
                   />
                   <template #append>
-                   <b-button variant="flat-dark" class="btn-icon" size="sm" @click="openModalEdit('username')" :disabled="userData.username_change === false">
+                   <b-button variant="flat-dark" class="btn-icon" size="sm" @click="openModalEdit('username')":disabled="userData.username_change === false">
                       <b-img
                         v-if="userData.username_change === true"
                         src="@/assets/images/icons/new-edit-icon.svg"
@@ -134,7 +135,7 @@
                     type="number"
                     placeholder="Nomer HP"
                     :state="errors.length > 0 ? false:null"
-                    style="background: white;"
+                    style="background: white; border: 1.5px solid #F3F3F3 !important"
                     disabled
                   />
                   <template #append>
@@ -168,7 +169,7 @@
                     v-model="emailUser"
                     placeholder="Email"
                     :state="errors.length > 0 ? false:null"
-                    style="background: white;"
+                    style="background: white; border: 1.5px solid #F3F3F3 !important"
                     disabled
                   />
                   <template #append>
@@ -202,6 +203,7 @@
                   placeholder="Alamat"
                   rows="3"
                   :state="errors.length > 0 ? false:null"
+                  @keypress="handleEnter"
                 />
                 <small class="text-danger">{{ errors[0] }}</small>
               </validation-provider>
@@ -498,7 +500,11 @@
       #default="{invalid}"
     >
       <b-row class="pt-2 mb-2 justify-content-center">
-        <h4 class="text-black">{{ modalTitle }}</h4>
+        <h4 class="text-black">
+          <strong>
+            {{ modalTitle }}
+          </strong>
+        </h4>
       </b-row>
 
       <b-row class="mb-2 justify-content-center">
@@ -512,7 +518,9 @@
             >
                 <template #label>
                   <span class="text-black">
-                    {{ modalFormLabel }}
+                    <strong>
+                      {{ modalFormLabel }}
+                    </strong>
                   </span>
                 </template>
                 <validation-provider
@@ -537,9 +545,10 @@
                       v-model="formInputEditItem"
                       :type="modalEditFormInputType"
                       :state="errors.length > 0 ? false:null"
+                      @input="handleMessageErrorUsernameIsSame"
                     />
                     <template
-                      v-if="modalEditFormInputType === 'password'"
+                      v-if="modalTitle === 'Password Komship'"
                     #append>
                       <b-button
                         class="btn-icon"
@@ -550,12 +559,22 @@
                       </b-button>
                     </template>
                   </b-input-group>
-                  <small
-                    v-if="messageErrorPassword"
-                    class="text-primary"
-                  >
-                    Password salah
-                  </small>
+                  <b-row>
+                    <small
+                      v-if="messageErrorPassword"
+                      class="text-primary"
+                    >
+                      Password salah
+                    </small>
+                  </b-row>
+                  <b-row>
+                    <small
+                      v-if="messageErrorUsernameIsSame"
+                      class="text-primary"
+                    >
+                      Username tidak boleh sama dengan saat ini
+                    </small>
+                  </b-row>
                   <div v-if="errorNoHp">
                     <small class="mr-1 text-primary">
                       *minimal 8 digit berupa angka
@@ -588,23 +607,29 @@
                       </b-button>
                     </template>
                   </b-input-group>
-                  <small
-                    v-if="messageErrorPassword"
-                    class="text-primary"
-                  >
-                    Password salah
-                  </small>
+                  <b-row>
+                    <small
+                      v-if="messageErrorPassword"
+                      class="text-primary"
+                    >
+                      Password salah
+                    </small>
+                  </b-row>
                   <div v-if="errorNoHp">
                     <small class="mr-1 text-primary">
                       *minimal 9 digit berupa angka
                     </small>
                   </div>
-                  <small v-if="messageErrorEmail !== null" class="text-primary">
-                    {{ messageErrorEmail }}
-                  </small>
-                  <small v-if="emailSamePrevious === true" class="text-primary">
-                    Email yang dimasukan sama dengan yang sekarang, coba email yang lain
-                  </small>
+                  <b-row>
+                    <small v-if="messageErrorEmail !== null" class="text-primary">
+                      {{ messageErrorEmail }}
+                    </small>
+                  </b-row>
+                  <b-row>
+                    <small v-if="emailSamePrevious === true" class="text-primary">
+                      Email yang dimasukan sama dengan yang sekarang, coba email yang lain
+                    </small>
+                  </b-row>
                   <small class="text-danger">{{ errors[0] }}</small>
                 </validation-provider>
             </b-form-group>

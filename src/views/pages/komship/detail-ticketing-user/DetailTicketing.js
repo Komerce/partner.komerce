@@ -88,6 +88,30 @@ export default {
 
       transactionValue: '',
       isLoading: false,
+
+      stars: [
+        {
+          value: 1,
+          active: false,
+        },
+        {
+          value: 2,
+          active: false,
+        },
+        {
+          value: 3,
+          active: false,
+        },
+        {
+          value: 4,
+          active: false,
+        },
+        {
+          value: 5,
+          active: false,
+        },
+      ],
+      ratingUser: null,
     }
   },
   directives: {
@@ -109,7 +133,6 @@ export default {
       scrollToBottom(theElement)
     }
     this.readChat()
-    console.log(this.$route)
   },
   methods: {
     fetchDetailTicket() {
@@ -129,6 +152,8 @@ export default {
           this.messages = data.history_ticket
           this.orderId = await data.order_id
           this.loadingDataDetail = false
+          this.ratingUser = data.rating_user
+          this.previewRating(data.rating_user.rating)
           setTimeout(() => {
             const theElement = document.getElementById('chatFocusing')
             const scrollToBottom = node => {
@@ -463,6 +488,68 @@ export default {
     },
     goBack() {
       window.close()
+    },
+    previewRating(data) {
+      const findIndexRating = this.stars.findIndex(item => item.value === data)
+      this.stars.forEach((item, index) => {
+        if (index <= findIndexRating) {
+          this.stars[index].active = true
+        }
+      })
+    },
+    resetRating() {
+      this.stars = [
+        {
+          value: 1,
+          active: false,
+        },
+        {
+          value: 2,
+          active: false,
+        },
+        {
+          value: 3,
+          active: false,
+        },
+        {
+          value: 4,
+          active: false,
+        },
+        {
+          value: 5,
+          active: false,
+        },
+      ]
+    },
+    submitRating(data) {
+      const formData = new FormData()
+      formData.append('ticket_id', this.ticketId)
+      formData.append('user_id', this.userId.partner_detail.id)
+      formData.append('rating', data)
+      this.$http_komship.post('/v1/ticket-partner/rating/store', formData)
+        .then(response => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Success',
+              icon: 'CheckIcon',
+              text: 'berhasil submit review',
+              variant: 'success',
+            },
+          }, 2000)
+          this.fetchDetailTicket()
+        })
+        .catch(err => {
+          this.$toast({
+            component: ToastificationContent,
+            props: {
+              title: 'Failure',
+              icon: 'AlertCircleIcon',
+              text: err,
+              variant: 'danger',
+            },
+          }, 2000)
+        })
     },
   },
 }

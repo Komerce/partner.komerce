@@ -411,6 +411,62 @@
                                     </div>
                                 </b-col>
                             </b-row>
+                            <b-row v-if="orderStatus === 'Diterima' || orderStatus === 'Retur' || orderStatus === 'Hilang' || orderStatus === 'Rusak'">
+                                <b-col cols="1">
+                                    <b-img src="@/assets/images/logo/logo-komship-chat.svg" />
+                                </b-col>
+                                <b-col
+                                    md="8"
+                                >
+                                    <div>
+                                        <b-row class="justify-content-start mb-50">
+                                            <small class="text-black">
+                                                Tim Komship
+                                            </small>
+                                        </b-row>
+                                        <b-row class="justify-content-start mb-50">
+                                            <div class="wrapper__chat__isnotuser p-1">
+                                                <p class="text-black">
+                                                    Penanganan pengiriman telah tertangani, status ticket sudah berganti menjadi selesai. Mohon berikan review atas kinerja penanganan pengiriman kali ini dari tim ekspedisi
+                                                </p>
+                                                <b-row
+                                                    class="mb-1 pl-1"
+                                                >
+                                                    <div v-for="(itemStar, index) in stars"
+                                                    :key="index+1">
+                                                        <div
+                                                            v-if="ratingUser === null"
+                                                            class="cursor-pointer"
+                                                            @mouseover="previewRating(itemStar.value)"
+                                                            @mouseleave="resetRating"
+                                                            @click="submitRating(itemStar.value)"
+                                                        >
+                                                            <svg width="29" height="27" viewBox="0 0 29 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M14.5 0L17.7555 10.0193L28.2903 10.0193L19.7674 16.2115L23.0229 26.2307L14.5 20.0385L5.97711 26.2307L9.23257 16.2115L0.709681 10.0193L11.2445 10.0193L14.5 0Z" :fill="itemStar.active === true ? '#FBBC05' : 'white'"/>
+                                                            </svg>     
+                                                        </div>                                                       
+                                                        <div
+                                                            v-if="ratingUser !== null"
+                                                        >
+                                                            <svg width="29" height="27" viewBox="0 0 29 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                <path d="M14.5 0L17.7555 10.0193L28.2903 10.0193L19.7674 16.2115L23.0229 26.2307L14.5 20.0385L5.97711 26.2307L9.23257 16.2115L0.709681 10.0193L11.2445 10.0193L14.5 0Z" :fill="itemStar.active === true ? '#FBBC05' : 'white'"/>
+                                                            </svg>     
+                                                        </div>                                                       
+                                                    </div>
+                                                </b-row>
+                                                <p class="text-black">
+                                                    *klik bintang untuk kasih review, evaluasi kamu berharga banget buat kami
+                                                </p>
+                                            </div>
+                                        </b-row>
+                                        <b-row class="justify-content-start mb-2">
+                                            <small class="text-black">
+                                                1 januari 2023
+                                            </small>
+                                        </b-row>
+                                    </div>
+                                </b-col>
+                            </b-row>
                         </div>
                     </div>
                 </b-col>

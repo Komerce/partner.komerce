@@ -135,6 +135,7 @@ export default {
       countOtp: 60,
       resendOtp: false,
       loadingOtp: false,
+      messageErrorUsernameIsSame: false,
     }
   },
   mounted() {
@@ -142,6 +143,7 @@ export default {
     this.loadPartnerCategory()
     this.loadBusinessType()
     this.loadAllProvince()
+    console.log(this.userData)
   },
   methods: {
     removeLogoBusiness() {
@@ -218,9 +220,7 @@ export default {
     loadProfile() {
       this.fieldLogoBusiness.push({ logo: '' })
       this.loading = true
-      this.$http_komship.post('/v1/my-profile', {
-        headers: { Authorization: `Bearer ${useJwt.getToken()}` },
-      }).then(response => {
+      this.$http_komship.post('/v1/my-profile').then(response => {
         const { data } = response.data
         this.id = data.user_id
         this.fullname = data.user_fullname
@@ -244,7 +244,7 @@ export default {
           this.cityCode = data.address_partner_business
           this.loadAllProvince()
         }
-        this.sektorBusiness = data.partner_category_name
+        if (data.partner_business_name === 'null') this.sektorBusiness = ''
         this.typeBusiness = data.partner_business_type_id
         this.loading = false
       }).catch(err => {
@@ -347,13 +347,17 @@ export default {
       }
     },
     reset() {
-      this.loadProfile()
+      window.history.go(-1)
     },
     fileUrl: file => (file ? URL.createObjectURL(file) : null),
     formatBusinessName(e) {
       return String(e).substring(0, 30)
     },
     formatPhoneProfile(e) {
+      console.log(e)
+      if (e.keyCode === 13) {
+        e.preventDefault()
+      }
       if (this.phoneBusiness.length < 9) {
         this.messageErrorPhone = true
       } else {
@@ -361,7 +365,7 @@ export default {
       }
     },
     validateInputBusinessName(e) {
-      if (e.keyCode === 47 || e.keyCode === 61 || e.keyCode === 58 || e.keyCode === 59) {
+      if (e.keyCode === 47 || e.keyCode === 61 || e.keyCode === 58 || e.keyCode === 59 || e.keyCode === 13) {
         e.preventDefault()
         this.messageErrorLengthNameBusiness = true
       } else {
@@ -369,7 +373,7 @@ export default {
       }
     },
     validateInputPhoneProfile(e) {
-      if (e.keyCode === 46 || e.keyCode === 45 || e.keyCode === 43 || e.keyCode === 101 || e.keyCode === 44) {
+      if (e.keyCode === 46 || e.keyCode === 45 || e.keyCode === 43 || e.keyCode === 101 || e.keyCode === 44 || e.keyCode === 13) {
         e.preventDefault()
       }
       if (this.phoneBusiness.length < 9) {
@@ -412,51 +416,58 @@ export default {
     closeModalEdit() {
       this.formInputEditItem = ''
       this.successConfirmPassword = false
+      this.messageErrorUsernameIsSame = false
       this.$refs['modal-edit'].hide()
     },
     closeSuccessEditUsername() {
       this.$refs['modal-success-edit-username'].hide()
     },
     submitEdit() {
+      this.messageErrorUsernameIsSame = false
       this.loadingEdit = true
       if (this.editMode === 'username') {
-        const formData = new FormData()
-        formData.append('username', this.formInputEditItem)
-        const params = {
-          username: this.formInputEditItem,
-        }
-        this.$http.put('/user/partner/update-profile/username', {
-          username: this.formInputEditItem,
-        })
-          .then(response => {
-            this.loadingEdit = false
-            if (response.data.code === 1009) {
+        if (this.userData.username !== this.formInputEditItem) {
+          const formData = new FormData()
+          formData.append('username', this.formInputEditItem)
+          const params = {
+            username: this.formInputEditItem,
+          }
+          this.$http.put('/user/partner/update-profile/username', {
+            username: this.formInputEditItem,
+          })
+            .then(response => {
+              this.loadingEdit = false
+              if (response.data.code === 1009) {
+                this.$toast({
+                  component: ToastificationContent,
+                  props: {
+                    title: 'Gagal',
+                    icon: 'AlertCircleIcon',
+                    text: response.data.message,
+                    variant: 'danger',
+                  },
+                }, 2000)
+              } else {
+                this.$refs['modal-success-edit-username'].show()
+                this.$refs['modal-edit'].hide()
+              }
+            })
+            .catch(err => {
+              this.loadingEdit = false
               this.$toast({
                 component: ToastificationContent,
                 props: {
                   title: 'Gagal',
                   icon: 'AlertCircleIcon',
-                  text: response.data.message,
+                  text: err,
                   variant: 'danger',
                 },
               }, 2000)
-            } else {
-              this.$refs['modal-success-edit-username'].show()
-              this.$refs['modal-edit'].hide()
-            }
-          })
-          .catch(err => {
-            this.loadingEdit = false
-            this.$toast({
-              component: ToastificationContent,
-              props: {
-                title: 'Gagal',
-                icon: 'AlertCircleIcon',
-                text: err,
-                variant: 'danger',
-              },
-            }, 2000)
-          })
+            })
+        } else {
+          this.loadingEdit = false
+          this.messageErrorUsernameIsSame = true
+        }
       } else if (this.editMode === 'noHP') {
         const formData = new FormData()
         formData.append('username', this.usernameCheckPasswword)
@@ -508,6 +519,7 @@ export default {
             if (err.response.data.data.check_password === false) {
               this.successConfirmPassword = false
               this.messageErrorPassword = true
+              this.loadingEdit = false
             } else {
               this.$toast({
                 component: ToastificationContent,
@@ -682,6 +694,7 @@ export default {
       }
     },
     resetMessageErrorEmail() {
+      this.messageErrorPassword = false
       this.messageErrorEmail = null
       this.emailSamePrevious = false
     },
@@ -727,11 +740,20 @@ export default {
     },
     hideCloseModalEdit() {
       this.formInputEditItem = ''
+      this.messageErrorUsernameIsSame = false
       this.successConfirmPassword = false
     },
     handleValueCityCode() {
-      console.log(this.cityCode)
       this.cityCodeValue = this.cityCode.city_code
+    },
+    handleEnter(e) {
+      if (e.keyCode === 13) {
+        e.preventDefault()
+      }
+    },
+    handleMessageErrorUsernameIsSame() {
+      this.messageErrorPassword = false
+      this.messageErrorUsernameIsSame = false
     },
   },
 
